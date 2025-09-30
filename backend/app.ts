@@ -1,0 +1,10 @@
+import express from "express";
+
+const app = express();
+
+app.get("/", (_, res) => {
+  res.send("Hello World!");
+  res.end();
+});
+
+export default app;
