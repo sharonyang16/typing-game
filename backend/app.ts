@@ -1,10 +1,17 @@
 import express from "express";
 
+const port = parseInt(process.env.PORT || "8000");
+
 const app = express();
 
 app.get("/", (_, res) => {
-  res.send("Hello World!");
-  res.end();
+  res.send("hello world");
 });
 
-export default app;
+const startServer = () => {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+};
+
+export { startServer };

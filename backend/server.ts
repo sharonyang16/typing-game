@@ -1,5 +1,3 @@
-import app from "./app.js";
+import { startServer } from "./app.js";
 
-app.listen(8000, () => {
-    console.log("Listening on port 8000");
-});
+startServer();
