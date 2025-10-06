@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import data from "@/static/words.json";
+import useKeyboardEvents from "./useKeyboardEvents";
 
 const useWords = () => {
+  const { keyPressed } = useKeyboardEvents();
   const [numWords, setNumWords] = useState(25);
   const [wordsToType, setWordsToType] = useState("");
   const [wordsTyped, setWordsTyped] = useState("");
@@ -27,6 +29,15 @@ const useWords = () => {
   const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWordsTyped(e.target.value);
   };
+
+  useEffect(() => {
+    if (keyPressed === "Backspace") {
+      setWordsTyped((prev) => prev.slice(0, -1));
+      return;
+    } else {
+      setWordsTyped((prev) => prev.concat(keyPressed));
+    }
+  }, [keyPressed]);
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
