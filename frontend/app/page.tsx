@@ -9,6 +9,7 @@ export default function Home() {
     setNumWords,
     wordsTyped,
     updateTyped,
+    charMatches,
   } = useWords();
   return (
     <div className="flex flex-col">
@@ -18,10 +19,28 @@ export default function Home() {
         value={numWords}
         onChange={(e) => setNumWords(parseInt(e.target.value))}
       ></input>
-      <p>{wordsToType}</p>
-      <input
-        type="text"
+      <p className="font-mono">
+        {wordsToType.split("").map((char, index) => {
+          return (
+            <span
+              key={index}
+              className={`${
+                index >= wordsTyped.length
+                  ? ""
+                  : charMatches(index)
+                  ? "text-green-400"
+                  : "bg-red-800"
+              }`}
+            >
+              {char}
+            </span>
+          );
+        })}
+      </p>
+      <textarea
+        className="font-mono"
         value={wordsTyped}
+        placeholder="type here"
         onChange={(e) => {
           updateTyped(e);
         }}

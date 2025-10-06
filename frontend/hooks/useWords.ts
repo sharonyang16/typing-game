@@ -24,8 +24,12 @@ const useWords = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords]);
 
-  const updateTyped = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWordsTyped(e.target.value);
+  };
+
+  const charMatches = (index: number) => {
+    return wordsToType[index] === wordsTyped[index];
   };
 
   return {
@@ -35,6 +39,7 @@ const useWords = () => {
     generateWords,
     wordsTyped,
     updateTyped,
+    charMatches,
   };
 };
 
