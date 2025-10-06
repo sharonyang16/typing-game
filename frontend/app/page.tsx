@@ -2,7 +2,14 @@
 import useWords from "@/hooks/useWords";
 
 export default function Home() {
-  const { words, generateWords, numWords, setNumWords } = useWords();
+  const {
+    wordsToType,
+    generateWords,
+    numWords,
+    setNumWords,
+    wordsTyped,
+    updateTyped,
+  } = useWords();
   return (
     <div className="flex flex-col">
       <button onClick={() => generateWords()}>restart</button>
@@ -11,7 +18,14 @@ export default function Home() {
         value={numWords}
         onChange={(e) => setNumWords(parseInt(e.target.value))}
       ></input>
-      <p>{words}</p>
+      <p>{wordsToType}</p>
+      <input
+        type="text"
+        value={wordsTyped}
+        onChange={(e) => {
+          updateTyped(e);
+        }}
+      />
     </div>
   );
 }
