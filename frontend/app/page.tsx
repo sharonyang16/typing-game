@@ -8,7 +8,6 @@ export default function Home() {
     numWords,
     setNumWords,
     wordsTyped,
-    updateTyped,
     charMatches,
   } = useWords();
   return (
@@ -25,7 +24,9 @@ export default function Home() {
             <span
               key={index}
               className={`${
-                index >= wordsTyped.length
+                index === wordsTyped.length
+                  ? "bg-blue-700"
+                  : index >= wordsTyped.length
                   ? ""
                   : charMatches(index)
                   ? "text-green-400"
