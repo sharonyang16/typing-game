@@ -1,24 +1,34 @@
 "use client";
 import useWords from "@/hooks/useWords";
+import numWordsConstant from "@/static/numWords.json";
 
 export default function Home() {
   const {
     wordsToType,
     generateWords,
     numWords,
-    setNumWords,
     wordsTyped,
     charMatches,
+    handleNumWordsChange,
   } = useWords();
 
   return (
     <div className="flex flex-col">
       <button onClick={() => generateWords()}>restart</button>
-      <input
-        type="number"
-        value={numWords}
-        onChange={(e) => setNumWords(parseInt(e.target.value))}
-      ></input>
+      <div className="flex gap-4">
+        {numWordsConstant.map((num) => (
+          <label key={`numWords-${num}`} className="flex gap-1">
+            <input
+              type="radio"
+              value={num}
+              onChange={handleNumWordsChange}
+              checked={numWords == num}
+            />
+            {num}
+          </label>
+        ))}
+      </div>
+
       <p className="font-mono">
         {wordsToType.split("").map((char, index) => {
           return (
