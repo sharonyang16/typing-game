@@ -10,6 +10,7 @@ export default function Home() {
     wordsTyped,
     charMatches,
   } = useWords();
+
   return (
     <div className="flex flex-col">
       <button onClick={() => generateWords()}>restart</button>

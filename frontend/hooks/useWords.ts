@@ -19,17 +19,16 @@ const useWords = () => {
     const newWordsString = newWords.join(" ");
 
     setWordsToType(newWordsString);
+    setWordsTyped("");
   };
 
+  // init
   useEffect(() => {
     generateWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords]);
 
-  const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setWordsTyped(e.target.value);
-  };
-
+  // Update the words typed
   useEffect(() => {
     if (keyPressed === "Backspace") {
       setWordsTyped((prev) => prev.slice(0, -1));
@@ -38,6 +37,10 @@ const useWords = () => {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
   }, [keyPressed]);
+
+  const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setWordsTyped(e.target.value);
+  };
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
