@@ -3,7 +3,8 @@ import data from "@/static/words.json";
 
 const useWords = () => {
   const [numWords, setNumWords] = useState(25);
-  const [words, setWords] = useState("");
+  const [wordsToType, setWordsToType] = useState("");
+  const [wordsTyped, setWordsTyped] = useState("");
 
   const generateWords = () => {
     const newWords = [];
@@ -15,7 +16,7 @@ const useWords = () => {
 
     const newWordsString = newWords.join(" ");
 
-    setWords(newWordsString);
+    setWordsToType(newWordsString);
   };
 
   useEffect(() => {
@@ -23,7 +24,18 @@ const useWords = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords]);
 
-  return { numWords, setNumWords, words, generateWords };
+  const updateTyped = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWordsTyped(e.target.value);
+  };
+
+  return {
+    numWords,
+    setNumWords,
+    wordsToType,
+    generateWords,
+    wordsTyped,
+    updateTyped,
+  };
 };
 
 export default useWords;
