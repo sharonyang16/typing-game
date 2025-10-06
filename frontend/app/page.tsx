@@ -28,9 +28,9 @@ export default function Home() {
                 index === wordsTyped.length
                   ? "bg-blue-700"
                   : index >= wordsTyped.length
-                  ? ""
+                  ? "text-gray-400"
                   : charMatches(index)
-                  ? "text-green-400"
+                  ? "text-white"
                   : "bg-red-800"
               }`}
             >
