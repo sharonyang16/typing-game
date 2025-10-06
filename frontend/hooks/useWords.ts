@@ -46,6 +46,14 @@ const useWords = () => {
     return wordsToType[index] === wordsTyped[index];
   };
 
+  const handleNumWordsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setNumWords(parseInt(e.target.value));
+    } catch {
+      // do nothing
+    }
+  };
+
   return {
     numWords,
     setNumWords,
@@ -54,6 +62,7 @@ const useWords = () => {
     wordsTyped,
     updateTyped,
     charMatches,
+    handleNumWordsChange,
   };
 };
 
