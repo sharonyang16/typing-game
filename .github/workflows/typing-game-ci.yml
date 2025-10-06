@@ -29,3 +29,6 @@ jobs:
 
       - name: Lint frontend
         run: cd frontend; npm install; npm run lint
+
+      - name: Lint backend
+        run: cd backend; npm install; npm run lint
