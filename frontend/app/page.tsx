@@ -37,14 +37,6 @@ export default function Home() {
           );
         })}
       </p>
-      <textarea
-        className="font-mono"
-        value={wordsTyped}
-        placeholder="type here"
-        onChange={(e) => {
-          updateTyped(e);
-        }}
-      />
     </div>
   );
 }
