@@ -33,7 +33,7 @@ const useWords = () => {
     if (keyPressed === "Backspace") {
       setWordsTyped((prev) => prev.slice(0, -1));
       return;
-    } else {
+    } else if (/^[\x00-\x7F]*$/.test(keyPressed) && keyPressed.length === 1) {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
   }, [keyPressed]);
