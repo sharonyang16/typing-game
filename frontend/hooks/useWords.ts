@@ -11,6 +11,7 @@ const useWords = () => {
   const [startTime, setStartTime] = useState(0);
   const [secondsTaken, setSecondsTaken] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [wpm, setWpm] = useState(0);
 
   const generateWords = () => {
     const newWords = [];
@@ -69,10 +70,6 @@ const useWords = () => {
       setShowResults(true);
     }
   }, [startTime, started, wordsToType, wordsTyped]);
-
-  const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setWordsTyped(e.target.value);
-  };
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
