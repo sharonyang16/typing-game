@@ -88,11 +88,9 @@ const useWords = () => {
 
   return {
     numWords,
-    setNumWords,
     wordsToType,
     handleRestart,
     wordsTyped,
-    updateTyped,
     charMatches,
     handleNumWordsChange,
     secondsTaken,
