@@ -50,7 +50,7 @@ const useWords = () => {
     } else if (/^[\x00-\x7F]*$/.test(keyPressed) && keyPressed.length === 1) {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
-  }, [keyPressed]);
+  }, [keyPressed, wordsToType.length, wordsTyped.length]);
 
   // Detect when user starts and ends test
   useEffect(() => {
