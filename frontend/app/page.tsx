@@ -12,6 +12,7 @@ export default function Home() {
     handleNumWordsChange,
     secondsTaken,
     showResults,
+    wpm,
   } = useWords();
 
   return (
@@ -22,6 +23,7 @@ export default function Home() {
           <h4>Results</h4>
           <p>{`Words: ${numWords}`}</p>
           <p>{`Seconds: ${secondsTaken}`}</p>
+          <p>{`WPM: ${wpm}`}</p>
         </div>
       )}
       {!showResults && (

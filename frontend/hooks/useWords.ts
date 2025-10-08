@@ -9,8 +9,9 @@ const useWords = () => {
   const [wordsTyped, setWordsTyped] = useState("");
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState(0);
-  const [secondsTaken, setSecondsTaken] = useState("");
+  const [secondsTaken, setSecondsTaken] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [wpm, setWpm] = useState(0);
 
   const generateWords = () => {
     const newWords = [];
@@ -50,7 +51,9 @@ const useWords = () => {
     } else if (/^[\x00-\x7F]*$/.test(keyPressed) && keyPressed.length === 1) {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
-  }, [keyPressed, wordsToType.length, wordsTyped.length]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyPressed]);
 
   // Detect when user starts and ends test
   useEffect(() => {
@@ -64,15 +67,14 @@ const useWords = () => {
     if (wordsToType.length === wordsTyped.length && started) {
       setStarted(false);
       const endTime = Date.now() - startTime;
-      const time = (endTime / 1000).toFixed(2);
+      const time = parseFloat((endTime / 1000).toFixed(2));
       setSecondsTaken(time);
       setShowResults(true);
+
+      const wordsPerMinute = Math.floor((wordsToType.length / 5) * (60 / time));
+      setWpm(wordsPerMinute);
     }
   }, [startTime, started, wordsToType, wordsTyped]);
-
-  const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setWordsTyped(e.target.value);
-  };
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
@@ -95,6 +97,7 @@ const useWords = () => {
     handleNumWordsChange,
     secondsTaken,
     showResults,
+    wpm,
   };
 };
 
