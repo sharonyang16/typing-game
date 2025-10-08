@@ -7,6 +7,10 @@ const useWords = () => {
   const [numWords, setNumWords] = useState(25);
   const [wordsToType, setWordsToType] = useState("");
   const [wordsTyped, setWordsTyped] = useState("");
+  const [started, setStarted] = useState(false);
+  const [startTime, setStartTime] = useState(0);
+  const [secondsTaken, setSecondsTaken] = useState("");
+  const [showResults, setShowResults] = useState(false);
 
   const generateWords = () => {
     const newWords = [];
@@ -20,6 +24,7 @@ const useWords = () => {
 
     setWordsToType(newWordsString);
     setWordsTyped("");
+    setStarted(false);
   };
 
   useEffect(() => {
@@ -30,10 +35,15 @@ const useWords = () => {
   const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
     generateWords();
     e.currentTarget.blur();
+    setShowResults(false);
   };
 
   // Update the words typed
   useEffect(() => {
+    if (wordsTyped.length === wordsToType.length) {
+      return;
+    }
+
     if (keyPressed === "Backspace") {
       setWordsTyped((prev) => prev.slice(0, -1));
       return;
@@ -41,6 +51,24 @@ const useWords = () => {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
   }, [keyPressed]);
+
+  // Detect when user starts and ends test
+  useEffect(() => {
+    // start
+    if (!started && wordsTyped.length === 1) {
+      setStarted(true);
+      setStartTime(Date.now());
+    }
+
+    // end
+    if (wordsToType.length === wordsTyped.length && started) {
+      setStarted(false);
+      const endTime = Date.now() - startTime;
+      const time = (endTime / 1000).toFixed(2);
+      setSecondsTaken(time);
+      setShowResults(true);
+    }
+  }, [startTime, started, wordsToType, wordsTyped]);
 
   const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWordsTyped(e.target.value);
@@ -67,6 +95,8 @@ const useWords = () => {
     updateTyped,
     charMatches,
     handleNumWordsChange,
+    secondsTaken,
+    showResults,
   };
 };
 
