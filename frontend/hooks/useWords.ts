@@ -10,7 +10,7 @@ const useWords = () => {
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState(0);
   const [secondsTaken, setSecondsTaken] = useState("");
-  //const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   const generateWords = () => {
     const newWords = [];
@@ -35,6 +35,7 @@ const useWords = () => {
   const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
     generateWords();
     e.currentTarget.blur();
+    setShowResults(false);
   };
 
   // Update the words typed
@@ -65,6 +66,7 @@ const useWords = () => {
       const endTime = Date.now() - startTime;
       const time = (endTime / 1000).toFixed(2);
       setSecondsTaken(time);
+      setShowResults(true);
     }
   }, [startTime, started, wordsToType, wordsTyped]);
 
@@ -94,6 +96,7 @@ const useWords = () => {
     charMatches,
     handleNumWordsChange,
     secondsTaken,
+    showResults,
   };
 };
 
