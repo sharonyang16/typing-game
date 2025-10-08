@@ -27,11 +27,15 @@ const useWords = () => {
     setStarted(false);
   };
 
-  // init
   useEffect(() => {
     generateWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords]);
+
+  const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    generateWords();
+    e.currentTarget.blur();
+  };
 
   // Update the words typed
   useEffect(() => {
@@ -84,7 +88,7 @@ const useWords = () => {
     numWords,
     setNumWords,
     wordsToType,
-    generateWords,
+    handleRestart,
     wordsTyped,
     updateTyped,
     charMatches,
