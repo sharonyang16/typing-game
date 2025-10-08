@@ -7,6 +7,7 @@ const useWords = () => {
   const [numWords, setNumWords] = useState(25);
   const [wordsToType, setWordsToType] = useState("");
   const [wordsTyped, setWordsTyped] = useState("");
+  const [started, setStarted] = useState(false);
 
   const generateWords = () => {
     const newWords = [];
@@ -37,6 +38,19 @@ const useWords = () => {
       setWordsTyped((prev) => prev.concat(keyPressed));
     }
   }, [keyPressed]);
+
+  // Detect when user starts and ends test
+  useEffect(() => {
+    if (!started && wordsTyped.length === 1) {
+      setStarted(true);
+      console.log("started");
+    }
+
+    if (wordsToType.length === wordsTyped.length && started) {
+      setStarted(false);
+      console.log("ended");
+    }
+  }, [started, wordsToType, wordsTyped]);
 
   const updateTyped = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setWordsTyped(e.target.value);
