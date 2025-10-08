@@ -5,7 +5,7 @@ import numWordsConstant from "@/static/numWords.json";
 export default function Home() {
   const {
     wordsToType,
-    generateWords,
+    handleRestart,
     numWords,
     wordsTyped,
     charMatches,
@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <button onClick={() => generateWords()}>restart</button>
+      <button onClick={handleRestart}>restart</button>
       <div className="flex gap-4">
         {numWordsConstant.map((num) => (
           <label key={`numWords-${num}`} className="flex gap-1">
