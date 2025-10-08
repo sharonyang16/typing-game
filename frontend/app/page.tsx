@@ -4,9 +4,9 @@ import numWordsConstant from "@/static/numWords.json";
 
 export default function Home() {
   const {
+    numWords,
     wordsToType,
     handleRestart,
-    numWords,
     wordsTyped,
     charMatches,
     handleNumWordsChange,
