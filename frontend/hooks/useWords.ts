@@ -96,6 +96,7 @@ const useWords = () => {
 
   const handleCapsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUseCaps(e.target.checked);
+    e.currentTarget.blur();
   };
 
   return {
