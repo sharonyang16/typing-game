@@ -5,6 +5,7 @@ import useKeyboardEvents from "./useKeyboardEvents";
 const useWords = () => {
   const { keyPressed } = useKeyboardEvents();
   const [numWords, setNumWords] = useState(25);
+  const [useCaps, setUseCaps] = useState(false);
   const [wordsToType, setWordsToType] = useState("");
   const [wordsTyped, setWordsTyped] = useState("");
   const [started, setStarted] = useState(false);
@@ -17,7 +18,12 @@ const useWords = () => {
     const newWords = [];
 
     for (let i = 0; i < numWords; i++) {
-      const word = data[Math.floor(Math.random() * data.length)];
+      let word = data[Math.floor(Math.random() * data.length)];
+
+      if (useCaps && Math.floor(Math.random() * 10) < 3) {
+        word = word.charAt(0).toUpperCase() + word.slice(1);
+      }
+
       newWords.push(word);
     }
 
@@ -31,7 +37,7 @@ const useWords = () => {
   useEffect(() => {
     generateWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numWords]);
+  }, [numWords, useCaps]);
 
   const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
     generateWords();
@@ -88,8 +94,14 @@ const useWords = () => {
     }
   };
 
+  const handleCapsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUseCaps(e.target.checked);
+  };
+
   return {
     numWords,
+    useCaps,
+    handleCapsChange,
     wordsToType,
     handleRestart,
     wordsTyped,
