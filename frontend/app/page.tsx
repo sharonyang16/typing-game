@@ -5,6 +5,8 @@ import numWordsConstant from "@/static/numWords.json";
 export default function Home() {
   const {
     numWords,
+    useCaps,
+    handleCapsChange,
     wordsToType,
     handleRestart,
     wordsTyped,
@@ -28,18 +30,28 @@ export default function Home() {
       )}
       {!showResults && (
         <div>
-          <div className="flex gap-4">
-            {numWordsConstant.map((num) => (
-              <label key={`numWords-${num}`} className="flex gap-1">
-                <input
-                  type="radio"
-                  value={num}
-                  onChange={handleNumWordsChange}
-                  checked={numWords == num}
-                />
-                {num}
-              </label>
-            ))}
+          <div className="flex justify-between">
+            <div className="flex gap-4">
+              {numWordsConstant.map((num) => (
+                <label key={`numWords-${num}`} className="flex gap-1">
+                  <input
+                    type="radio"
+                    value={num}
+                    onChange={handleNumWordsChange}
+                    checked={numWords == num}
+                  />
+                  {num}
+                </label>
+              ))}
+            </div>
+            <label className="flex gap-1">
+              <input
+                type="checkbox"
+                checked={useCaps}
+                onChange={handleCapsChange}
+              />
+              Capital Letters
+            </label>
           </div>
 
           <p className="font-mono">
