@@ -1,8 +1,9 @@
-import * as express from "express";
-import * as dotenv from "dotenv";
+import "reflect-metadata";
+import express from "express";
+import dotenv from "dotenv";
 import { Request, Response } from "express";
 import cors from "cors";
-import "reflect-metadata";
+import userController from "./controllers/user.controller";
 
 dotenv.config();
 
@@ -23,5 +24,7 @@ const startServer = () => {
     console.log(`Listening on port ${port}`);
   });
 };
+
+app.use("/user", userController());
 
 export { startServer };

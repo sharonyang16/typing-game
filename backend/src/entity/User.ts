@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 /**
  * Entity definition for a single user.
  * @class User
- * 
+ *
  * Each User includes the following fields:
  * - id: The unique id of the user.
  * - email: The email of the user.
@@ -13,18 +13,15 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
  */
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: "text" })
   email: string;
 
-  @Column({ unique: true })
-  username: string;
-
-  @Column()
+  @Column({ unique: true, type: "text" })
   firebaseId: string;
 
-  @Column()
+  @Column({ type: "date" })
   dateJoined: Date;
 }
