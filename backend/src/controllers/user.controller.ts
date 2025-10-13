@@ -23,8 +23,8 @@ const userController = () => {
     try {
       const username = await addUser(user);
       res.status(200).send(username);
-    } catch {
-      res.status(500).send("bad");
+    } catch (e) {
+      res.status(500).send(e?.message);
     }
   };
 
