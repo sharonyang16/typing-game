@@ -12,10 +12,13 @@ export class TypingTest {
   timeToComplete: number;
 
   @Column()
-  wpm: number;
+  rawWpm: number;
 
   @Column()
   accuracy: number;
+
+  @Column()
+  wpm: number;
 
   @Column()
   date: Date;
