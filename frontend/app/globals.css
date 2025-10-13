@@ -25,7 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-button.icon-button {
-  border: 1px solid--foreground;
+.icon-button {
+  border: 1px solid --foreground;
   border-radius: 100%;
 }
