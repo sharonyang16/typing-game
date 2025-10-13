@@ -1,16 +1,30 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+/**
+ * Entity definition for a single user.
+ * @class User
+ * 
+ * Each User includes the following fields:
+ * - id: The unique id of the user.
+ * - email: The email of the user.
+ * - username: The username of the user.
+ * - firebaseId: The firebase id of the user.
+ * - dateJoined: The date the user joined.
+ */
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
+  @Column({ unique: true })
+  email: string;
+
+  @Column({ unique: true })
+  username: string;
 
   @Column()
-  lastName: string;
+  firebaseId: string;
 
   @Column()
-  age: number;
+  dateJoined: Date;
 }
