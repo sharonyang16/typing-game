@@ -1,0 +1,14 @@
+import Link from "next/link";
+import { User } from "lucide-react";
+const Header = () => {
+  return (
+    <header className="w-full flex justify-between align-center py-4">
+      <div className="font-mono text-xl"> typing game</div>
+      <Link href="/sign-up">
+        <User />
+      </Link>
+    </header>
+  );
+};
+
+export default Header;
