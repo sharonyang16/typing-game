@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 /**
  * Entity definition for a single typing test
  * @class TypingTest
- * 
+ *
  * Each TypingTest includes the following fields:
  * - id: The unique id of the test.
  * - wordsTyped: The words the user had to type.
@@ -19,24 +19,24 @@ export class TypingTest {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: "text" })
   wordsTyped: string;
 
-  @Column()
+  @Column({ type: "float" })
   timeToComplete: number;
 
-  @Column()
+  @Column({ type: "int" })
   rawWpm: number;
 
-  @Column()
+  @Column({ type: "int" })
   accuracy: number;
 
-  @Column()
+  @Column({ type: "int" })
   wpm: number;
 
-  @Column()
+  @Column({ type: "date" })
   date: Date;
 
-  @Column()
+  @Column({ type: "uuid" })
   userId: number;
 }
