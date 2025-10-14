@@ -1,4 +1,5 @@
 "use client";
+import { RotateCcw } from "lucide-react";
 import useWords from "@/hooks/useWords";
 import numWordsConstant from "@/static/numWords.json";
 
@@ -18,64 +19,70 @@ export default function Home() {
   } = useWords();
 
   return (
-    <div className="flex flex-col">
-      <button onClick={handleRestart}>restart</button>
-      {showResults && (
-        <div>
-          <h4>Results</h4>
-          <p>{`Words: ${numWords}`}</p>
-          <p>{`Seconds: ${secondsTaken}`}</p>
-          <p>{`WPM: ${wpm}`}</p>
-        </div>
-      )}
-      {!showResults && (
-        <div>
-          <div className="flex justify-between">
-            <div className="flex gap-4">
-              {numWordsConstant.map((num) => (
-                <label key={`numWords-${num}`} className="flex gap-1">
-                  <input
-                    type="radio"
-                    value={num}
-                    onChange={handleNumWordsChange}
-                    checked={numWords == num}
-                  />
-                  {num}
-                </label>
-              ))}
-            </div>
-            <label className="flex gap-1">
-              <input
-                type="checkbox"
-                checked={useCaps}
-                onChange={handleCapsChange}
-              />
-              Capital Letters
-            </label>
+    <div className="flex flex-col justify-center">
+      <div className="py-4">
+        {showResults && (
+          <div>
+            <h4>Results</h4>
+            <p>{`Words: ${numWords}`}</p>
+            <p>{`Seconds: ${secondsTaken}`}</p>
+            <p>{`WPM: ${wpm}`}</p>
           </div>
+        )}
+        {!showResults && (
+          <div>
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                {numWordsConstant.map((num) => (
+                  <label key={`numWords-${num}`} className="flex gap-1">
+                    <input
+                      type="radio"
+                      value={num}
+                      onChange={handleNumWordsChange}
+                      checked={numWords == num}
+                    />
+                    {num}
+                  </label>
+                ))}
+              </div>
+              <label className="flex gap-1">
+                <input
+                  type="checkbox"
+                  checked={useCaps}
+                  onChange={handleCapsChange}
+                />
+                Capital Letters
+              </label>
+            </div>
 
-          <p className="font-mono">
-            {wordsToType.split("").map((char, index) => {
-              return (
-                <span
-                  key={index}
-                  className={`${
-                    index === wordsTyped.length
-                      ? "bg-blue-700"
-                      : index >= wordsTyped.length
-                      ? "text-gray-400"
-                      : charMatches(index)
-                      ? "text-white"
-                      : "bg-red-800"
-                  }`}
-                >
-                  {char}
-                </span>
-              );
-            })}
-          </p>
-        </div>
-      )}
+            <p className="font-mono">
+              {wordsToType.split("").map((char, index) => {
+                return (
+                  <span
+                    key={index}
+                    className={`${
+                      index === wordsTyped.length
+                        ? "bg-blue-700"
+                        : index >= wordsTyped.length
+                        ? "text-gray-400"
+                        : charMatches(index)
+                        ? "text-white"
+                        : "bg-red-800"
+                    }`}
+                  >
+                    {char}
+                  </span>
+                );
+              })}
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="flex justify-center">
+        <button onClick={handleRestart}>
+          <RotateCcw />
+        </button>
+      </div>
     </div>
   );
 }
