@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-80 min-h-full flex flex-col justify-between`}
       >
         <Layout>
-          <main> {children}</main>
+          <main className="flex-1 py-8"> {children}</main>
         </Layout>
       </body>
     </html>
