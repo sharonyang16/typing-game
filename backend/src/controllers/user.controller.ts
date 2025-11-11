@@ -9,8 +9,8 @@ const userController = () => {
     req.body !== undefined &&
     req.body.email !== undefined &&
     req.body.email !== "" &&
-    req.body.firebaseId !== undefined &&
-    req.body.firebaseId !== "";
+    req.body.password !== undefined &&
+    req.body.password !== "";
 
   const createUser = async (req: AuthRequest, res: Response) => {
     if (!isAuthBodyValid(req)) {
