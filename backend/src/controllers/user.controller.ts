@@ -1,6 +1,6 @@
 import express, { Response } from "express";
 import { AuthRequest } from "../types/user";
-import { addUser } from "../services/user.service";
+import { addUser, loginUser } from "../services/user.service";
 
 const userController = () => {
   const router = express.Router();
@@ -26,7 +26,28 @@ const userController = () => {
       res.cookie("access_token", idToken, {
         httpOnly: true,
       });
-      
+
+      res.status(200).send(user);
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
+  const signInUser = async (req: AuthRequest, res: Response) => {
+    if (!isAuthBodyValid(req)) {
+      res.status(500).send("Invalid user body");
+      return;
+    }
+
+    const userCredentials = req.body;
+
+    try {
+      const { user, idToken } = await loginUser(userCredentials);
+
+      res.cookie("access_token", idToken, {
+        httpOnly: true,
+      });
+
       res.status(200).send(user);
     } catch (e) {
       res.status(500).send(e?.message);
@@ -34,6 +55,7 @@ const userController = () => {
   };
 
   router.post("/signup", createUser);
+  router.post("/login", signInUser);
 
   return router;
 };

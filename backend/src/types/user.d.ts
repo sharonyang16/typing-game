@@ -18,7 +18,7 @@ export interface UserCredentials {
   password: string;
 }
 
-export interface AddUserServiceResponse {
+export interface AuthServiceResponse {
   user: User;
   idToken: string;
 }
