@@ -70,7 +70,7 @@ const userController = () => {
     }
   };
 
-  const logOut = async (req: Request, res: Response) => {
+  const logOut = async (_: Request, res: Response) => {
     try {
       await signOut();
       res.clearCookie("access_token");
@@ -81,9 +81,9 @@ const userController = () => {
   };
 
   router.post("/sign-up", createUser);
-  router.get("/login", signInUser);
+  router.post("/login", signInUser);
   router.get("/check-auth", checkAuth);
-  router.get("/logout", logOut);
+  router.post("/logout", logOut);
 
   return router;
 };

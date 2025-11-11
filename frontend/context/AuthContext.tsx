@@ -7,6 +7,12 @@ import {
 } from "react";
 import { cookies } from "next/headers";
 import { AuthContextType, User, UserCredentials } from "@/types/user";
+import {
+  getAuthCheck,
+  postLogin,
+  postLogout,
+  postSignUp,
+} from "@/services/user-services";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -24,10 +30,22 @@ const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
 
   const signUp = async (userCredentials: UserCredentials): Promise<void> => {
+    try {
+      const { user } = await postSignUp(userCredentials);
+      setUser(user);
+    } catch (_) {
+      // Do Nothing
+    }
     return;
   };
 
   const login = async (userCredentials: UserCredentials): Promise<void> => {
+    try {
+      const { user } = await postLogin(userCredentials);
+      setUser(user);
+    } catch (_) {
+      // Do Nothing
+    }
     return;
   };
 
@@ -36,14 +54,18 @@ const AuthProvider = ({
     const idToken = cookieStore.get("access_token");
 
     if (idToken) {
-      return;
+      const user = await getAuthCheck(idToken.value);
+      setUser(user);
     }
 
-    
     return;
   };
 
   const logout = async (): Promise<void> => {
+    try {
+      await postLogout();
+      setUser(null);
+    } catch (_) {}
     return;
   };
 
