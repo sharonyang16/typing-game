@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { cookies } from "next/headers";
 import { AuthContextType, User, UserCredentials } from "@/types/user";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,6 +32,14 @@ const AuthProvider = ({
   };
 
   const checkAuth = async (): Promise<void> => {
+    const cookieStore = await cookies();
+    const idToken = cookieStore.get("access_token");
+
+    if (idToken) {
+      return;
+    }
+
+    
     return;
   };
 
