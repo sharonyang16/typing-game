@@ -25,16 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-      <html lang="en" className="h-full">
-        <body
-          className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-80 min-h-full flex flex-col justify-between`}
-        >
+    <html lang="en" className="h-full">
+      <body
+        className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-80 min-h-full flex flex-col justify-between`}
+      >
+        <AuthProvider>
           <Layout>
             <main className="flex-1 py-8"> {children}</main>
           </Layout>
-        </body>
-      </html>
-    </AuthProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }

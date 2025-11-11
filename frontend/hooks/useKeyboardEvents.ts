@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 
 const useKeyboardEvents = () => {
@@ -22,7 +23,7 @@ const useKeyboardEvents = () => {
     if (e.key === "Shift") {
       setNextKeyUpperCase(false);
     }
-    
+
     setKeyPressed("");
   };
 

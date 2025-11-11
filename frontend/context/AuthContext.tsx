@@ -1,3 +1,4 @@
+"use client";
 import {
   createContext,
   ReactElement,
@@ -5,7 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 import { AuthContextType, User, UserCredentials } from "@/types/user";
 import {
   getAuthCheck,
@@ -50,12 +51,11 @@ const AuthProvider = ({
   };
 
   const checkAuth = async (): Promise<void> => {
-    const cookieStore = await cookies();
-    const idToken = cookieStore.get("access_token");
+    const idToken = Cookies.get("access_token");
 
     if (idToken) {
       try {
-        const user = await getAuthCheck(idToken.value);
+        const user = await getAuthCheck(idToken);
         setUser(user);
       } catch (e) {
         console.error(e);

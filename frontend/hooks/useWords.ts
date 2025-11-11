@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import data from "@/static/words.json";
 import useKeyboardEvents from "./useKeyboardEvents";
