@@ -81,9 +81,9 @@ const userController = () => {
   };
 
   router.post("/sign-up", createUser);
-  router.get("/login", signInUser);
+  router.post("/login", signInUser);
   router.get("/check-auth", checkAuth);
-  router.get("/logout", logOut);
+  router.post("/logout", logOut);
 
   return router;
 };
