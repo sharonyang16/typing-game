@@ -7,6 +7,7 @@ import {
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import admin from "firebase-admin";
 
 dotenv.config();
 
@@ -19,9 +20,20 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
+export const serviceAccountKey = {
+  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
+  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY,
+  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+};
+
 initializeApp(firebaseConfig);
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccountKey),
+});
+
 export {
+  admin,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
