@@ -1,7 +1,7 @@
 const AuthPage = () => {
   return (
     <div>
-      <h1>Authentication</h1>
+      <h1>Sign In</h1>
       <fieldset className="fieldset w-fit">
         <legend className="fieldset-legend">Sign In</legend>
 

@@ -6,7 +6,7 @@ const Header = () => {
       <div className="font-mono text-xl font-bold">
         <Link href="/">typing game</Link>
       </div>
-      <Link href="/authentication">
+      <Link href="/authentication/login">
         <User />
       </Link>
     </header>
