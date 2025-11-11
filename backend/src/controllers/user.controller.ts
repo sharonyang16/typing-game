@@ -1,6 +1,11 @@
-import express, { Response } from "express";
+import express, { Request, Response } from "express";
 import { AuthRequest } from "../types/user";
-import { addUser } from "../services/user.service";
+import {
+  addUser,
+  loginUser,
+  signOut,
+  verifyUser,
+} from "../services/user.service";
 
 const userController = () => {
   const router = express.Router();
@@ -9,8 +14,8 @@ const userController = () => {
     req.body !== undefined &&
     req.body.email !== undefined &&
     req.body.email !== "" &&
-    req.body.firebaseId !== undefined &&
-    req.body.firebaseId !== "";
+    req.body.password !== undefined &&
+    req.body.password !== "";
 
   const createUser = async (req: AuthRequest, res: Response) => {
     if (!isAuthBodyValid(req)) {
@@ -18,17 +23,67 @@ const userController = () => {
       return;
     }
 
-    const user = req.body;
+    const newUser = req.body;
 
     try {
-      const username = await addUser(user);
-      res.status(200).send(username);
+      const { user, idToken } = await addUser(newUser);
+
+      res.cookie("access_token", idToken, {
+        httpOnly: true,
+      });
+
+      res.status(200).send(user);
     } catch (e) {
       res.status(500).send(e?.message);
     }
   };
 
-  router.post("/signup", createUser);
+  const signInUser = async (req: AuthRequest, res: Response) => {
+    if (!isAuthBodyValid(req)) {
+      res.status(500).send("Invalid user body");
+      return;
+    }
+
+    const userCredentials = req.body;
+
+    try {
+      const { user, idToken } = await loginUser(userCredentials);
+
+      res.cookie("access_token", idToken, {
+        httpOnly: true,
+      });
+
+      res.status(200).send(user);
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
+  const checkAuth = async (req: Request, res: Response) => {
+    const idToken = req.cookies.access_token;
+
+    try {
+      const user = await verifyUser(idToken);
+      res.status(200).send(user);
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
+  const logOut = async (req: Request, res: Response) => {
+    try {
+      await signOut();
+      res.clearCookie("access_token");
+      res.status(200).send("User logged out");
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
+  router.post("/sign-up", createUser);
+  router.get("/login", signInUser);
+  router.get("/check-auth", checkAuth);
+  router.get("/logout", logOut);
 
   return router;
 };

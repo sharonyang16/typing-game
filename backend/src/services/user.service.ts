@@ -1,26 +1,94 @@
-import { QueryFailedError } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { User } from "../entity/User";
-import { UserCredentials } from "../types/user";
+import { AuthServiceResponse, UserCredentials } from "../types/user";
+import {
+  admin,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "../config/firebase";
 
 const userRepository = AppDataSource.getRepository(User);
 
+const auth = getAuth();
+
 export const addUser = async (
   userCredentials: UserCredentials
-): Promise<User> => {
-  const { email, firebaseId } = userCredentials;
-
-  const newUser = new User();
-  newUser.email = email;
-  newUser.firebaseId = firebaseId;
-  newUser.dateJoined = new Date();
+): Promise<AuthServiceResponse> => {
+  const { email, password } = userCredentials;
 
   try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const firebaseId = userCredential.user.uid;
+    const newUser = userRepository.create({
+      email,
+      firebaseId,
+      dateJoined: new Date(),
+    });
+
     const user = await userRepository.save(newUser);
+    const idToken = await userCredential.user.getIdToken();
+
+    return { user, idToken };
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export const loginUser = async (
+  userCredentials: UserCredentials
+): Promise<AuthServiceResponse> => {
+  const { email, password } = userCredentials;
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const user = await userRepository.findOneBy({
+      firebaseId: userCredential.user.uid,
+    });
+
+    const idToken = await userCredential.user.getIdToken();
+
+    return { user, idToken };
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export const verifyUser = async (idToken: string): Promise<User> => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+    const user = await userRepository.findOneBy({
+      firebaseId: decodedToken.uid,
+    });
 
     return user;
   } catch (e) {
-    if (e instanceof QueryFailedError) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export const signOut = async () => {
+  try {
+    await auth.signOut();
+  } catch (e) {
+    if (e instanceof Error) {
       throw e;
     }
   }
