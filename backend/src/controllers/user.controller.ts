@@ -1,6 +1,11 @@
 import express, { Request, Response } from "express";
 import { AuthRequest } from "../types/user";
-import { addUser, loginUser, verifyUser } from "../services/user.service";
+import {
+  addUser,
+  loginUser,
+  signOut,
+  verifyUser,
+} from "../services/user.service";
 
 const userController = () => {
   const router = express.Router();
@@ -65,9 +70,20 @@ const userController = () => {
     }
   };
 
-  router.post("/signup", createUser);
+  const logOut = async (req: Request, res: Response) => {
+    try {
+      await signOut();
+      res.clearCookie("access_token");
+      res.status(200).send("User logged out");
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
+  router.post("/sign-up", createUser);
   router.get("/login", signInUser);
   router.get("/check-auth", checkAuth);
+  router.get("/logout", logOut);
 
   return router;
 };

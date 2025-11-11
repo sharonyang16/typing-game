@@ -83,3 +83,13 @@ export const verifyUser = async (idToken: string): Promise<User> => {
     }
   }
 };
+
+export const signOut = async () => {
+  try {
+    await auth.signOut();
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
