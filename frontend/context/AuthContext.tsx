@@ -31,22 +31,16 @@ const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
 
   const signUp = async (userCredentials: UserCredentials): Promise<void> => {
-    try {
-      const { user } = await postSignUp(userCredentials);
-      setUser(user);
-    } catch (e) {
-      console.error(e);
-    }
+    const { user } = await postSignUp(userCredentials);
+    setUser(user);
+
     return;
   };
 
   const login = async (userCredentials: UserCredentials): Promise<void> => {
-    try {
-      const { user } = await postLogin(userCredentials);
-      setUser(user);
-    } catch (e) {
-      console.error(e);
-    }
+    const { user } = await postLogin(userCredentials);
+    setUser(user);
+
     return;
   };
 
@@ -57,8 +51,9 @@ const AuthProvider = ({
       try {
         const user = await getAuthCheck(idToken);
         setUser(user);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        console.error(e);
+        // do nothing
       }
     }
 

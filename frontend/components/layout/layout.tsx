@@ -4,11 +4,11 @@ import Footer from "./footer";
 import Header from "./header";
 
 const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  useLayout();
+  const { headerText } = useLayout();
 
   return (
     <>
-      <Header />
+      <Header text={headerText} />
       {children}
       <Footer />
     </>

@@ -1,15 +1,27 @@
 import { UserCredentials } from "@/types/user";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`;
 
 const postSignUp = async (userCredentials: UserCredentials) => {
   const { email, password } = userCredentials;
   try {
-    const response = await axios.post(`${BASE_URL}/sign-up`, {
-      email,
-      password,
-    });
+    const response = await axios.post(
+      `${BASE_URL}/sign-up`,
+      {
+        email,
+        password,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.data);
+    }
+
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
@@ -25,6 +37,19 @@ const postLogin = async (userCredentials: UserCredentials) => {
       email,
       password,
     });
+
+    if (response.status !== 200) {
+      throw new Error(response.data);
+    }
+
+    console.log(response.headers);
+    console.log(response.headers["set-cookie"]);
+    if (response.headers["set-cookie"]) {
+      Cookies.set("access_token", response.headers[0], {
+        httpOnly: true,
+      });
+    }
+
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
