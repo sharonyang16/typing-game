@@ -33,8 +33,8 @@ const AuthProvider = ({
     try {
       const { user } = await postSignUp(userCredentials);
       setUser(user);
-    } catch (_) {
-      // Do Nothing
+    } catch (e) {
+      console.error(e);
     }
     return;
   };
@@ -43,8 +43,8 @@ const AuthProvider = ({
     try {
       const { user } = await postLogin(userCredentials);
       setUser(user);
-    } catch (_) {
-      // Do Nothing
+    } catch (e) {
+      console.error(e);
     }
     return;
   };
@@ -54,8 +54,12 @@ const AuthProvider = ({
     const idToken = cookieStore.get("access_token");
 
     if (idToken) {
-      const user = await getAuthCheck(idToken.value);
-      setUser(user);
+      try {
+        const user = await getAuthCheck(idToken.value);
+        setUser(user);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     return;
@@ -65,7 +69,9 @@ const AuthProvider = ({
     try {
       await postLogout();
       setUser(null);
-    } catch (_) {}
+    } catch (e) {
+      console.error(e);
+    }
     return;
   };
 
