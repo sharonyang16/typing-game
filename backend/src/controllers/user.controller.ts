@@ -1,6 +1,6 @@
-import express, { Response } from "express";
+import express, { Request, Response } from "express";
 import { AuthRequest } from "../types/user";
-import { addUser, loginUser } from "../services/user.service";
+import { addUser, loginUser, verifyUser } from "../services/user.service";
 
 const userController = () => {
   const router = express.Router();
@@ -54,8 +54,20 @@ const userController = () => {
     }
   };
 
+  const checkAuth = async (req: Request, res: Response) => {
+    const idToken = req.cookies.access_token;
+
+    try {
+      const user = await verifyUser(idToken);
+      res.status(200).send(user);
+    } catch (e) {
+      res.status(500).send(e?.message);
+    }
+  };
+
   router.post("/signup", createUser);
-  router.post("/login", signInUser);
+  router.get("/login", signInUser);
+  router.get("/check-auth", checkAuth);
 
   return router;
 };

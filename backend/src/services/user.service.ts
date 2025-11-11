@@ -2,6 +2,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entity/User";
 import { AuthServiceResponse, UserCredentials } from "../types/user";
 import {
+  admin,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -60,6 +61,22 @@ export const loginUser = async (
     const idToken = await userCredential.user.getIdToken();
 
     return { user, idToken };
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export const verifyUser = async (idToken: string): Promise<User> => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+    const user = await userRepository.findOneBy({
+      firebaseId: decodedToken.uid,
+    });
+
+    return user;
   } catch (e) {
     if (e instanceof Error) {
       throw e;
