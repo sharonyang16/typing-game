@@ -19,8 +19,8 @@ export default function Home() {
   } = useWords();
 
   return (
-    <div className="flex flex-col justify-center">
-      <div className="py-4">
+    <div className="flex flex-col h-full">
+      <div className="pb-8">
         {showResults && (
           <div>
             <h4>Results</h4>
@@ -30,51 +30,54 @@ export default function Home() {
           </div>
         )}
         {!showResults && (
-          <div>
+          <div className="flex flex-col gap-16">
             <div className="flex justify-between">
-              <div className="flex gap-4">
+              <div className="join">
                 {numWordsConstant.map((num) => (
-                  <label key={`numWords-${num}`} className="flex gap-1">
-                    <input
-                      type="radio"
-                      value={num}
-                      onChange={handleNumWordsChange}
-                      checked={numWords == num}
-                    />
-                    {num}
-                  </label>
+                  <input
+                    key={`numWords-${num}`}
+                    className="join-item btn btn-square"
+                    type="radio"
+                    value={num}
+                    onChange={handleNumWordsChange}
+                    checked={numWords == num}
+                    aria-label={num.toString()}
+                  />
                 ))}
               </div>
-              <label className="flex gap-1">
+              <label className="flex gap-2 items-center label">
                 <input
                   type="checkbox"
                   checked={useCaps}
                   onChange={handleCapsChange}
+                  className="toggle"
                 />
                 Capital Letters
               </label>
             </div>
 
-            <p className="font-mono">
-              {wordsToType.split("").map((char, index) => {
-                return (
-                  <span
-                    key={index}
-                    className={`${
-                      index === wordsTyped.length
-                        ? "bg-blue-700"
-                        : index >= wordsTyped.length
-                        ? "text-gray-400"
-                        : charMatches(index)
-                        ? "text-white"
-                        : "bg-red-800"
-                    }`}
-                  >
-                    {char}
-                  </span>
-                );
-              })}
-            </p>
+            <div>
+              <p className="text-xl">
+                {wordsToType.split("").map((char, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className={`${
+                        index === wordsTyped.length
+                          ? "bg-blue-700"
+                          : index >= wordsTyped.length
+                          ? "text-gray-400"
+                          : charMatches(index)
+                          ? "text-white"
+                          : "bg-red-800"
+                      }`}
+                    >
+                      {char}
+                    </span>
+                  );
+                })}
+              </p>
+            </div>
           </div>
         )}
       </div>
