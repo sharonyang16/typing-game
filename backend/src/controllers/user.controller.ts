@@ -18,11 +18,16 @@ const userController = () => {
       return;
     }
 
-    const user = req.body;
+    const newUser = req.body;
 
     try {
-      const username = await addUser(user);
-      res.status(200).send(username);
+      const { user, idToken } = await addUser(newUser);
+
+      res.cookie("access_token", idToken, {
+        httpOnly: true,
+      });
+      
+      res.status(200).send(user);
     } catch (e) {
       res.status(500).send(e?.message);
     }

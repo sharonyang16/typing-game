@@ -7,7 +7,6 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
  * Each User includes the following fields:
  * - id: The unique id of the user.
  * - email: The email of the user.
- * - username: The username of the user.
  * - firebaseId: The firebase id of the user.
  * - dateJoined: The date the user joined.
  */

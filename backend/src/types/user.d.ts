@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { User } from "../entity/User";
 
 /**
  * Express request for user sign up and log in.
@@ -15,4 +16,9 @@ export interface AuthRequest extends Request {
 export interface UserCredentials {
   email: string;
   password: string;
+}
+
+export interface AddUserServiceResponse {
+  user: User;
+  idToken: string;
 }
