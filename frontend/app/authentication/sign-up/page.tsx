@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-const LoginPage = () => {
+const AuthPage = () => {
   return (
     <div>
       <fieldset className="fieldset w-fit">
-        <legend className="fieldset-legend">Login</legend>
+        <legend className="fieldset-legend">Sign Up</legend>
 
         <label className="label">Username</label>
         <input
@@ -16,12 +16,15 @@ const LoginPage = () => {
         <label className="label">Password</label>
         <input type="text" className="input" placeholder="●●●●●●●●" />
 
-        <button className="btn btn-neutral mt-4">Login</button>
+        <label className="label">Confirm Password</label>
+        <input type="text" className="input" placeholder="●●●●●●●●" />
+
+        <button className="btn btn-neutral mt-4">Sign Up</button>
       </fieldset>
 
       <div className="text-xs">
-        Don&apos;t have an account? Sign up{" "}
-        <Link href="/authentication/sign-up" className="link">
+        Already have an account? Login{" "}
+        <Link href="/authentication/login" className="link">
           here
         </Link>
         !
@@ -30,4 +33,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AuthPage;
