@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { getAllTests, saveTest } from "../services/typing-test.service";
-import { SubmitTypingTestRequest } from "../types/typing-test";
+import { Order, SubmitTypingTestRequest } from "../types/typing-test";
 
 const TypingTestController = () => {
   const router = express.Router();
@@ -19,9 +19,10 @@ const TypingTestController = () => {
     req.body.wpm !== 0 &&
     req.body.userId !== undefined;
 
-  const getTests = async (_: Request, res: Response) => {
+  const getTests = async (req: Request, res: Response) => {
+    const orderBy = req.query.orderBy as Order;
     try {
-      const tests = await getAllTests();
+      const tests = await getAllTests(orderBy);
       res.status(200).send(tests);
     } catch (e) {
       res.status(500).send(e?.message);
