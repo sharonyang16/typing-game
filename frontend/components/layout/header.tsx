@@ -12,7 +12,7 @@ const Header = ({ text }: { text: string }) => {
         <Link href="/">typing game</Link>
       </div>
       <div>{text}</div>
-      <Link href={user ? "/authentication/logout" : "/authentication/login"}>
+      <Link href={user ? "/profile" : "/authentication/login"}>
         <User />
       </Link>
     </header>
