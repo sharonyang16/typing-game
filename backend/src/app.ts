@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import userController from "./controllers/user.controller";
+import UserController from "./controllers/user.controller";
+import TypingTestController from "./controllers/typing-test.controller";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ const startServer = () => {
   });
 };
 
-app.use("/user", userController());
+app.use("/users", UserController());
+app.use("/typing-tests", TypingTestController());
 
 export { startServer };
