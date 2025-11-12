@@ -36,7 +36,7 @@ const LeaderboardPage = () => {
           {tests.map((test, index) => (
             <tr key={`test-${index}`}>
               <td>{index + 1}</td>
-              <td>{test.username}</td>
+              <td>{test.user.email}</td>
               <td>{test.wpm}</td>
               <td>{test.timeToComplete}</td>
               <td>{test.accuracy}</td>
