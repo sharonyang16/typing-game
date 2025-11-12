@@ -1,6 +1,5 @@
 import { UserCredentials } from "@/types/user";
 import api from "@/config/axios";
-import Cookies from "js-cookie";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`;
 
@@ -40,14 +39,6 @@ const postLogin = async (userCredentials: UserCredentials) => {
 
     if (response.status !== 200) {
       throw new Error(response.data);
-    }
-
-    console.log(response);
-    console.log(response.headers["set-cookie"]);
-    if (response.headers["set-cookie"]) {
-      Cookies.set("access_token", response.headers[0], {
-        httpOnly: true,
-      });
     }
 
     return response.data;

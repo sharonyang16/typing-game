@@ -6,7 +6,6 @@ import {
   useContext,
   useState,
 } from "react";
-import Cookies from "js-cookie";
 import { AuthContextType, User, UserCredentials } from "@/types/user";
 import {
   getAuthCheck,
