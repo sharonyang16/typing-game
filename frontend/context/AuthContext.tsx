@@ -38,7 +38,6 @@ const AuthProvider = ({
 
   const login = async (userCredentials: UserCredentials): Promise<void> => {
     const user = await postLogin(userCredentials);
-    console.log(user);
     setUser(user);
 
     return;
@@ -58,10 +57,11 @@ const AuthProvider = ({
 
   const logout = async (): Promise<void> => {
     try {
-      await postLogout();
       setUser(null);
+      await postLogout();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      console.error(e);
+      // do nothing
     }
     return;
   };
