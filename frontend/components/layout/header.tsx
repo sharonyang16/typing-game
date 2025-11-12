@@ -10,10 +10,13 @@ const Header = () => {
       <div className="font-mono text-xl font-bold">
         <Link href="/">typing game</Link>
       </div>
-      <div>{headerText}</div>
-      <Link href={link}>
-        <User />
-      </Link>
+
+      <div className="flex gap-4">
+        <div>{headerText}</div>
+        <Link href={link}>
+          <User />
+        </Link>
+      </div>
     </header>
   );
 };

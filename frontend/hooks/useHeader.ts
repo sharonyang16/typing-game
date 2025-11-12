@@ -3,7 +3,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
 const useHeader = () => {
-  const [headerText, setHeaderText] = useState("Welcome!");
+  const [headerText, setHeaderText] = useState("");
   const [link, setLink] = useState("/authentication/login");
   const { user, checkAuth } = useAuthContext();
 
@@ -18,10 +18,10 @@ const useHeader = () => {
 
   useEffect(() => {
     if (user) {
-      setHeaderText(`Hi, ${user.email}!`);
+      setHeaderText(user.email);
       setLink("/profile");
     } else {
-      setHeaderText("Welcome!");
+      setHeaderText("");
       setLink("/authentication/login");
     }
   }, [user]);
