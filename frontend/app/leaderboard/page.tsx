@@ -1,12 +1,26 @@
 "use client";
 
 import useLeaderboardPage from "@/hooks/useLeaderboardPage";
+import Link from "next/link";
 
 const LeaderboardPage = () => {
-  const { tests } = useLeaderboardPage();
+  const { tests, showBanner } = useLeaderboardPage();
   return (
-    <main>
+    <div className="flex flex-col gap-4">
       <h1>Leaderboard</h1>
+      {showBanner && (
+        <div
+          role="alert"
+          className="alert alert-vertical sm:alert-horizontal flex justify-between"
+        >
+          <div>Login to join the leaderboard!</div>
+          <div>
+            <Link href="/authentication/login" className="btn btn-sm">
+              Sign In
+            </Link>
+          </div>
+        </div>
+      )}
       <table className="table">
         <thead>
           <tr>
@@ -31,7 +45,7 @@ const LeaderboardPage = () => {
           ))}
         </tbody>
       </table>
-    </main>
+    </div>
   );
 };
 
