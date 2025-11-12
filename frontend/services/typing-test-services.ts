@@ -14,4 +14,15 @@ const postTest = async (test: TypingTest) => {
   }
 };
 
-export { postTest };
+const getAllTests = async () => {
+  try {
+    const response = await api.get(`${BASE_URL}/`);
+    return response.data;
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export { postTest, getAllTests };
