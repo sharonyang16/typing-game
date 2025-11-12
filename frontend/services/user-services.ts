@@ -1,7 +1,7 @@
 import { UserCredentials } from "@/types/user";
 import api from "@/config/axios";
 
-const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`;
+const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`;
 
 const postSignUp = async (userCredentials: UserCredentials) => {
   const { email, password } = userCredentials;
