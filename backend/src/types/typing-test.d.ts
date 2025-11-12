@@ -1,4 +1,5 @@
-type SubmitTypingTest = {
+import { Request } from "express";
+export type SubmitTypingTest = {
   wordsTyped: string;
   timeToComplete: number;
   rawWpm: number;
@@ -6,3 +7,7 @@ type SubmitTypingTest = {
   wpm: number;
   userId: number;
 };
+
+export interface SubmitTypingTestRequest extends Request {
+  body: SubmitTypingTest;
+}

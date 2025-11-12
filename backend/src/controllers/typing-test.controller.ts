@@ -1,8 +1,23 @@
 import express, { Request, Response } from "express";
-import { getAllTests } from "../services/typing-test.service";
+import { getAllTests, saveTest } from "../services/typing-test.service";
+import { SubmitTypingTestRequest } from "../types/typing-test";
 
 const TypingTestController = () => {
   const router = express.Router();
+
+  const isBodyValid = (req: SubmitTypingTestRequest) =>
+    req.body !== undefined &&
+    req.body.wordsTyped !== undefined &&
+    req.body.wordsTyped !== "" &&
+    req.body.timeToComplete !== undefined &&
+    req.body.timeToComplete !== 0 &&
+    req.body.rawWpm !== undefined &&
+    req.body.rawWpm !== 0 &&
+    req.body.accuracy !== undefined &&
+    req.body.accuracy >= 80 &&
+    req.body.wpm !== undefined &&
+    req.body.wpm !== 0 &&
+    req.body.userId !== undefined;
 
   const getTests = async (_: Request, res: Response) => {
     try {
@@ -13,9 +28,14 @@ const TypingTestController = () => {
     }
   };
 
-  const createTest = async (req: Request, res: Response) => {
+  const createTest = async (req: SubmitTypingTestRequest, res: Response) => {
+    if (!isBodyValid(req)) {
+      res.status(500).send("Invalid typing test body");
+      return;
+    }
     try {
-      res.status(200).send("hello world");
+      const test = await saveTest(req.body);
+      res.status(200).send(test);
     } catch (e) {
       res.status(500).send(e?.message);
     }
