@@ -1,7 +1,17 @@
 "use client";
 import Link from "next/link";
+import useAuthPage from "@/hooks/useAuthPage";
 
-const AuthPage = () => {
+const SignUpPage = () => {
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    handleSignUp,
+  } = useAuthPage();
   return (
     <div>
       <fieldset className="fieldset w-fit">
@@ -12,15 +22,31 @@ const AuthPage = () => {
           type="text"
           className="input"
           placeholder="example@example.com"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
 
         <label className="label">Password</label>
-        <input type="text" className="input" placeholder="●●●●●●●●" />
+        <input
+          type="password"
+          className="input"
+          placeholder="●●●●●●●●"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
 
         <label className="label">Confirm Password</label>
-        <input type="text" className="input" placeholder="●●●●●●●●" />
+        <input
+          type="password"
+          className="input"
+          placeholder="●●●●●●●●"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
+        />
 
-        <button className="btn btn-neutral mt-4">Sign Up</button>
+        <button className="btn btn-neutral mt-4" onClick={handleSignUp}>
+          Sign Up
+        </button>
       </fieldset>
 
       <div className="text-xs">
@@ -34,4 +60,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default SignUpPage;

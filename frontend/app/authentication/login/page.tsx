@@ -1,6 +1,6 @@
 "use client";
-import useAuthPage from "@/hooks/useAuthPage";
 import Link from "next/link";
+import useAuthPage from "@/hooks/useAuthPage";
 
 const LoginPage = () => {
   const { username, setUsername, password, setPassword, handleLogin } =
@@ -22,7 +22,7 @@ const LoginPage = () => {
 
         <label className="label">Password</label>
         <input
-          type="text"
+          type="password"
           className="input"
           placeholder="●●●●●●●●"
           onChange={(e) => setPassword(e.target.value)}
