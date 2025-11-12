@@ -2,6 +2,11 @@
 import { useEffect, useState } from "react";
 import data from "@/static/words.json";
 import useKeyboardEvents from "./useKeyboardEvents";
+import {
+  calculateRawWpm,
+  calculateAccuracy,
+  calculateWpm,
+} from "@/utils/typing-test.utils";
 
 const useWords = () => {
   const { keyPressed } = useKeyboardEvents();
@@ -13,6 +18,8 @@ const useWords = () => {
   const [startTime, setStartTime] = useState(0);
   const [secondsTaken, setSecondsTaken] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [accuracy, setAccuracy] = useState(0);
+  const [rawWpm, setRawWpm] = useState(0);
   const [wpm, setWpm] = useState(0);
 
   const generateWords = () => {
@@ -78,8 +85,14 @@ const useWords = () => {
       setSecondsTaken(time);
       setShowResults(true);
 
-      const wordsPerMinute = Math.floor((wordsToType.length / 5) * (60 / time));
-      setWpm(wordsPerMinute);
+      const rawWordsPerMinute = calculateRawWpm(wordsToType.length, time);
+      setRawWpm(rawWordsPerMinute);
+
+      const accuracy = calculateAccuracy(wordsToType, wordsTyped);
+      setAccuracy(accuracy);
+
+      const wpm = calculateWpm(rawWordsPerMinute, accuracy);
+      setWpm(wpm);
     }
   }, [startTime, started, wordsToType, wordsTyped]);
 
@@ -111,6 +124,8 @@ const useWords = () => {
     handleNumWordsChange,
     secondsTaken,
     showResults,
+    accuracy,
+    rawWpm,
     wpm,
   };
 };

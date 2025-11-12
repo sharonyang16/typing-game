@@ -15,6 +15,8 @@ export default function Home() {
     handleNumWordsChange,
     secondsTaken,
     showResults,
+    rawWpm,
+    accuracy,
     wpm,
   } = useWords();
 
@@ -27,6 +29,8 @@ export default function Home() {
             <p>{`Words: ${numWords}`}</p>
             <p>{`Seconds: ${secondsTaken}`}</p>
             <p>{`WPM: ${wpm}`}</p>
+            <p>{`Accuracy: ${accuracy}%`}</p>
+            <p>{`Raw WPM: ${rawWpm}`}</p>
           </div>
         )}
         {!showResults && (
