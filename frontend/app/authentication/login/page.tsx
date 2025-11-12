@@ -8,9 +8,8 @@ const LoginPage = () => {
 
   return (
     <div>
+      <h1 className="text-xl font-bold">Login</h1>
       <fieldset className="fieldset w-fit">
-        <legend className="fieldset-legend">Login</legend>
-
         <label className="label">Username</label>
         <input
           type="text"
