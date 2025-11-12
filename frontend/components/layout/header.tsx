@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { User } from "lucide-react";
+import { Trophy, User } from "lucide-react";
 import useHeader from "@/hooks/useHeader";
 
 const Header = () => {
@@ -15,6 +15,9 @@ const Header = () => {
         <div>{headerText}</div>
         <Link href={link}>
           <User />
+        </Link>
+        <Link href="/leaderboard">
+          <Trophy />
         </Link>
       </div>
     </header>
