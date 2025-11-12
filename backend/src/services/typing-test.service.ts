@@ -5,7 +5,9 @@ import { SubmitTypingTest, Order } from "../types/typing-test";
 const testRepository = AppDataSource.getRepository(TypingTest);
 
 export const getAllTests = async (orderBy?: Order) => {
-  const tests = await testRepository.find();
+  const tests = await testRepository.find({
+    relations: ["user"],
+  });
 
   switch (orderBy) {
     case "asc":
