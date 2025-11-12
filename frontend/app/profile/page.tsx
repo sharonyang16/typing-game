@@ -6,7 +6,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <h1>Profile</h1>
+      <h1 className="text-xl font-bold">Profile</h1>
       <button className="btn" onClick={handleLogout}>
         Logout
       </button>
