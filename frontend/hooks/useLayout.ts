@@ -7,7 +7,12 @@ const useLayout = () => {
   const { user, checkAuth } = useAuthContext();
 
   useEffect(() => {
-    checkAuth();
+    const loginPersistenceCheck = async () => {
+      console.log("here");
+      await checkAuth();
+    };
+
+    loginPersistenceCheck();
     // eslint-disable-next-line
   }, []);
 

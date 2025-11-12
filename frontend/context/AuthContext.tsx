@@ -46,16 +46,12 @@ const AuthProvider = ({
   };
 
   const checkAuth = async (): Promise<void> => {
-    const idToken = Cookies.get("access_token");
-
-    if (idToken) {
-      try {
-        const user = await getAuthCheck(idToken);
-        setUser(user);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (e) {
-        // do nothing
-      }
+    try {
+      const user = await getAuthCheck();
+      setUser(user);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      // do nothing
     }
 
     return;

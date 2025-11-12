@@ -42,7 +42,7 @@ const postLogin = async (userCredentials: UserCredentials) => {
       throw new Error(response.data);
     }
 
-    console.log(response.headers);
+    console.log(response);
     console.log(response.headers["set-cookie"]);
     if (response.headers["set-cookie"]) {
       Cookies.set("access_token", response.headers[0], {
@@ -58,11 +58,9 @@ const postLogin = async (userCredentials: UserCredentials) => {
   }
 };
 
-const getAuthCheck = async (cookie: string) => {
+const getAuthCheck = async () => {
   try {
-    const response = await api.get(`${BASE_URL}/check-auth`, {
-      headers: { Cookie: `access_token=${cookie}` },
-    });
+    const response = await api.get(`${BASE_URL}/check-auth`, {});
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
