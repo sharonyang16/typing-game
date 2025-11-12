@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { TypingTest } from "./TypingTest";
 
 /**
  * Entity definition for a single user.
@@ -23,4 +24,7 @@ export class User {
 
   @Column({ type: "date" })
   dateJoined: Date;
+
+  @OneToMany(() => TypingTest, (test) => test.user)
+  tests: TypingTest[];
 }

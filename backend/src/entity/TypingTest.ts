@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./User";
 
 /**
  * Entity definition for a single typing test
@@ -39,4 +40,7 @@ export class TypingTest {
 
   @Column({ type: "uuid" })
   userId: number;
+
+  @ManyToOne(() => User, (user) => user.tests)
+  user: User;
 }
