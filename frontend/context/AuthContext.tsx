@@ -31,14 +31,15 @@ const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
 
   const signUp = async (userCredentials: UserCredentials): Promise<void> => {
-    const { user } = await postSignUp(userCredentials);
+    const user = await postSignUp(userCredentials);
     setUser(user);
 
     return;
   };
 
   const login = async (userCredentials: UserCredentials): Promise<void> => {
-    const { user } = await postLogin(userCredentials);
+    const user = await postLogin(userCredentials);
+    console.log(user);
     setUser(user);
 
     return;

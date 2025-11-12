@@ -1,5 +1,5 @@
 import { UserCredentials } from "@/types/user";
-import axios from "axios";
+import api from "@/config/axios";
 import Cookies from "js-cookie";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`;
@@ -7,7 +7,7 @@ const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`;
 const postSignUp = async (userCredentials: UserCredentials) => {
   const { email, password } = userCredentials;
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${BASE_URL}/sign-up`,
       {
         email,
@@ -33,7 +33,7 @@ const postSignUp = async (userCredentials: UserCredentials) => {
 const postLogin = async (userCredentials: UserCredentials) => {
   const { email, password } = userCredentials;
   try {
-    const response = await axios.post(`${BASE_URL}/login`, {
+    const response = await api.post(`${BASE_URL}/login`, {
       email,
       password,
     });
@@ -60,7 +60,7 @@ const postLogin = async (userCredentials: UserCredentials) => {
 
 const getAuthCheck = async (cookie: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/check-auth`, {
+    const response = await api.get(`${BASE_URL}/check-auth`, {
       headers: { Cookie: `access_token=${cookie}` },
     });
     return response.data;
@@ -73,7 +73,7 @@ const getAuthCheck = async (cookie: string) => {
 
 const postLogout = async () => {
   try {
-    const response = await axios.post(`${BASE_URL}/logout`, {});
+    const response = await api.post(`${BASE_URL}/logout`, {});
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
