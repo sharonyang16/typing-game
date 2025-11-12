@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { getAllTests } from "@/services/typing-test-services";
-import { TypingTest } from "@/types/typing-test";
+import { PopulatedTypingTest } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
 
 const useLeaderboardPage = () => {
-  const [tests, setTests] = useState<TypingTest[]>([]);
+  const [tests, setTests] = useState<PopulatedTypingTest[]>([]);
   const [showBanner, setShowBanner] = useState(false);
 
   const { user } = useAuthContext();
