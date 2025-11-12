@@ -7,6 +7,8 @@ import {
   calculateAccuracy,
   calculateWpm,
 } from "@/utils/typing-test.utils";
+import { postTest } from "@/services/typing-test-services";
+import { useAuthContext } from "@/context/AuthContext";
 
 const useWords = () => {
   const { keyPressed } = useKeyboardEvents();
@@ -21,6 +23,8 @@ const useWords = () => {
   const [accuracy, setAccuracy] = useState(0);
   const [rawWpm, setRawWpm] = useState(0);
   const [wpm, setWpm] = useState(0);
+
+  const { user } = useAuthContext();
 
   const generateWords = () => {
     const newWords = [];
@@ -85,15 +89,27 @@ const useWords = () => {
       setSecondsTaken(time);
       setShowResults(true);
 
-      const rawWordsPerMinute = calculateRawWpm(wordsToType.length, time);
-      setRawWpm(rawWordsPerMinute);
+      const rawWpm = calculateRawWpm(wordsToType.length, time);
+      setRawWpm(rawWpm);
 
       const accuracy = calculateAccuracy(wordsToType, wordsTyped);
       setAccuracy(accuracy);
 
-      const wpm = calculateWpm(rawWordsPerMinute, accuracy);
+      const wpm = calculateWpm(rawWpm, accuracy);
       setWpm(wpm);
+
+      if (accuracy >= 80 && user) {
+        postTest({
+          wordsTyped,
+          timeToComplete: time,
+          rawWpm,
+          accuracy,
+          wpm,
+          userId: user.id,
+        });
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startTime, started, wordsToType, wordsTyped]);
 
   const charMatches = (index: number) => {
