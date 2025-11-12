@@ -2,13 +2,13 @@
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
-const useLayout = () => {
+const useHeader = () => {
   const [headerText, setHeaderText] = useState("Welcome!");
+  const [link, setLink] = useState("/authentication/login");
   const { user, checkAuth } = useAuthContext();
 
   useEffect(() => {
     const loginPersistenceCheck = async () => {
-      console.log("here");
       await checkAuth();
     };
 
@@ -19,12 +19,14 @@ const useLayout = () => {
   useEffect(() => {
     if (user) {
       setHeaderText(`Hi, ${user.email}!`);
+      setLink("/profile");
     } else {
       setHeaderText("Welcome!");
+      setLink("/authentication/login");
     }
   }, [user]);
 
-  return { headerText };
+  return { headerText, link };
 };
 
-export default useLayout;
+export default useHeader;

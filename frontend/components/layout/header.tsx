@@ -1,18 +1,17 @@
 import Link from "next/link";
 import { User } from "lucide-react";
-import { useAuthContext } from "@/context/AuthContext";
+import useHeader from "@/hooks/useHeader";
 
-const Header = ({ text }: { text: string }) => {
-  const { user } = useAuthContext();
-  console.log(user);
+const Header = () => {
+  const { headerText, link } = useHeader();
 
   return (
     <header className="w-full flex justify-between align-center py-4">
       <div className="font-mono text-xl font-bold">
         <Link href="/">typing game</Link>
       </div>
-      <div>{text}</div>
-      <Link href={user ? "/profile" : "/authentication/login"}>
+      <div>{headerText}</div>
+      <Link href={link}>
         <User />
       </Link>
     </header>
