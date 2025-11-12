@@ -8,6 +8,6 @@ export type TypingTest = {
 };
 
 export interface PopulatedTypingTest extends TypingTest {
-  username: string;
+  user: User;
   date: Date;
 }
