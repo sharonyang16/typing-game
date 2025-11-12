@@ -7,7 +7,7 @@ import {
   verifyUser,
 } from "../services/user.service";
 
-const userController = () => {
+const UserController = () => {
   const router = express.Router();
 
   const isAuthBodyValid = (req: AuthRequest) =>
@@ -88,4 +88,4 @@ const userController = () => {
   return router;
 };
 
-export default userController;
+export default UserController;
