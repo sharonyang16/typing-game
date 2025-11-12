@@ -1,11 +1,27 @@
 import { AppDataSource } from "../data-source";
 import { TypingTest } from "../entity/TypingTest";
-import { SubmitTypingTest } from "../types/typing-test";
+import { SubmitTypingTest, Order } from "../types/typing-test";
 
 const testRepository = AppDataSource.getRepository(TypingTest);
 
-export const getAllTests = async () => {
-  return await testRepository.find();
+export const getAllTests = async (orderBy?: Order) => {
+  const tests = await testRepository.find();
+
+  switch (orderBy) {
+    case "asc":
+      tests.sort((a, b) => a.wpm - b.wpm);
+      break;
+    case "desc":
+    default:
+      tests.sort((a, b) => {
+        return a.wpm === b.wpm
+          ? b.timeToComplete - a.timeToComplete
+          : b.wpm - a.wpm;
+      });
+      break;
+  }
+
+  return tests;
 };
 
 export const saveTest = async (test: SubmitTypingTest) => {

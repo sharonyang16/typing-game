@@ -11,3 +11,5 @@ export type SubmitTypingTest = {
 export interface SubmitTypingTestRequest extends Request {
   body: SubmitTypingTest;
 }
+
+export type Order = "asc" | "desc";
