@@ -70,7 +70,7 @@ const userController = () => {
     }
   };
 
-  const logOut = async (req: Request, res: Response) => {
+  const logOut = async (_: Request, res: Response) => {
     try {
       await signOut();
       res.clearCookie("access_token");

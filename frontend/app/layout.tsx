@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layout/layout";
+import { AuthProvider } from "@/context/AuthContext";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -28,9 +29,11 @@ export default function RootLayout({
       <body
         className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-80 min-h-full flex flex-col justify-between`}
       >
-        <Layout>
-          <main className="flex-1 py-8"> {children}</main>
-        </Layout>
+        <AuthProvider>
+          <Layout>
+            <main className="flex-1 py-8"> {children}</main>
+          </Layout>
+        </AuthProvider>
       </body>
     </html>
   );
