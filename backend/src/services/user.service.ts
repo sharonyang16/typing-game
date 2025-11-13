@@ -29,6 +29,7 @@ export const addUser = async (
       email,
       firebaseId,
       dateJoined: new Date(),
+      tests: [],
     });
 
     const user = await userRepository.save(newUser);
