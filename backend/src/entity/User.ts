@@ -10,6 +10,7 @@ import { TypingTest } from "./TypingTest";
  * - email: The email of the user.
  * - firebaseId: The firebase id of the user.
  * - dateJoined: The date the user joined.
+ * - tests: The tests the user has completed.
  */
 @Entity()
 export class User {

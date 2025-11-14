@@ -1,8 +1,10 @@
 import { AppDataSource } from "../data-source";
 import { TypingTest } from "../entity/TypingTest";
+import { User } from "../entity/User";
 import { SubmitTypingTest, Order } from "../types/typing-test";
 
 const testRepository = AppDataSource.getRepository(TypingTest);
+const userRepository = AppDataSource.getRepository(User);
 
 export const getAllTests = async (orderBy?: Order) => {
   const tests = await testRepository.find({
@@ -33,14 +35,20 @@ export const getAllTests = async (orderBy?: Order) => {
 export const saveTest = async (test: SubmitTypingTest) => {
   const { wordsTyped, timeToComplete, rawWpm, accuracy, wpm, userId } = test;
 
+  const user = await userRepository.findOneBy({ id: userId });
+
+  if (!user) {
+    throw new Error("User does not exist!");
+  }
+
   const newTest = testRepository.create({
     wordsTyped,
     timeToComplete,
     rawWpm,
     accuracy,
     wpm,
-    userId,
     date: new Date(),
+    user,
   });
 
   return await testRepository.save(newTest);

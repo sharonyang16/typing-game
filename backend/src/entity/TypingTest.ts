@@ -13,7 +13,7 @@ import { User } from "./User";
  * - accuracy: The accuracy of the user.
  * - wpm: The calculated WPM (from the raw WPM and accuracy)of the user.
  * - date: The date the test was completed.
- * - userId: The id of the user who completed the test.
+ * - user: The user who completed the test.
  */
 @Entity()
 export class TypingTest {
@@ -37,9 +37,6 @@ export class TypingTest {
 
   @Column({ type: "date" })
   date: Date;
-
-  @Column({ type: "uuid" })
-  userId: number;
 
   @ManyToOne(() => User, (user) => user.tests)
   user: User;
