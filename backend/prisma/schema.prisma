@@ -8,21 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model public_typing_test {
-  id             Int      @id(map: "PK_0f7155d8b481508cd3cdfb7af71") @default(autoincrement())
-  wordsTyped     String
-  timeToComplete Float
-  rawWpm         Int
-  accuracy       Int
-  wpm            Int
-  date           DateTime @db.Date
-  userId         String   @db.Uuid
-  user           user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_fa952a59cbb99bf67168cf9d6fd")
-
-  @@map("typing-test")
-}
-
-model public_typing_test {
+model typing_test {
   id             Int      @id(map: "PK_cb119115f89df3bdbbfa207ae5a") @default(autoincrement())
   wordsTyped     String
   timeToComplete Float
@@ -31,16 +17,11 @@ model public_typing_test {
   wpm            Int
   date           DateTime @db.Date
   userId         String   @db.Uuid
-  user           user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_009b3c2a856e295591cec1eebd3")
-
-  @@map("typing_test")
 }
 
-model user {
-  id          String               @id(map: "PK_cace4a159ff9f2512dd42373760") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email       String               @unique(map: "UQ_e12875dfb3b1d92d7d7c5377e22")
-  firebaseId  String               @unique(map: "UQ_4d8f69fd9538c19d3a42518feac")
-  dateJoined  DateTime             @db.Date
-  typing_test public_typing_test[]
-  typing_test public_typing_test[]
+model users {
+  id         String   @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email      String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3")
+  firebaseId String   @unique(map: "UQ_1c2d0bf809fd5f537a43d8f8d8e")
+  dateJoined DateTime @db.Date
 }
