@@ -1,13 +1,10 @@
-import AppDataSource from "../data-source.js";
-import { TypingTest } from "../entity/TypingTest.js";
 import { SubmitTypingTest, Order } from "../types/typing-test";
 
-const testRepository = AppDataSource.getRepository(TypingTest);
+import { PrismaClient } from "../../generated/prisma/client";
+const prisma = new PrismaClient();
 
 export const getAllTests = async (orderBy?: Order) => {
-  const tests = await testRepository.find({
-    relations: ["user"],
-  });
+  const tests = await prisma.typingTest.findMany();
 
   switch (orderBy) {
     case "asc":
@@ -33,15 +30,15 @@ export const getAllTests = async (orderBy?: Order) => {
 export const saveTest = async (test: SubmitTypingTest) => {
   const { wordsTyped, timeToComplete, rawWpm, accuracy, wpm, userId } = test;
 
-  const newTest = testRepository.create({
-    wordsTyped,
-    timeToComplete,
-    rawWpm,
-    accuracy,
-    wpm,
-    userId,
-    date: new Date(),
+  return await prisma.typingTest.create({
+    data: {
+      wordsTyped,
+      timeToComplete,
+      rawWpm,
+      accuracy,
+      wpm,
+      userId,
+      date: new Date(),
+    },
   });
-
-  return await testRepository.save(newTest);
 };

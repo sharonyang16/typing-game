@@ -14,9 +14,8 @@ const SignUpPage = () => {
   } = useAuthPage();
   return (
     <div>
+      <h1 className="text-xl font-bold">Sign Up</h1>
       <fieldset className="fieldset w-fit">
-        <legend className="fieldset-legend">Sign Up</legend>
-
         <label className="label">Username</label>
         <input
           type="text"
