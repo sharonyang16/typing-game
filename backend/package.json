@@ -18,8 +18,7 @@
     "firebase-admin": "^13.6.0",
     "pg": "^8.16.3",
     "prisma": "^6.19.0",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "0.3.27"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
