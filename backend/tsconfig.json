@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2019", // Or a later ECMAScript version
     "module": "esnext", // Or "esnext" for ESM projects
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "outDir": "./dist", // Output directory for compiled JavaScript
     "strict": true, // Enable strict type-checking options
     "esModuleInterop": true, // Enables default imports for CommonJS modules
