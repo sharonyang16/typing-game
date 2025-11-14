@@ -11,14 +11,9 @@
     "sourceMap": true, // Generate source maps for debugging
     "lib": ["es2019", "dom"], // Or other relevant libraries
     "types": ["node"], // Include Node.js types
-    "baseUrl": "./", // Base URL for module resolution
-    "paths": {
-      // Optional: for path aliases
-      "@entities/*": ["src/entities/*"],
-      "@config/*": ["src/config/*"]
-    },
+    "rootDir": "./", // Specify the root directory
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/*.ts"], // Files to include in compilation
+  "include": ["./**/*.ts", "app.ts", "data-source.ts", "server.ts"], // Files to include in compilation
   "exclude": ["node_modules", "dist"] // Files to exclude
 }

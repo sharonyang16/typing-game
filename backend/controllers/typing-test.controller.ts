@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getAllTests, saveTest } from "../services/typing-test.service";
+import { getAllTests, saveTest } from "../services/typing-test.service.js";
 import { Order, SubmitTypingTestRequest } from "../types/typing-test";
 
 const TypingTestController = () => {

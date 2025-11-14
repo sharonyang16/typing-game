@@ -1,8 +1,8 @@
 import "dotenv/config";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entity/User";
-import { TypingTest } from "./entity/TypingTest";
+import { User } from "./entity/User.js";
+import { TypingTest } from "./entity/TypingTest.js";
 
 const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_URL } =
   process.env;

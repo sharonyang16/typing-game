@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { User } from "./User";
+import { User } from "./User.js";
 
 /**
  * Entity definition for a single typing test

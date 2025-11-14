@@ -5,7 +5,7 @@ import {
   loginUser,
   signOut,
   verifyUser,
-} from "../services/user.service";
+} from "../services/user.service.js";
 
 const UserController = () => {
   const router = express.Router();

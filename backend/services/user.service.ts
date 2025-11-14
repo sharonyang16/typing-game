@@ -1,12 +1,12 @@
-import { AppDataSource } from "../data-source";
-import { User } from "../entity/User";
+import { AppDataSource } from "../data-source.js";
+import { User } from "../entity/User.js";
 import { AuthServiceResponse, UserCredentials } from "../types/user";
 import {
   admin,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "../config/firebase";
+} from "../config/firebase.js";
 
 const userRepository = AppDataSource.getRepository(User);
 
