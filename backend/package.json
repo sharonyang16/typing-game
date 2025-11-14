@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "tsx watch src/server.ts",
-    "build": "tsc",
+    "start": "tsx watch server.ts",
+    "build": "prisma generate && tsc",
     "lint": "eslint",
     "typeorm": "typeorm-ts-node-commonjs"
   },

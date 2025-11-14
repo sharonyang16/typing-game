@@ -16,6 +16,7 @@ const postTest = async (test: TypingTest) => {
 
 const getAllTests = async () => {
   try {
+    console.log(BASE_URL);
     const response = await api.get(`${BASE_URL}/`);
     return response.data;
   } catch (e) {
