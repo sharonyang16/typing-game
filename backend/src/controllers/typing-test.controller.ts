@@ -25,7 +25,9 @@ const TypingTestController = () => {
       const tests = await getAllTests(orderBy);
       res.status(200).send(tests);
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 
@@ -38,7 +40,9 @@ const TypingTestController = () => {
       const test = await saveTest(req.body);
       res.status(200).send(test);
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 

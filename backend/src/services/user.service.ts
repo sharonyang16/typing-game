@@ -17,29 +17,23 @@ export const addUser = async (
 ): Promise<AuthServiceResponse> => {
   const { email, password } = userCredentials;
 
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
 
-    const firebaseId = userCredential.user.uid;
-    const newUser = userRepository.create({
-      email,
-      firebaseId,
-      dateJoined: new Date(),
-    });
+  const firebaseId = userCredential.user.uid;
+  const newUser = userRepository.create({
+    email,
+    firebaseId,
+    dateJoined: new Date(),
+  });
 
-    const user = await userRepository.save(newUser);
-    const idToken = await userCredential.user.getIdToken();
+  const user = await userRepository.save(newUser);
+  const idToken = await userCredential.user.getIdToken();
 
-    return { user, idToken };
-  } catch (e) {
-    if (e instanceof Error) {
-      throw e;
-    }
-  }
+  return { user, idToken };
 };
 
 export const loginUser = async (
@@ -47,41 +41,37 @@ export const loginUser = async (
 ): Promise<AuthServiceResponse> => {
   const { email, password } = userCredentials;
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
 
-    const user = await userRepository.findOneBy({
-      firebaseId: userCredential.user.uid,
-    });
+  const user = await userRepository.findOneBy({
+    firebaseId: userCredential.user.uid,
+  });
 
-    const idToken = await userCredential.user.getIdToken();
-
-    return { user, idToken };
-  } catch (e) {
-    if (e instanceof Error) {
-      throw e;
-    }
+  if (!user) {
+    throw new Error("User not found");
   }
+
+  const idToken = await userCredential.user.getIdToken();
+
+  return { user, idToken };
 };
 
 export const verifyUser = async (idToken: string): Promise<User> => {
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+  const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-    const user = await userRepository.findOneBy({
-      firebaseId: decodedToken.uid,
-    });
+  const user = await userRepository.findOneBy({
+    firebaseId: decodedToken.uid,
+  });
 
-    return user;
-  } catch (e) {
-    if (e instanceof Error) {
-      throw e;
-    }
+  if (!user) {
+    throw new Error("User not found");
   }
+
+  return user;
 };
 
 export const signOut = async () => {

@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
-    "lib": ["es2021"],
-    "target": "es2021",
-    "module": "ESNext",
+    "target": "es2019", // Or a later ECMAScript version
+    "module": "esnext", // Or "esnext" for ESM projects
     "moduleResolution": "node",
-    "outDir": "./build",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "outDir": "./dist", // Output directory for compiled JavaScript
+    "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Enables default imports for CommonJS modules
+    "emitDecoratorMetadata": true, // Required for TypeORM decorators
+    "experimentalDecorators": true, // Required for TypeORM decorators
+    "sourceMap": true, // Generate source maps for debugging
+    "lib": ["es2019", "dom"], // Or other relevant libraries
+    "types": ["node"], // Include Node.js types
+    "baseUrl": "./", // Base URL for module resolution
+    "paths": {
+      // Optional: for path aliases
+      "@entities/*": ["src/entities/*"],
+      "@config/*": ["src/config/*"]
+    },
+    "strictPropertyInitialization": false
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"], // Files to include in compilation
+  "exclude": ["node_modules", "dist"] // Files to exclude
 }

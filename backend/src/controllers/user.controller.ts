@@ -34,7 +34,9 @@ const UserController = () => {
 
       res.status(200).send(user);
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 
@@ -55,7 +57,9 @@ const UserController = () => {
 
       res.status(200).send(user);
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 
@@ -66,7 +70,9 @@ const UserController = () => {
       const user = await verifyUser(idToken);
       res.status(200).send(user);
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 
@@ -76,7 +82,9 @@ const UserController = () => {
       res.clearCookie("access_token");
       res.status(200).send("User logged out");
     } catch (e) {
-      res.status(500).send(e?.message);
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
     }
   };
 
