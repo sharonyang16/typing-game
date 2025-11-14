@@ -1,4 +1,3 @@
-import { User } from "../entity/User";
 import { AuthServiceResponse, UserCredentials } from "../types/user";
 import {
   admin,
@@ -6,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../config/firebase";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "../../generated/prisma/client";
 
 const prisma = new PrismaClient();
 

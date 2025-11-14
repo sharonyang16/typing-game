@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { User } from "../entity/User";
+import { User } from "../../generated/prisma/client";
 
 /**
  * Express request for user sign up and log in.

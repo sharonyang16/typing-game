@@ -5,7 +5,7 @@ export type SubmitTypingTest = {
   rawWpm: number;
   accuracy: number;
   wpm: number;
-  userId: number;
+  userId: string;
 };
 
 export interface SubmitTypingTestRequest extends Request {

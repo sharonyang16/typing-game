@@ -1,6 +1,6 @@
 import { SubmitTypingTest, Order } from "../types/typing-test";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 const prisma = new PrismaClient();
 
 export const getAllTests = async (orderBy?: Order) => {
