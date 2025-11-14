@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import "reflect-metadata";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  Relation,
+} from "typeorm";
 import { User } from "./User.js";
 
 /**
@@ -15,7 +22,7 @@ import { User } from "./User.js";
  * - date: The date the test was completed.
  * - userId: The id of the user who completed the test.
  */
-@Entity()
+@Entity("typing-test")
 export class TypingTest {
   @PrimaryGeneratedColumn()
   id: number;
@@ -42,5 +49,5 @@ export class TypingTest {
   userId: number;
 
   @ManyToOne(() => User, (user) => user.tests)
-  user: User;
+  user: Relation<User>;
 }

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import "reflect-metadata";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  Relation,
+} from "typeorm";
 import { TypingTest } from "./TypingTest.js";
 
 /**
@@ -11,7 +18,7 @@ import { TypingTest } from "./TypingTest.js";
  * - firebaseId: The firebase id of the user.
  * - dateJoined: The date the user joined.
  */
-@Entity()
+@Entity('user')
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: number;
@@ -26,5 +33,5 @@ export class User {
   dateJoined: Date;
 
   @OneToMany(() => TypingTest, (test) => test.user)
-  tests: TypingTest[];
+  tests: Relation<TypingTest>[];
 }

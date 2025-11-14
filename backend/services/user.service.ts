@@ -1,4 +1,4 @@
-import { AppDataSource } from "../data-source.js";
+import AppDataSource from "../data-source.js";
 import { User } from "../entity/User.js";
 import { AuthServiceResponse, UserCredentials } from "../types/user";
 import {

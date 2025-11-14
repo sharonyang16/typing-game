@@ -1,4 +1,4 @@
-import { AppDataSource } from "../data-source.js";
+import AppDataSource from "../data-source.js";
 import { TypingTest } from "../entity/TypingTest.js";
 import { SubmitTypingTest, Order } from "../types/typing-test";
 
