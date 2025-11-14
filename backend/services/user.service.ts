@@ -1,5 +1,3 @@
-import AppDataSource from "../data-source.js";
-import { User } from "../entity/User.js";
 import { AuthServiceResponse, UserCredentials } from "../types/user";
 import {
   admin,
@@ -7,8 +5,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../config/firebase.js";
+import { PrismaClient, User } from "../generated/prisma/client.js";
 
-const userRepository = AppDataSource.getRepository(User);
+const prisma = new PrismaClient();
 
 const auth = getAuth();
 
@@ -24,13 +23,19 @@ export const addUser = async (
   );
 
   const firebaseId = userCredential.user.uid;
-  const newUser = userRepository.create({
-    email,
-    firebaseId,
-    dateJoined: new Date(),
+
+  const user = await prisma.user.create({
+    data: {
+      email,
+      firebaseId,
+      dateJoined: new Date(),
+    },
   });
 
-  const user = await userRepository.save(newUser);
+  if (!user) {
+    throw new Error("User could not be created");
+  }
+
   const idToken = await userCredential.user.getIdToken();
 
   return { user, idToken };
@@ -40,15 +45,14 @@ export const loginUser = async (
   userCredentials: UserCredentials
 ): Promise<AuthServiceResponse> => {
   const { email, password } = userCredentials;
-
   const userCredential = await signInWithEmailAndPassword(
     auth,
     email,
     password
   );
 
-  const user = await userRepository.findOneBy({
-    firebaseId: userCredential.user.uid,
+  const user = await prisma.user.findUnique({
+    where: { firebaseId: userCredential.user.uid },
   });
 
   if (!user) {
@@ -63,8 +67,8 @@ export const loginUser = async (
 export const verifyUser = async (idToken: string): Promise<User> => {
   const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-  const user = await userRepository.findOneBy({
-    firebaseId: decodedToken.uid,
+  const user = await prisma.user.findUnique({
+    where: { firebaseId: decodedToken.uid },
   });
 
   if (!user) {

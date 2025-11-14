@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { User } from "../../generated/prisma/client";
+import { User } from "../generated/prisma/client.js";
 
 /**
  * Express request for user sign up and log in.
