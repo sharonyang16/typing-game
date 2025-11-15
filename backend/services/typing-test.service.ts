@@ -3,7 +3,9 @@ import { PrismaClient } from "../generated/prisma/client.js";
 const prisma = new PrismaClient();
 
 export const getAllTests = async (orderBy?: Order) => {
-  const tests = await prisma.typingTest.findMany();
+  const tests = await prisma.typingTest.findMany({
+    include: { user: true },
+  });
 
   switch (orderBy) {
     case "asc":
