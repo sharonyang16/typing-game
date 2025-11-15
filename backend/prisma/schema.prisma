@@ -17,13 +17,17 @@ model TypingTest {
   wpm            Int
   date           DateTime @db.Date
   userId         String   @db.Uuid
+  user           User     @relation(fields: [userId], references: [id])
+
   @@map("typing_test")
 }
 
 model User {
-  id         String   @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email      String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3")
-  firebaseId String   @unique(map: "UQ_1c2d0bf809fd5f537a43d8f8d8e")
-  dateJoined DateTime @db.Date
+  id         String       @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email      String       @unique(map: "UQ_97672ac88f789774dd47f7c8be3")
+  firebaseId String       @unique(map: "UQ_1c2d0bf809fd5f537a43d8f8d8e")
+  dateJoined DateTime     @db.Date
+  tests      TypingTest[]
+
   @@map("users")
 }
