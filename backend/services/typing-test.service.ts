@@ -1,10 +1,11 @@
 import { SubmitTypingTest, Order } from "../types/typing-test";
-import { PrismaClient } from "../generated/prisma/client.js";
-const prisma = new PrismaClient();
+import prisma from "../prisma/prisma";
 
 export const getAllTests = async (orderBy?: Order) => {
   const tests = await prisma.typingTest.findMany({
-    include: { user: true },
+    include: {
+      user: true,
+    },
   });
 
   switch (orderBy) {
