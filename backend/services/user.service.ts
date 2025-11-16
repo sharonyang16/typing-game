@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../config/firebase.js";
-import prisma from "../prisma/prisma";
+import prisma from "../prisma/prisma.js";
 
 const auth = getAuth();
 
