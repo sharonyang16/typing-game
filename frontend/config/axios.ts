@@ -6,7 +6,6 @@ import axios, {
 
 const handleRes = (res: AxiosResponse) => res;
 const handleErr = (err: AxiosError) => {
-  console.log(err);
   return Promise.reject(err);
 };
 
