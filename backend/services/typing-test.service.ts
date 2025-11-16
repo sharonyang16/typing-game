@@ -4,7 +4,11 @@ import prisma from "../prisma/prisma.js";
 export const getAllTests = async (orderBy?: Order) => {
   const tests = await prisma.typingTest.findMany({
     include: {
-      user: true,
+      user: {
+        select: {
+          email: true,
+        },
+      },
     },
   });
 
