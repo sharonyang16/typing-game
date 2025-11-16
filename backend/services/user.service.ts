@@ -1,13 +1,11 @@
-import { AuthServiceResponse, UserCredentials } from "../types/user";
+import { AuthServiceResponse, User, UserCredentials } from "../types/user";
 import {
   admin,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "../config/firebase.js";
-import { PrismaClient, User } from "../generated/prisma/client.js";
-
-const prisma = new PrismaClient();
+import prisma from "../prisma/prisma.js";
 
 const auth = getAuth();
 

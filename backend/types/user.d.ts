@@ -1,5 +1,11 @@
 import { Request } from "express";
-import { User } from "../generated/prisma/client.js";
+
+export interface User {
+  id: string;
+  email: string;
+  firebaseId: string;
+  dateJoined: Date;
+}
 
 /**
  * Express request for user sign up and log in.
