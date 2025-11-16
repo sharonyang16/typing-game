@@ -13,6 +13,7 @@ import {
   postLogout,
   postSignUp,
 } from "@/services/user-services";
+import { AxiosError } from "axios";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -30,15 +31,27 @@ const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
 
   const signUp = async (userCredentials: UserCredentials): Promise<void> => {
-    const user = await postSignUp(userCredentials);
-    setUser(user);
+    try {
+      const user = await postSignUp(userCredentials);
+      setUser(user);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new Error(e.response?.data);
+      }
+    }
 
     return;
   };
 
   const login = async (userCredentials: UserCredentials): Promise<void> => {
-    const user = await postLogin(userCredentials);
-    setUser(user);
+    try {
+      const user = await postLogin(userCredentials);
+      setUser(user);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new Error(e.response?.data);
+      }
+    }
 
     return;
   };
