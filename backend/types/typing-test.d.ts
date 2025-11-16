@@ -5,6 +5,7 @@ export type SubmitTypingTest = {
   rawWpm: number;
   accuracy: number;
   wpm: number;
+  useCapitals: boolean;
   userId: string;
 };
 

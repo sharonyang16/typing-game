@@ -6,7 +6,8 @@
     "start": "tsx watch server.ts",
     "build": "prisma generate && tsc",
     "lint": "eslint",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "prisma": "prisma"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
