@@ -1,14 +1,24 @@
 "use client";
 import Link from "next/link";
+import { CircleAlert } from "lucide-react";
 import useAuthPage from "@/hooks/useAuthPage";
 
 const LoginPage = () => {
-  const { username, setUsername, password, setPassword, handleLogin } =
+  const { username, setUsername, password, setPassword, handleLogin, error } =
     useAuthPage();
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Login</h1>
+      {error && (
+        <div
+          role="alert"
+          className="alert alert-error alert-vertical sm:alert-horizontal flex gap-2"
+        >
+          <CircleAlert />
+          <div>{error}</div>
+        </div>
+      )}
       <fieldset className="fieldset w-fit">
         <label className="label">Username</label>
         <input
