@@ -4,6 +4,7 @@ export type TypingTest = {
   rawWpm: number;
   accuracy: number;
   wpm: number;
+  useCapitals: boolean;
   userId: number;
 };
 

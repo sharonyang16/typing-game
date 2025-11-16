@@ -106,6 +106,7 @@ const useWords = () => {
           accuracy,
           wpm,
           userId: user.id,
+          useCapitals: useCaps,
         });
       }
     }
