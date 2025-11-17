@@ -15,7 +15,7 @@ const useLeaderboardPage = () => {
 
   useEffect(() => {
     const getTests = async () => {
-      const tests = await getAllTests();
+      const tests = await getAllTests("orderByField=wpm");
 
       setTests(
         tests.map((test: PopulatedTypingTest) => {

@@ -14,9 +14,9 @@ const postTest = async (test: TypingTest) => {
   }
 };
 
-const getAllTests = async (): Promise<PopulatedTypingTest[]> => {
+const getAllTests = async (query?: string): Promise<PopulatedTypingTest[]> => {
   try {
-    const response = await api.get(`${BASE_URL}/`);
+    const response = await api.get(`${BASE_URL}/?${query || ""}`);
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
