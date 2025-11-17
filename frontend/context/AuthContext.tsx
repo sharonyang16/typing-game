@@ -8,6 +8,7 @@ import {
 } from "react";
 import { AuthContextType, User, UserCredentials } from "@/types/user";
 import {
+  deleteUser,
   getAuthCheck,
   postLogin,
   postLogout,
@@ -79,9 +80,21 @@ const AuthProvider = ({
     return;
   };
 
+  const deleteAccount = async (): Promise<void> => {
+    try {
+      await deleteUser();
+      setUser(null);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new Error(e.response?.data);
+      }
+    }
+    return;
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, signUp, login, checkAuth, logout }}
+      value={{ user, setUser, signUp, login, checkAuth, logout, deleteAccount }}
     >
       {children}
     </AuthContext.Provider>

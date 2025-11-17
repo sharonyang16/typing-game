@@ -71,4 +71,15 @@ const postLogout = async () => {
   }
 };
 
-export { postSignUp, postLogin, getAuthCheck, postLogout };
+const deleteUser = async () => {
+  try {
+    const response = await api.delete(`${BASE_URL}/delete`, {});
+    return response.data;
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export { postSignUp, postLogin, getAuthCheck, postLogout, deleteUser };
