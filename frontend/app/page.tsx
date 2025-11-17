@@ -2,6 +2,7 @@
 import { RotateCcw } from "lucide-react";
 import useWords from "@/hooks/useWords";
 import numWordsConstant from "@/static/numWords.json";
+import Link from "next/link";
 
 export default function Home() {
   const {
@@ -18,6 +19,7 @@ export default function Home() {
     rawWpm,
     accuracy,
     wpm,
+    showSignUpBanner,
   } = useWords();
 
   return (
@@ -26,6 +28,19 @@ export default function Home() {
         {showResults && (
           <div>
             <h4>Results</h4>
+            {showSignUpBanner && (
+              <div
+                role="alert"
+                className="alert alert-vertical sm:alert-horizontal flex justify-between"
+              >
+                <div>Sign up to save your results!</div>
+                <div>
+                  <Link href="/authentication/sign-up" className="btn btn-sm">
+                    Sign Up
+                  </Link>
+                </div>
+              </div>
+            )}
             <p>{`Words: ${numWords}`}</p>
             <p>{`Seconds: ${secondsTaken}`}</p>
             <p>{`WPM: ${wpm}`}</p>

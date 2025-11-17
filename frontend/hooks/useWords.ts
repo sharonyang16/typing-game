@@ -23,6 +23,7 @@ const useWords = () => {
   const [accuracy, setAccuracy] = useState(0);
   const [rawWpm, setRawWpm] = useState(0);
   const [wpm, setWpm] = useState(0);
+  const [showSignUpBanner, setShowSignUpBanner] = useState(false);
 
   const { user } = useAuthContext();
 
@@ -50,6 +51,10 @@ const useWords = () => {
     generateWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords, useCaps]);
+
+  useEffect(() => {
+    setShowSignUpBanner(!user);
+  }, [user]);
 
   const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
     generateWords();
@@ -144,6 +149,7 @@ const useWords = () => {
     accuracy,
     rawWpm,
     wpm,
+    showSignUpBanner,
   };
 };
 
