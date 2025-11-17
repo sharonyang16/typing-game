@@ -9,7 +9,7 @@ import { useAuthContext } from "@/context/AuthContext";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
-  const [showBanner, setShowBanner] = useState(false);
+  const [showSignUpBanner, setShowSignUpBanner] = useState(false);
 
   const { user } = useAuthContext();
 
@@ -32,16 +32,12 @@ const useLeaderboardPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      setShowBanner(false);
-    } else {
-      setShowBanner(true);
-    }
+    setShowSignUpBanner(!user);
   }, [user]);
 
   return {
     tests,
-    showBanner,
+    showSignUpBanner,
   };
 };
 

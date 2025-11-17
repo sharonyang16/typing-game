@@ -5,11 +5,11 @@ import { Check, X } from "lucide-react";
 import Link from "next/link";
 
 const LeaderboardPage = () => {
-  const { tests, showBanner } = useLeaderboardPage();
+  const { tests, showSignUpBanner } = useLeaderboardPage();
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Leaderboard</h1>
-      {showBanner && (
+      {showSignUpBanner && (
         <div
           role="alert"
           className="alert alert-vertical sm:alert-horizontal flex justify-between"
@@ -17,7 +17,7 @@ const LeaderboardPage = () => {
           <div>Sign up to join the leaderboard!</div>
           <div>
             <Link href="/authentication/sign-up" className="btn btn-sm">
-              Sign In
+              Sign up
             </Link>
           </div>
         </div>
