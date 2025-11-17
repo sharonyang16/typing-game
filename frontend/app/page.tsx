@@ -34,9 +34,15 @@ export default function Home() {
                 className="alert alert-vertical sm:alert-horizontal flex justify-between"
               >
                 <div>Sign up to save your results!</div>
-                <div>
-                  <Link href="/authentication/sign-up" className="btn btn-sm">
-                    Sign Up
+                <div className="flex gap-2">
+                  <Link href="/authentication/login" className="btn btn-sm">
+                    Login
+                  </Link>
+                  <Link
+                    href="/authentication/sign-up"
+                    className="btn btn-sm btn-primary"
+                  >
+                    Sign up
                   </Link>
                 </div>
               </div>
