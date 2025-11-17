@@ -28,3 +28,11 @@ export interface AuthServiceResponse {
   user: User;
   idToken: string;
 }
+
+export interface EditableUser {
+  username?: string;
+}
+
+export interface EditUserRequest extends Request {
+  body: EditableUser;
+}
