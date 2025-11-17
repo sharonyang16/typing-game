@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { AuthRequest } from "../types/user";
 import {
   addUser,
+  deleteUserWithIdToken,
   loginUser,
   signOut,
   verifyUser,
@@ -88,10 +89,24 @@ const UserController = () => {
     }
   };
 
+  const deleteUser = async (req: Request, res: Response) => {
+    const idToken = req.cookies.access_token;
+
+    try {
+      await deleteUserWithIdToken(idToken);
+      res.status(200).send("User deleted");
+    } catch (e) {
+      if (e instanceof Error) {
+        res.status(500).send(e.message);
+      }
+    }
+  };
+
   router.post("/sign-up", createUser);
   router.post("/login", signInUser);
   router.get("/check-auth", checkAuth);
   router.post("/logout", logOut);
+  router.delete("/delete", deleteUser);
 
   return router;
 };

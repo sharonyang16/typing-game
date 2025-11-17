@@ -86,7 +86,7 @@ export const signOut = async () => {
   }
 };
 
-export const deleteUser = async (idToken: string) => {
+export const deleteUserWithIdToken = async (idToken: string) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
 
