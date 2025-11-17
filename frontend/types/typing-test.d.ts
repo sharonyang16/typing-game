@@ -6,6 +6,7 @@ export type TypingTest = {
   wpm: number;
   useCapitals: boolean;
   userId: number;
+  date: Date;
 };
 
 export interface PopulatedTypingTest extends TypingTest {

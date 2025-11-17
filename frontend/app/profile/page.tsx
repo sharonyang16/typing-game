@@ -15,6 +15,7 @@ const ProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
+    tests,
   } = useProfilePage();
 
   return (
@@ -73,6 +74,11 @@ const ProfilePage = () => {
               </div>
             </div>
           )}
+        </div>
+        <div>
+          {tests.map((test, index) => {
+            return <div key={index}>{test.date.toString()}</div>;
+          })}
         </div>
         <dialog ref={deleteDialogRef} className="modal">
           <div className="modal-box">

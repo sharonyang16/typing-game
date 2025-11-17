@@ -4,12 +4,15 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { patchUser } from "@/services/user-services";
 import { AxiosError } from "axios";
+import { TypingTest } from "@/types/typing-test";
+import { getAllTests } from "@/services/typing-test-services";
 
 const useProfilePage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [error, setError] = useState("");
+  const [tests, setTests] = useState<TypingTest[]>([]);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
@@ -17,6 +20,17 @@ const useProfilePage = () => {
   if (!user) {
     router.push("/authentication/login");
   }
+
+  useEffect(() => {
+    const getTests = async () => {
+      const tests = await getAllTests(
+        `orderByField=date&orderBy=asc&user=${user?.email}`
+      );
+      setTests(tests);
+    };
+
+    getTests();
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -77,6 +91,7 @@ const useProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
+    tests,
   };
 };
 
