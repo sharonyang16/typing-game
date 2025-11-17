@@ -85,3 +85,19 @@ export const signOut = async () => {
     }
   }
 };
+
+export const deleteUser = async (idToken: string) => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+    const deletedUser = await prisma.user.delete({
+      where: { firebaseId: decodedToken.uid },
+    });
+
+    await admin.auth().deleteUser(deletedUser.firebaseId);
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
