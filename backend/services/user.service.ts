@@ -1,4 +1,9 @@
-import { AuthServiceResponse, User, UserCredentials } from "../types/user";
+import {
+  AuthServiceResponse,
+  EditableUser,
+  User,
+  UserCredentials,
+} from "../types/user";
 import {
   admin,
   getAuth,
@@ -95,6 +100,20 @@ export const deleteUserWithIdToken = async (idToken: string) => {
     });
 
     await admin.auth().deleteUser(deletedUser.firebaseId);
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export const editUser = async (idToken: string, editableUser: EditableUser) => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    return prisma.user.update({
+      where: { firebaseId: decodedToken.uid },
+      data: editableUser,
+    });
   } catch (e) {
     if (e instanceof Error) {
       throw e;
