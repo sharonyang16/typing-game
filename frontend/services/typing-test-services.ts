@@ -1,4 +1,4 @@
-import { TypingTest } from "@/types/typing-test";
+import { PopulatedTypingTest, TypingTest } from "@/types/typing-test";
 import api from "@/config/axios";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/typing-tests`;
@@ -14,7 +14,7 @@ const postTest = async (test: TypingTest) => {
   }
 };
 
-const getAllTests = async () => {
+const getAllTests = async (): Promise<PopulatedTypingTest[]> => {
   try {
     const response = await api.get(`${BASE_URL}/`);
     return response.data;
@@ -23,6 +23,8 @@ const getAllTests = async () => {
       throw e;
     }
   }
+
+  return [];
 };
 
 export { postTest, getAllTests };
