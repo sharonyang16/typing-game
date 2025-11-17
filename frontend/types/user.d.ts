@@ -17,4 +17,5 @@ export type AuthContextType = {
   login: (userCredentials: UserCredentials) => Promise<void>;
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
 };

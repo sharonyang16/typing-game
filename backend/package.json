@@ -7,7 +7,8 @@
     "build": "prisma generate && tsc",
     "lint": "eslint",
     "typeorm": "typeorm-ts-node-commonjs",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
