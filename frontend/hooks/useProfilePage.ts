@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { patchUser } from "@/services/user-services";
@@ -10,7 +10,6 @@ const useProfilePage = () => {
   const [username, setUsername] = useState("");
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
@@ -18,6 +17,12 @@ const useProfilePage = () => {
   if (!user) {
     router.push("/authentication/login");
   }
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username || "");
+    }
+  }, [user]);
 
   const setDefault = () => {
     setUsername(user?.username || "");
@@ -29,10 +34,13 @@ const useProfilePage = () => {
   };
   const handleEditSave = async () => {
     try {
+      if (!username) {
+        setError("Username cannot be empty!");
+        return;
+      }
       const user = await patchUser({ username });
       setUser(user);
       setIsEditingProfile(false);
-      setSuccess("Profile updated successfully!");
     } catch (e) {
       if (e instanceof AxiosError) {
         setError(e.response?.data);
@@ -69,7 +77,6 @@ const useProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
-    success,
   };
 };
 
