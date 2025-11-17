@@ -1,9 +1,11 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const useProfilePage = () => {
-  const { user, logout } = useAuthContext();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { user, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
 
   if (!user) {
@@ -12,7 +14,17 @@ const useProfilePage = () => {
   const handleLogout = async () => {
     await logout();
   };
-  return { handleLogout };
+
+  const handleDeleteAccount = async () => {
+    await deleteAccount();
+  };
+
+  return {
+    isDeleteModalOpen,
+    setIsDeleteModalOpen,
+    handleLogout,
+    handleDeleteAccount,
+  };
 };
 
 export default useProfilePage;
