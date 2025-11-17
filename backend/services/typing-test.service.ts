@@ -1,7 +1,11 @@
-import { SubmitTypingTest, Order } from "../types/typing-test";
+import { SubmitTypingTest, Order, OrderByField } from "../types/typing-test";
 import prisma from "../prisma/prisma.js";
 
-export const getAllTests = async (orderBy?: Order) => {
+export const getAllTests = async (
+  userEmail?: string,
+  orderBy?: Order,
+  orderByField?: OrderByField
+) => {
   const tests = await prisma.typingTest.findMany({
     include: {
       user: {
@@ -11,25 +15,15 @@ export const getAllTests = async (orderBy?: Order) => {
         },
       },
     },
+    where: {
+      user: {
+        email: userEmail || undefined,
+      },
+    },
+    orderBy: {
+      [orderByField || "date"]: orderBy || "desc",
+    },
   });
-
-  switch (orderBy) {
-    case "asc":
-      tests.sort((a, b) => {
-        return a.wpm === b.wpm
-          ? a.timeToComplete - b.timeToComplete
-          : a.wpm - b.wpm;
-      });
-      break;
-    case "desc":
-    default:
-      tests.sort((a, b) => {
-        return a.wpm === b.wpm
-          ? b.timeToComplete - a.timeToComplete
-          : b.wpm - a.wpm;
-      });
-      break;
-  }
 
   return tests;
 };

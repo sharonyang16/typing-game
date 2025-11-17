@@ -16,7 +16,7 @@ model TypingTest {
   accuracy       Int
   wpm            Int
   useCapitals    Boolean  @default(false)
-  date           DateTime @db.Date
+  date           DateTime @db.Timestamptz
   userId         String   @db.Uuid
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
