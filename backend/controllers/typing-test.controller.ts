@@ -1,6 +1,9 @@
-import express, { Request, Response } from "express";
+import express, { Response } from "express";
 import { getAllTests, saveTest } from "../services/typing-test.service.js";
-import { Order, SubmitTypingTestRequest } from "../types/typing-test";
+import {
+  GetTypingTestsRequest,
+  SubmitTypingTestRequest,
+} from "../types/typing-test";
 
 const TypingTestController = () => {
   const router = express.Router();
@@ -20,10 +23,10 @@ const TypingTestController = () => {
     req.body.userId !== undefined &&
     req.body.useCapitals !== undefined;
 
-  const getTests = async (req: Request, res: Response) => {
-    const orderBy = req.query.orderBy as Order;
+  const getTests = async (req: GetTypingTestsRequest, res: Response) => {
+    const { user, orderBy, orderByField } = req.query;
     try {
-      const tests = await getAllTests(orderBy);
+      const tests = await getAllTests(user, orderBy, orderByField);
       res.status(200).send(tests);
     } catch (e) {
       if (e instanceof Error) {
