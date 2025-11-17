@@ -20,3 +20,7 @@ export type AuthContextType = {
   logout: () => Promise<void>;
   deleteAccount: () => Promise<void>;
 };
+
+export type EditableUser = {
+  username?: string;
+};
