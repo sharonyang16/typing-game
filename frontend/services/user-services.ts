@@ -1,4 +1,4 @@
-import { UserCredentials } from "@/types/user";
+import { EditableUser, UserCredentials } from "@/types/user";
 import api from "@/config/axios";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`;
@@ -82,4 +82,22 @@ const deleteUser = async () => {
   }
 };
 
-export { postSignUp, postLogin, getAuthCheck, postLogout, deleteUser };
+const patchUser = async (editableUser: EditableUser) => {
+  try {
+    const response = await api.patch(`${BASE_URL}/`, editableUser);
+    return response.data;
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+  }
+};
+
+export {
+  postSignUp,
+  postLogin,
+  getAuthCheck,
+  postLogout,
+  deleteUser,
+  patchUser,
+};

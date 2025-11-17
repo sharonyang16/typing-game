@@ -18,7 +18,7 @@ const useHeader = () => {
 
   useEffect(() => {
     if (user) {
-      setHeaderText(user.email);
+      setHeaderText(user.username || user.email);
       setLink("/profile");
     } else {
       setHeaderText("");

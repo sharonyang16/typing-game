@@ -7,6 +7,7 @@ export const getAllTests = async (orderBy?: Order) => {
       user: {
         select: {
           email: true,
+          username: true,
         },
       },
     },

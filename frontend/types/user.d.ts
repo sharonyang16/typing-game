@@ -1,5 +1,6 @@
 export type User = {
   email: string;
+  username?: string;
   firebaseId: string;
   dateJoined: Date;
   id: number;
@@ -18,4 +19,8 @@ export type AuthContextType = {
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;
   deleteAccount: () => Promise<void>;
+};
+
+export type EditableUser = {
+  username?: string;
 };

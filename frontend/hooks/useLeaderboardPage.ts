@@ -21,7 +21,7 @@ const useLeaderboardPage = () => {
         tests.map((test: PopulatedTypingTest) => {
           return {
             ...test,
-            user: test.user.email,
+            user: test.user.username || test.user.email,
             date: new Date(test.date).toLocaleDateString(),
             words: test.wordsTyped.split(" ").length,
           };
