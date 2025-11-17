@@ -18,7 +18,7 @@ model TypingTest {
   useCapitals    Boolean  @default(false)
   date           DateTime @db.Date
   userId         String   @db.Uuid
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("typing_test")
 }
