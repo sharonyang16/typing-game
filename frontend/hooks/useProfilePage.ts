@@ -14,7 +14,7 @@ const useProfilePage = () => {
   }
 
   useLayoutEffect(() => {
-    if (!isDeleteModalOpen ) {
+    if (!isDeleteModalOpen) {
       deleteDialogRef.current?.close();
     } else {
       deleteDialogRef.current?.showModal();

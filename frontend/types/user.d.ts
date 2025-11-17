@@ -1,5 +1,6 @@
 export type User = {
   email: string;
+  username?: string;
   firebaseId: string;
   dateJoined: Date;
   id: number;
