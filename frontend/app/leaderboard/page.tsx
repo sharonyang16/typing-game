@@ -14,9 +14,9 @@ const LeaderboardPage = () => {
           role="alert"
           className="alert alert-vertical sm:alert-horizontal flex justify-between"
         >
-          <div>Login to join the leaderboard!</div>
+          <div>Sign up to join the leaderboard!</div>
           <div>
-            <Link href="/authentication/login" className="btn btn-sm">
+            <Link href="/authentication/sign-up" className="btn btn-sm">
               Sign In
             </Link>
           </div>
