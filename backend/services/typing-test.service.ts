@@ -34,7 +34,15 @@ export const getAllTests = async (orderBy?: Order) => {
 };
 
 export const saveTest = async (test: SubmitTypingTest) => {
-  const { wordsTyped, timeToComplete, rawWpm, accuracy, wpm, userId } = test;
+  const {
+    wordsTyped,
+    timeToComplete,
+    rawWpm,
+    accuracy,
+    wpm,
+    useCapitals,
+    userId,
+  } = test;
 
   return await prisma.typingTest.create({
     data: {
@@ -44,6 +52,7 @@ export const saveTest = async (test: SubmitTypingTest) => {
       accuracy,
       wpm,
       userId,
+      useCapitals,
       date: new Date(),
     },
   });

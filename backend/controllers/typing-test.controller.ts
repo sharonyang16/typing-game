@@ -17,7 +17,8 @@ const TypingTestController = () => {
     req.body.accuracy >= 80 &&
     req.body.wpm !== undefined &&
     req.body.wpm !== 0 &&
-    req.body.userId !== undefined;
+    req.body.userId !== undefined &&
+    req.body.useCapitals !== undefined;
 
   const getTests = async (req: Request, res: Response) => {
     const orderBy = req.query.orderBy as Order;

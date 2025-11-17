@@ -15,6 +15,7 @@ model TypingTest {
   rawWpm         Int
   accuracy       Int
   wpm            Int
+  useCapitals    Boolean  @default(false)
   date           DateTime @db.Date
   userId         String   @db.Uuid
   user           User     @relation(fields: [userId], references: [id])

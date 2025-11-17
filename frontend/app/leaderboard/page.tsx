@@ -1,6 +1,7 @@
 "use client";
 
 import useLeaderboardPage from "@/hooks/useLeaderboardPage";
+import { Check, X } from "lucide-react";
 import Link from "next/link";
 
 const LeaderboardPage = () => {
@@ -26,9 +27,11 @@ const LeaderboardPage = () => {
           <tr>
             <th></th>
             <th>User</th>
+            <th>Words</th>
             <th>WPM</th>
             <th>Time</th>
             <th>Accuracy</th>
+            <th>Caps</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -36,11 +39,13 @@ const LeaderboardPage = () => {
           {tests.map((test, index) => (
             <tr key={`test-${index}`}>
               <td>{index + 1}</td>
-              <td>{test.user.email}</td>
+              <td>{test.user}</td>
+              <td>{test.words}</td>
               <td>{test.wpm}</td>
               <td>{test.timeToComplete}</td>
               <td>{test.accuracy}</td>
-              <td>{test.date.toString()}</td>
+              <td>{test.useCapitals ? <Check /> : <X />}</td>
+              <td>{test.date}</td>
             </tr>
           ))}
         </tbody>
