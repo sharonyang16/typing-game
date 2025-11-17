@@ -11,6 +11,7 @@ import {
   signInWithEmailAndPassword,
 } from "../config/firebase.js";
 import prisma from "../prisma/prisma.js";
+import { Prisma } from "@prisma/client";
 
 const auth = getAuth();
 
@@ -110,13 +111,20 @@ export const deleteUserWithIdToken = async (idToken: string) => {
 export const editUser = async (idToken: string, editableUser: EditableUser) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
-    return prisma.user.update({
+    const user = await prisma.user.update({
       where: { firebaseId: decodedToken.uid },
       data: editableUser,
     });
+    return user;
   } catch (e) {
-    if (e instanceof Error) {
-      throw e;
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        throw new Error("Username is already taken");
+      }
+    } else {
+      if (e instanceof Error) {
+        throw e;
+      }
     }
   }
 };

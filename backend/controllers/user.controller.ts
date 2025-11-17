@@ -19,6 +19,8 @@ const UserController = () => {
     req.body.password !== undefined &&
     req.body.password !== "";
 
+  const isEditBodyValid = (req: EditUserRequest) => req.body !== undefined;
+
   const createUser = async (req: AuthRequest, res: Response) => {
     if (!isAuthBodyValid(req)) {
       res.status(500).send("Invalid user body");
@@ -104,6 +106,10 @@ const UserController = () => {
   };
 
   const patchUser = async (req: EditUserRequest, res: Response) => {
+    if (!isEditBodyValid(req)) {
+      res.status(500).send("Body is missing");
+      return;
+    }
     const idToken = req.cookies.access_token;
 
     try {
