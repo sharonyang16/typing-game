@@ -13,6 +13,7 @@ const useProfilePage = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [error, setError] = useState("");
   const [tests, setTests] = useState<TypingTest[]>([]);
+  const [chartData, setChartData] = useState<{ x: string; y: number }[]>([]);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
@@ -32,6 +33,19 @@ const useProfilePage = () => {
     getTests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (tests.length > 0) {
+      setChartData(
+        tests.map((test: TypingTest) => {
+          return {
+            x: test.date.toString(),
+            y: test.wpm,
+          };
+        })
+      );
+    }
+  }, [tests]);
 
   useEffect(() => {
     if (user) {
@@ -92,7 +106,7 @@ const useProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
-    tests,
+    chartData,
   };
 };
 

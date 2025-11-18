@@ -1,15 +1,7 @@
 "use client";
 import useProfilePage from "@/hooks/useProfilePage";
 import { CircleAlert } from "lucide-react";
-import {
-  VictoryChart,
-  VictoryTheme,
-  VictoryArea,
-  VictoryClipContainer,
-  VictoryAxis,
-  VictoryVoronoiContainer,
-  VictoryTooltip,
-} from "victory";
+import { VictoryChart, VictoryTheme, VictoryArea, VictoryAxis } from "victory";
 
 const ProfilePage = () => {
   const {
@@ -24,8 +16,15 @@ const ProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
-    tests,
+    chartData,
   } = useProfilePage();
+
+  const axisLabelStyle = {
+    fill: "white",
+    fontSize: 6,
+    fontFamily: "var(--font-mono)",
+    fontWeight: "500",
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -88,13 +87,9 @@ const ProfilePage = () => {
           <VictoryChart
             theme={VictoryTheme.clean}
             domainPadding={{ y: [0, 30] }}
-            containerComponent={<VictoryVoronoiContainer />}
           >
             <VictoryArea
-              data={tests.map((test) => ({
-                x: test.date.toString(),
-                y: test.wpm,
-              }))}
+              data={chartData}
               style={{
                 data: {
                   fill: "var(--color-primary)",
@@ -107,24 +102,16 @@ const ProfilePage = () => {
             <VictoryAxis
               label="Date"
               style={{
-                axisLabel: {
-                  fill: "white",
-                  fontSize: 8,
-                  fontFamily: "var(--font-mono)",
-                },
-                tickLabels: {
-                  fill: "white",
-                  fontSize: 8,
-                  fontFamily: "var(--font-mono)",
-                },
+                axisLabel: axisLabelStyle,
+                tickLabels: axisLabelStyle,
               }}
             />
             <VictoryAxis
               dependentAxis
               label="WPM"
               style={{
-                axisLabel: { fill: "white", fontSize: 8, font: "Roboto Mono" },
-                tickLabels: { fill: "white", fontSize: 8, font: "Roboto Mono" },
+                axisLabel: axisLabelStyle,
+                tickLabels: axisLabelStyle,
               }}
             />
           </VictoryChart>
