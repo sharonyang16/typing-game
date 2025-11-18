@@ -9,6 +9,8 @@ export type TypingTest = {
   date: Date;
 };
 
+export type SubmitTypingTest = Omit<TypingTest, "date">;
+
 export interface PopulatedTypingTest extends TypingTest {
   user: User;
   date: Date;
