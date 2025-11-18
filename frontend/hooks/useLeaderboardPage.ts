@@ -6,6 +6,7 @@ import {
   TypingTestLeaderboardEntry,
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
+import { format } from "date-fns";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
@@ -22,7 +23,7 @@ const useLeaderboardPage = () => {
           return {
             ...test,
             user: test.user.username || test.user.email,
-            date: new Date(test.date).toLocaleDateString(),
+            date: format(test.date, "MM-dd-yyyy"),
             words: test.wordsTyped.split(" ").length,
           };
         })
