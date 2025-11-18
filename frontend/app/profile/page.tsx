@@ -1,7 +1,15 @@
 "use client";
 import useProfilePage from "@/hooks/useProfilePage";
 import { CircleAlert } from "lucide-react";
-import { VictoryChart, VictoryTheme, VictoryArea, VictoryAxis } from "victory";
+import {
+  VictoryChart,
+  VictoryTheme,
+  VictoryArea,
+  VictoryAxis,
+  VictoryVoronoiContainer,
+  VictoryTooltip,
+} from "victory";
+import { format } from "date-fns";
 
 const ProfilePage = () => {
   const {
@@ -87,6 +95,22 @@ const ProfilePage = () => {
           <VictoryChart
             theme={VictoryTheme.clean}
             domainPadding={{ y: [0, 30] }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) =>
+                  `${datum.y} WPM, ${format(datum.x, "MM/dd, HH:mm")}`
+                }
+                labelComponent={
+                  <VictoryTooltip
+                    constrainToVisibleArea
+                    style={axisLabelStyle}
+                    flyoutStyle={{
+                      fill: "var(--color-base-100)",
+                    }}
+                  />
+                }
+              />
+            }
           >
             <VictoryArea
               data={chartData}
@@ -99,13 +123,7 @@ const ProfilePage = () => {
                 },
               }}
             />
-            <VictoryAxis
-              label="Date"
-              style={{
-                axisLabel: axisLabelStyle,
-                tickLabels: axisLabelStyle,
-              }}
-            />
+
             <VictoryAxis
               dependentAxis
               label="WPM"

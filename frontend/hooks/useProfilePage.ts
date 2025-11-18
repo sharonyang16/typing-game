@@ -13,7 +13,7 @@ const useProfilePage = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [error, setError] = useState("");
   const [tests, setTests] = useState<TypingTest[]>([]);
-  const [chartData, setChartData] = useState<{ x: string; y: number }[]>([]);
+  const [chartData, setChartData] = useState<{ x: Date; y: number }[]>([]);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
@@ -39,7 +39,7 @@ const useProfilePage = () => {
       setChartData(
         tests.map((test: TypingTest) => {
           return {
-            x: test.date.toString(),
+            x: test.date,
             y: test.wpm,
           };
         })
