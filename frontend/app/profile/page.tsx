@@ -1,6 +1,15 @@
 "use client";
 import useProfilePage from "@/hooks/useProfilePage";
 import { CircleAlert } from "lucide-react";
+import {
+  VictoryChart,
+  VictoryTheme,
+  VictoryArea,
+  VictoryAxis,
+  VictoryVoronoiContainer,
+  VictoryTooltip,
+} from "victory";
+import { format } from "date-fns";
 
 const ProfilePage = () => {
   const {
@@ -15,7 +24,15 @@ const ProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
+    chartData,
   } = useProfilePage();
+
+  const axisLabelStyle = {
+    fill: "white",
+    fontSize: 6,
+    fontFamily: "var(--font-mono)",
+    fontWeight: "500",
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -73,6 +90,49 @@ const ProfilePage = () => {
               </div>
             </div>
           )}
+        </div>
+        <div>
+          <VictoryChart
+            theme={VictoryTheme.clean}
+            domainPadding={{ y: [0, 30] }}
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) =>
+                  `${datum.y} WPM, ${format(datum.x, "MM/dd, HH:mm")}`
+                }
+                labelComponent={
+                  <VictoryTooltip
+                    constrainToVisibleArea
+                    style={axisLabelStyle}
+                    flyoutStyle={{
+                      fill: "var(--color-base-100)",
+                    }}
+                  />
+                }
+              />
+            }
+          >
+            <VictoryArea
+              data={chartData}
+              style={{
+                data: {
+                  fill: "var(--color-primary)",
+                  fillOpacity: 0.3,
+                  stroke: "var(--color-primary)",
+                  strokeWidth: 2,
+                },
+              }}
+            />
+
+            <VictoryAxis
+              dependentAxis
+              label="WPM"
+              style={{
+                axisLabel: axisLabelStyle,
+                tickLabels: axisLabelStyle,
+              }}
+            />
+          </VictoryChart>
         </div>
         <dialog ref={deleteDialogRef} className="modal">
           <div className="modal-box">
