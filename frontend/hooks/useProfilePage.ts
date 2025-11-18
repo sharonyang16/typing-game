@@ -30,6 +30,7 @@ const useProfilePage = () => {
     };
 
     getTests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

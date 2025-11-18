@@ -1,6 +1,15 @@
 "use client";
 import useProfilePage from "@/hooks/useProfilePage";
 import { CircleAlert } from "lucide-react";
+import {
+  VictoryChart,
+  VictoryTheme,
+  VictoryArea,
+  VictoryClipContainer,
+  VictoryAxis,
+  VictoryVoronoiContainer,
+  VictoryTooltip,
+} from "victory";
 
 const ProfilePage = () => {
   const {
@@ -76,9 +85,49 @@ const ProfilePage = () => {
           )}
         </div>
         <div>
-          {tests.map((test, index) => {
-            return <div key={index}>{test.date.toString()}</div>;
-          })}
+          <VictoryChart
+            theme={VictoryTheme.clean}
+            domainPadding={{ y: [0, 30] }}
+            containerComponent={<VictoryVoronoiContainer />}
+          >
+            <VictoryArea
+              data={tests.map((test) => ({
+                x: test.date.toString(),
+                y: test.wpm,
+              }))}
+              style={{
+                data: {
+                  fill: "var(--color-primary)",
+                  fillOpacity: 0.3,
+                  stroke: "var(--color-primary)",
+                  strokeWidth: 2,
+                },
+              }}
+            />
+            <VictoryAxis
+              label="Date"
+              style={{
+                axisLabel: {
+                  fill: "white",
+                  fontSize: 8,
+                  fontFamily: "var(--font-mono)",
+                },
+                tickLabels: {
+                  fill: "white",
+                  fontSize: 8,
+                  fontFamily: "var(--font-mono)",
+                },
+              }}
+            />
+            <VictoryAxis
+              dependentAxis
+              label="WPM"
+              style={{
+                axisLabel: { fill: "white", fontSize: 8, font: "Roboto Mono" },
+                tickLabels: { fill: "white", fontSize: 8, font: "Roboto Mono" },
+              }}
+            />
+          </VictoryChart>
         </div>
         <dialog ref={deleteDialogRef} className="modal">
           <div className="modal-box">
