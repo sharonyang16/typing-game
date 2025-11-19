@@ -1,4 +1,4 @@
-name: Typing Game Frontend CI
+name: Typing Game CI
 
 on:
   pull_request:

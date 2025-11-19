@@ -1,4 +1,4 @@
-name: Typing Game Backend CI
+name: Typing Game API CI
 
 on:
   pull_request:
@@ -16,7 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    working-directory: backend
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
       - name: Check out Repo
