@@ -1,4 +1,4 @@
-name: Typing Game Frontend CI
+name: Typing Game Backend CI
 
 on:
   pull_request:
@@ -26,14 +26,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Navigate to frontend
-        run: cd frontend
+      - name: Navigate to backend
+        run: cd backend
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Lint 
+      - name: Lint
         run: npm run lint
 
-      - name: Build 
+      - name: Build
         run: npm run build
