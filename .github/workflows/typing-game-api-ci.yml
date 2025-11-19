@@ -16,6 +16,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    working-directory: backend
 
     steps:
       - name: Check out Repo
@@ -25,9 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Navigate to backend
-        run: cd backend
 
       - name: Install Dependencies
         run: npm install
