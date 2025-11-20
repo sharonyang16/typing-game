@@ -38,7 +38,7 @@ const LoginPage = () => {
           value={password}
         />
 
-        <button className="btn btn-neutral mt-4" onClick={handleLogin}>
+        <button className="btn btn-primary mt-4" onClick={handleLogin}>
           Login
         </button>
       </fieldset>
