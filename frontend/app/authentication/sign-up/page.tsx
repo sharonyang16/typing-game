@@ -54,7 +54,7 @@ const SignUpPage = () => {
           value={confirmPassword}
         />
 
-        <button className="btn btn-neutral mt-4" onClick={handleSignUp}>
+        <button className="btn btn-primary mt-4" onClick={handleSignUp}>
           Sign Up
         </button>
       </fieldset>

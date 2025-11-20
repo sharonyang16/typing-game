@@ -2,7 +2,7 @@
 import { RotateCcw } from "lucide-react";
 import useWords from "@/hooks/useWords";
 import numWordsConstant from "@/static/numWords.json";
-import Link from "next/link";
+import ResultsPage from "@/components/game/results";
 
 export default function Home() {
   const {
@@ -26,33 +26,14 @@ export default function Home() {
     <div className="flex flex-col h-full">
       <div className="pb-8">
         {showResults && (
-          <div>
-            <h4>Results</h4>
-            {showSignUpBanner && (
-              <div
-                role="alert"
-                className="alert alert-vertical sm:alert-horizontal flex justify-between"
-              >
-                <div>Sign up to save your results!</div>
-                <div className="flex gap-2">
-                  <Link href="/authentication/login" className="btn btn-sm">
-                    Login
-                  </Link>
-                  <Link
-                    href="/authentication/sign-up"
-                    className="btn btn-sm btn-primary"
-                  >
-                    Sign up
-                  </Link>
-                </div>
-              </div>
-            )}
-            <p>{`Words: ${numWords}`}</p>
-            <p>{`Seconds: ${secondsTaken}`}</p>
-            <p>{`WPM: ${wpm}`}</p>
-            <p>{`Accuracy: ${accuracy}%`}</p>
-            <p>{`Raw WPM: ${rawWpm}`}</p>
-          </div>
+          <ResultsPage
+            showSignUpBanner={showSignUpBanner}
+            wpm={wpm}
+            accuracy={accuracy}
+            secondsTaken={secondsTaken}
+            rawWpm={rawWpm}
+            numWords={numWords}
+          />
         )}
         {!showResults && (
           <div className="flex flex-col gap-16">
