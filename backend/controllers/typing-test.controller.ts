@@ -24,9 +24,21 @@ const TypingTestController = () => {
     req.body.useCapitals !== undefined;
 
   const getTests = async (req: GetTypingTestsRequest, res: Response) => {
-    const { user, orderBy, orderByField } = req.query;
+    const { user, orderBy, orderByField, wordCount, usedCapitals } = req.query;
+
     try {
-      const tests = await getAllTests(user, orderBy, orderByField);
+      const wordCountNumber = wordCount ? parseInt(wordCount) : undefined;
+      const usedCapitalsBoolean = usedCapitals
+        ? usedCapitals === "true"
+        : undefined;
+
+      const tests = await getAllTests(
+        user,
+        orderBy,
+        orderByField,
+        wordCountNumber,
+        usedCapitalsBoolean
+      );
       res.status(200).send(tests);
     } catch (e) {
       if (e instanceof Error) {

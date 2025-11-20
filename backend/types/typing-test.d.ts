@@ -18,8 +18,14 @@ export interface GetTypingTestsRequest extends Request {
     user?: string;
     orderBy?: Order;
     orderByField?: OrderByField;
+    wordCount?: WordCount;
+    usedCapitals?: BooleanString;
   };
 }
+
+export type BooleanString = "true" | "false";
+
+export type WordCount = "10" | "25" | "50" | "100";
 
 export type Order = "asc" | "desc";
 
