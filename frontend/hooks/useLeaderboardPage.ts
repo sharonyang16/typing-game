@@ -6,13 +6,14 @@ import {
   TypingTestLeaderboardEntry,
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
   const [selectedWordCount, setSelectedWordCount] = useState(25);
+  const [selectedCapitals, setSelectedCapitals] = useState("");
   const { user } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
@@ -44,11 +45,23 @@ const useLeaderboardPage = () => {
     getTests();
   }, [searchParams]);
 
-  const handleWordCountClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleWordCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("wordCount", e.target.ariaLabel || "");
-      setSelectedWordCount(parseInt(e.target.ariaLabel || "25"));
+      params.set("wordCount", e.target.value || "");
+      setSelectedWordCount(parseInt(e.target.value || "25"));
+
+      router.push(pathname + "?" + params.toString());
+    } catch {
+      // do nothing
+    }
+  };
+
+  const handleCapitalsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("usedCapitals", e.target.value || "");
+      setSelectedCapitals(e.target.value || "");
 
       router.push(pathname + "?" + params.toString());
     } catch {
@@ -63,8 +76,10 @@ const useLeaderboardPage = () => {
   return {
     tests,
     showSignUpBanner,
-    handleWordCountClick,
+    handleWordCountChange,
+    handleCapitalsChange,
     selectedWordCount,
+    selectedCapitals,
   };
 };
 

@@ -1,0 +1,5 @@
+[
+  { "label": "All", "value": "" },
+  { "label": "✔", "value": "true" },
+  { "label": "✖", "value": "false" }
+]

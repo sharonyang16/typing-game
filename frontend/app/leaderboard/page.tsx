@@ -4,10 +4,17 @@ import useLeaderboardPage from "@/hooks/useLeaderboardPage";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
 import numWordsConstant from "@/static/numWords.json";
+import capitalsConstant from "@/static/capitals.json";
 
 const LeaderboardPage = () => {
-  const { tests, showSignUpBanner, handleWordCountClick, selectedWordCount } =
-    useLeaderboardPage();
+  const {
+    tests,
+    showSignUpBanner,
+    handleWordCountChange,
+    handleCapitalsChange,
+    selectedWordCount,
+    selectedCapitals,
+  } = useLeaderboardPage();
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,31 +38,53 @@ const LeaderboardPage = () => {
           </div>
         </div>
       )}
-      <div className="flex gap-8">
-        <div className="join join-vertical">
-          {numWordsConstant.map((value) => (
-            <input
-              className="join-item btn"
-              key={`numWords-${value}`}
-              type="radio"
-              name="options"
-              value={value}
-              checked={selectedWordCount === value}
-              aria-label={value.toString()}
-              onChange={handleWordCountClick}
-            />
-          ))}
+      <div className="flex gap-8 items-start">
+        <div className="flex flex-col gap-4">
+          <fieldset className="fieldset">
+            <label className="label">Word Count</label>
+            <div className="join join-vertical">
+              {numWordsConstant.map((value) => (
+                <input
+                  className="join-item btn"
+                  key={`numWords-${value}`}
+                  type="radio"
+                  name="word-count-options"
+                  value={value}
+                  checked={selectedWordCount === value}
+                  aria-label={value.toString()}
+                  onChange={handleWordCountChange}
+                />
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="fieldset">
+            <label className="label">Capitals</label>
+            <div className="join join-vertical">
+              {capitalsConstant.map(({ label, value }) => (
+                <input
+                  className="join-item btn"
+                  key={`numWords-${value}`}
+                  type="radio"
+                  name="caps-options"
+                  value={value}
+                  checked={selectedCapitals === value}
+                  aria-label={label}
+                  onChange={handleCapitalsChange}
+                />
+              ))}
+            </div>
+          </fieldset>
         </div>
+
         <table className="table">
           <thead>
             <tr>
               <th></th>
               <th>User</th>
-              {/*<th>Words</th>*/}
               <th>WPM</th>
               <th>Time</th>
               <th>Accuracy</th>
-              {/*<th>Caps</th>*/}
+              {!selectedCapitals && <th>Caps</th>}
               <th>Date</th>
             </tr>
           </thead>
@@ -64,11 +93,12 @@ const LeaderboardPage = () => {
               <tr key={`test-${index}`}>
                 <td>{index + 1}</td>
                 <td>{test.user}</td>
-                {/*<td>{test.words}</td>*/}
                 <td>{test.wpm}</td>
                 <td>{test.timeToComplete}</td>
                 <td>{test.accuracy}</td>
-                {/*<td>{test.useCapitals ? <Check /> : <X />}</td>*/}
+                {!selectedCapitals && (
+                  <td>{test.useCapitals ? <Check /> : <X />}</td>
+                )}
                 <td>{test.date}</td>
               </tr>
             ))}
