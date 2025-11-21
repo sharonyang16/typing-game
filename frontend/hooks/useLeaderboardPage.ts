@@ -7,16 +7,26 @@ import {
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
 import { format } from "date-fns";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
-
   const { user } = useAuthContext();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
+    const wordCount = searchParams.get("wordCount") ?? "10";
+    const useCapitals = searchParams.get("usedCapitals");
+
     const getTests = async () => {
-      const tests = await getAllTests("orderByField=wpm");
+      const tests = await getAllTests(
+        `orderByField=wpm&wordCount=${wordCount}${
+          useCapitals ? `&usedCapitals=${useCapitals}` : ""
+        }`
+      );
 
       setTests(
         tests.map((test: PopulatedTypingTest) => {
@@ -30,7 +40,20 @@ const useLeaderboardPage = () => {
       );
     };
     getTests();
-  }, []);
+  }, [searchParams]);
+
+  const handleWordCountClick = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    try {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("wordCount", e.currentTarget.ariaLabel || "");
+
+      router.push(pathname + "?" + params.toString());
+    } catch {
+      // do nothing
+    }
+  };
 
   useEffect(() => {
     setShowSignUpBanner(!user);
@@ -39,6 +62,7 @@ const useLeaderboardPage = () => {
   return {
     tests,
     showSignUpBanner,
+    handleWordCountClick,
   };
 };
 
