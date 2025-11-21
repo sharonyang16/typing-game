@@ -4,7 +4,7 @@ import useLeaderboardPage from "@/hooks/useLeaderboardPage";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
 import numWordsConstant from "@/static/numWords.json";
-import capitalsConstant from "@/static/capitals.json";
+import capitalsConstant from "@/static/capitalsFilterOptions.json";
 
 const LeaderboardPage = () => {
   const {
