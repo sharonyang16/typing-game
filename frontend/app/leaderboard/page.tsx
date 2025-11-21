@@ -6,7 +6,7 @@ import Link from "next/link";
 import numWordsConstant from "@/static/numWords.json";
 
 const LeaderboardPage = () => {
-  const { tests, showSignUpBanner, handleWordCountClick } =
+  const { tests, showSignUpBanner, handleWordCountClick, selectedWordCount } =
     useLeaderboardPage();
 
   return (
@@ -39,8 +39,10 @@ const LeaderboardPage = () => {
               key={`numWords-${value}`}
               type="radio"
               name="options"
+              value={value}
+              checked={selectedWordCount === value}
               aria-label={value.toString()}
-              onClick={handleWordCountClick}
+              onChange={handleWordCountClick}
             />
           ))}
         </div>

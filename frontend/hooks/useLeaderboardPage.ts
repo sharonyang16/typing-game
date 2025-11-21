@@ -6,19 +6,21 @@ import {
   TypingTestLeaderboardEntry,
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
+  const [selectedWordCount, setSelectedWordCount] = useState(25);
   const { user } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const wordCount = searchParams.get("wordCount") ?? "10";
+    const wordCount = searchParams.get("wordCount") ?? "25";
+    setSelectedWordCount(parseInt(wordCount));
     const useCapitals = searchParams.get("usedCapitals");
 
     const getTests = async () => {
@@ -42,12 +44,11 @@ const useLeaderboardPage = () => {
     getTests();
   }, [searchParams]);
 
-  const handleWordCountClick = (
-    e: React.MouseEvent<HTMLInputElement, MouseEvent>
-  ) => {
+  const handleWordCountClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("wordCount", e.currentTarget.ariaLabel || "");
+      params.set("wordCount", e.target.ariaLabel || "");
+      setSelectedWordCount(parseInt(e.target.ariaLabel || "25"));
 
       router.push(pathname + "?" + params.toString());
     } catch {
@@ -63,6 +64,7 @@ const useLeaderboardPage = () => {
     tests,
     showSignUpBanner,
     handleWordCountClick,
+    selectedWordCount,
   };
 };
 
