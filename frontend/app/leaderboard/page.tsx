@@ -14,6 +14,7 @@ const LeaderboardPage = () => {
     handleCapitalsChange,
     selectedWordCount,
     selectedCapitals,
+    loading,
   } = useLeaderboardPage();
 
   return (
@@ -89,6 +90,24 @@ const LeaderboardPage = () => {
             </tr>
           </thead>
           <tbody>
+            {loading &&
+              [...Array(5)].map((_, index) => (
+                <tr key={`skeleton-row-${index}`}>
+                  {[...Array(selectedCapitals ? 6 : 7)]
+                    .fill(selectedCapitals ? 6 : 7)
+                    .map((_, index) => (
+                      <td key={`skeleton-${index}`}>
+                        <div className="skeleton h-4" />
+                      </td>
+                    ))}
+                </tr>
+              ))}
+            {!loading && tests.length === 0 && (
+              <tr>
+                <td></td>
+                <td colSpan={5} >No tests yet</td>
+              </tr>
+            )}
             {tests.map((test, index) => (
               <tr key={`test-${index}`}>
                 <td>{index + 1}</td>
