@@ -1,5 +1,5 @@
-import { TriangleAlert } from "lucide-react";
 import Link from "next/link";
+import Banner from "../banner/banner";
 
 type ResultsPageProps = {
   showSignUpBanner: boolean;
@@ -38,32 +38,28 @@ const ResultsPage = ({
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Results</h1>
       {showSignUpBanner && (
-        <div
-          role="alert"
-          className="alert alert-vertical sm:alert-horizontal flex justify-between"
-        >
-          <div>Sign up to save your results!</div>
-          <div className="flex gap-2">
-            <Link href="/authentication/login" className="btn btn-sm">
-              Login
-            </Link>
-            <Link
-              href="/authentication/sign-up"
-              className="btn btn-sm btn-primary"
-            >
-              Sign up
-            </Link>
-          </div>
-        </div>
+        <Banner
+          message="Sign up to save your results!"
+          action={
+            <div className="flex gap-2">
+              <Link href="/authentication/login" className="btn btn-sm">
+                Login
+              </Link>
+              <Link
+                href="/authentication/sign-up"
+                className="btn btn-sm btn-primary"
+              >
+                Sign up
+              </Link>
+            </div>
+          }
+        />
       )}
       {!showSignUpBanner && showAccuracyWarningBanner && (
-        <div
-          role="alert"
-          className="alert alert-warning alert-vertical sm:alert-horizontal flex gap-2"
-        >
-          <TriangleAlert />
-          <span>Your accuracy was too low to be saved.</span>
-        </div>
+        <Banner
+          message="Your accuracy was too low to be saved."
+          type="warning"
+        />
       )}
       <div className="flex justify-between">
         <div className="flex flex-col gap-4">
