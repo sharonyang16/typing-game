@@ -50,7 +50,7 @@ const LoginPage = () => {
         <button
           className="btn btn-primary mt-4"
           onClick={handleLogin}
-          disabled={loading}
+          disabled={loading || !username || !password}
         >
           Login
         </button>

@@ -61,7 +61,7 @@ const SignUpPage = () => {
         <button
           className="btn btn-primary mt-4"
           onClick={handleSignUp}
-          disabled={loading}
+          disabled={loading || !username || !password || !confirmPassword}
         >
           Sign Up
         </button>
