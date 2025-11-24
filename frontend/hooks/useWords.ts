@@ -105,28 +105,22 @@ const useWords = () => {
       const wpm = calculateWpm(rawWpm, accuracy);
       setWpm(wpm);
 
-      if (accuracy >= 80) {
-        saveTest();
+      if (accuracy >= 80 && user) {
+        postTest({
+          wordsTyped,
+          timeToComplete: time,
+          rawWpm,
+          accuracy,
+          wpm,
+          userId: user.id,
+          useCapitals: useCaps,
+        });
       } else {
         setShowAccuracyWarningBanner(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startTime, started, wordsToType, wordsTyped]);
-
-  const saveTest = async () => {
-    if (user) {
-      await postTest({
-        wordsTyped,
-        timeToComplete: secondsTaken,
-        rawWpm,
-        accuracy,
-        wpm,
-        userId: user.id,
-        useCapitals: useCaps,
-      });
-    }
-  };
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
