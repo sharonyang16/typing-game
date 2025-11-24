@@ -14,6 +14,7 @@ const useLeaderboardPage = () => {
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
   const [selectedWordCount, setSelectedWordCount] = useState(25);
   const [selectedCapitals, setSelectedCapitals] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
@@ -25,6 +26,7 @@ const useLeaderboardPage = () => {
     const useCapitals = searchParams.get("usedCapitals");
 
     const getTests = async () => {
+      setLoading(true);
       const tests = await getAllTests(
         `orderByField=wpm&wordCount=${wordCount}${
           useCapitals ? `&usedCapitals=${useCapitals}` : ""
@@ -41,7 +43,9 @@ const useLeaderboardPage = () => {
           };
         })
       );
+      setLoading(false);
     };
+
     getTests();
   }, [searchParams]);
 
@@ -80,6 +84,7 @@ const useLeaderboardPage = () => {
     handleCapitalsChange,
     selectedWordCount,
     selectedCapitals,
+    loading,
   };
 };
 

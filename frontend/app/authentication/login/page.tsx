@@ -4,8 +4,15 @@ import { CircleAlert } from "lucide-react";
 import useAuthPage from "@/hooks/useAuthPage";
 
 const LoginPage = () => {
-  const { username, setUsername, password, setPassword, handleLogin, error } =
-    useAuthPage();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    handleLogin,
+    error,
+    loading,
+  } = useAuthPage();
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,6 +34,7 @@ const LoginPage = () => {
           placeholder="example@example.com"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          disabled={loading}
         />
 
         <label className="label">Password</label>
@@ -36,9 +44,14 @@ const LoginPage = () => {
           placeholder="●●●●●●●●"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          disabled={loading}
         />
 
-        <button className="btn btn-primary mt-4" onClick={handleLogin}>
+        <button
+          className="btn btn-primary mt-4"
+          onClick={handleLogin}
+          disabled={loading || !username || !password}
+        >
           Login
         </button>
       </fieldset>

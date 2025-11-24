@@ -13,6 +13,7 @@ const SignUpPage = () => {
     setConfirmPassword,
     handleSignUp,
     error,
+    loading,
   } = useAuthPage();
   return (
     <div className="flex flex-col gap-4">
@@ -34,6 +35,7 @@ const SignUpPage = () => {
           placeholder="example@example.com"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          disabled={loading}
         />
 
         <label className="label">Password</label>
@@ -43,6 +45,7 @@ const SignUpPage = () => {
           placeholder="●●●●●●●●"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          disabled={loading}
         />
 
         <label className="label">Confirm Password</label>
@@ -52,9 +55,14 @@ const SignUpPage = () => {
           placeholder="●●●●●●●●"
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword}
+          disabled={loading}
         />
 
-        <button className="btn btn-primary mt-4" onClick={handleSignUp}>
+        <button
+          className="btn btn-primary mt-4"
+          onClick={handleSignUp}
+          disabled={loading || !username || !password || !confirmPassword}
+        >
           Sign Up
         </button>
       </fieldset>

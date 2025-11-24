@@ -21,6 +21,7 @@ export default function Home() {
     wpm,
     showSignUpBanner,
     started,
+    showAccuracyWarningBanner,
   } = useWords();
 
   return (
@@ -29,6 +30,7 @@ export default function Home() {
         {showResults && (
           <ResultsPage
             showSignUpBanner={showSignUpBanner}
+            showAccuracyWarningBanner={showAccuracyWarningBanner}
             wpm={wpm}
             accuracy={accuracy}
             secondsTaken={secondsTaken}
