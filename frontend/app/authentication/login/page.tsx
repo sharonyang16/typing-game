@@ -19,7 +19,7 @@ const LoginPage = () => {
       <h1 className="text-xl font-bold">Login</h1>
       {error && <Banner message={error} type="error" />}
       <fieldset className="fieldset w-fit">
-        <label className="label">Username</label>
+        <label className="label">Email or Username</label>
         <input
           type="text"
           className="input"
