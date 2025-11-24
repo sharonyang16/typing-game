@@ -20,7 +20,7 @@ const SignUpPage = () => {
       <h1 className="text-xl font-bold">Sign Up</h1>
       {error && <Banner message={error} type="error" />}
       <fieldset className="fieldset w-fit">
-        <label className="label">Username</label>
+        <label className="label">Email</label>
         <input
           type="text"
           className="input"

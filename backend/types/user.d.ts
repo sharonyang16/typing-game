@@ -13,10 +13,7 @@ export interface User {
  * - `password`: The password submitted in the request.
  */
 export interface AuthRequest extends Request {
-  body: {
-    email: string;
-    password: string;
-  };
+  body: UserCredentials;
 }
 
 export interface UserCredentials {

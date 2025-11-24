@@ -12,6 +12,7 @@ import {
 } from "../config/firebase.js";
 import prisma from "../prisma/prisma.js";
 import { Prisma } from "@prisma/client";
+import { FirebaseError } from "firebase/app";
 
 const auth = getAuth();
 
@@ -49,23 +50,50 @@ export const loginUser = async (
   userCredentials: UserCredentials
 ): Promise<AuthServiceResponse> => {
   const { email, password } = userCredentials;
-  const userCredential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
 
-  const user = await prisma.user.findUnique({
-    where: { firebaseId: userCredential.user.uid },
-  });
+  let userEmail = email;
 
-  if (!user) {
-    throw new Error("User not found");
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  try {
+    // If the email is not in the correct format, assume it's a username
+    if (!emailPattern.test(email)) {
+      const user = await prisma.user.findUnique({
+        where: { username: email },
+      });
+
+      if (!user) {
+        throw new Error("Invalid credentials");
+      }
+
+      userEmail = user.email;
+    }
+
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userEmail,
+      password
+    );
+
+    const user = await prisma.user.findUnique({
+      where: { firebaseId: userCredential.user.uid },
+    });
+
+    if (!user) {
+      throw new Error("Internal error: User not found");
+    }
+
+    const idToken = await userCredential.user.getIdToken();
+
+    return { user, idToken };
+  } catch (e) {
+    if (e instanceof FirebaseError) {
+      if (e.code === "auth/invalid-credential") {
+        throw new Error("Invalid credentials");
+      }
+    }
+    throw e;
   }
-
-  const idToken = await userCredential.user.getIdToken();
-
-  return { user, idToken };
 };
 
 export const verifyUser = async (idToken: string): Promise<User> => {
