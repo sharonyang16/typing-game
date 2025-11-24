@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-80 min-h-full flex flex-col justify-between`}
+        className={`${robotoSans.variable} ${robotoMono.variable}  antialiased px-64 min-h-full flex flex-col justify-between`}
       >
         <AuthProvider>
           <Layout>
