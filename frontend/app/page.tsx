@@ -56,15 +56,16 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <label className="flex gap-2 items-center label">
+              <fieldset className="flex gap-2 items-center">
                 <input
                   type="checkbox"
                   checked={useCaps}
                   onChange={handleCapsChange}
                   className="toggle"
+                  id="toggle-caps"
                 />
-                Capital Letters
-              </label>
+                <label htmlFor="toggle-caps"> Capital Letters</label>
+              </fieldset>
             </div>
 
             <div>
