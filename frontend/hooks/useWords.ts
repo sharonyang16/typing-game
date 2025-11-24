@@ -150,6 +150,7 @@ const useWords = () => {
     rawWpm,
     wpm,
     showSignUpBanner,
+    started,
   };
 };
 
