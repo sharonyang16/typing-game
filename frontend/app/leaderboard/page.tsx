@@ -5,6 +5,7 @@ import { Check, X } from "lucide-react";
 import Link from "next/link";
 import numWordsConstant from "@/static/numWords.json";
 import capitalsConstant from "@/static/capitalsFilterOptions.json";
+import Banner from "@/components/banner/banner";
 
 const LeaderboardPage = () => {
   const {
@@ -21,23 +22,22 @@ const LeaderboardPage = () => {
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Leaderboard</h1>
       {showSignUpBanner && (
-        <div
-          role="alert"
-          className="alert alert-vertical sm:alert-horizontal flex justify-between"
-        >
-          <div>Sign up to join the leaderboard!</div>
-          <div className="flex gap-2">
-            <Link href="/authentication/login" className="btn btn-sm">
-              Login
-            </Link>
-            <Link
-              href="/authentication/sign-up"
-              className="btn btn-sm btn-primary"
-            >
-              Sign up
-            </Link>
-          </div>
-        </div>
+        <Banner
+          message="Sign up to join the leaderboard!"
+          action={
+            <div className="flex gap-2">
+              <Link href="/authentication/login" className="btn btn-sm">
+                Login
+              </Link>
+              <Link
+                href="/authentication/sign-up"
+                className="btn btn-sm btn-primary"
+              >
+                Sign up
+              </Link>
+            </div>
+          }
+        />
       )}
       <div className="flex gap-8 items-start">
         <div className="flex flex-col gap-4">

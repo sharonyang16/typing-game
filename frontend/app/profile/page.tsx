@@ -1,6 +1,5 @@
 "use client";
 import useProfilePage from "@/hooks/useProfilePage";
-import { CircleAlert } from "lucide-react";
 import {
   VictoryChart,
   VictoryTheme,
@@ -10,6 +9,7 @@ import {
   VictoryTooltip,
 } from "victory";
 import { format } from "date-fns";
+import Banner from "@/components/banner/banner";
 
 const ProfilePage = () => {
   const {
@@ -42,15 +42,7 @@ const ProfilePage = () => {
           {isEditingProfile ? (
             <div className="card-body">
               <h2 className="card-title">Edit Account Info</h2>
-              {error && (
-                <div
-                  role="alert"
-                  className="alert alert-error alert-vertical sm:alert-horizontal flex gap-2"
-                >
-                  <CircleAlert />
-                  <div>{error}</div>
-                </div>
-              )}
+              {error && <Banner message={error} type="error" />}
               <fieldset className="fieldset w-fit">
                 <label className="label">Username</label>
                 <input
