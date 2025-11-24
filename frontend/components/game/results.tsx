@@ -1,7 +1,9 @@
+import { TriangleAlert } from "lucide-react";
 import Link from "next/link";
 
 type ResultsPageProps = {
   showSignUpBanner: boolean;
+  showAccuracyWarningBanner: boolean;
   wpm: number;
   accuracy: number;
   secondsTaken: number;
@@ -25,6 +27,7 @@ const ResultsNumberLabel = ({ value, label }: ResultsNumberLabelProps) => {
 
 const ResultsPage = ({
   showSignUpBanner,
+  showAccuracyWarningBanner,
   wpm,
   accuracy,
   secondsTaken,
@@ -51,6 +54,15 @@ const ResultsPage = ({
               Sign up
             </Link>
           </div>
+        </div>
+      )}
+      {!showSignUpBanner && showAccuracyWarningBanner && (
+        <div
+          role="alert"
+          className="alert alert-warning alert-vertical sm:alert-horizontal flex gap-2"
+        >
+          <TriangleAlert />
+          <span>Your accuracy was too low to be saved.</span>
         </div>
       )}
       <div className="flex justify-between">

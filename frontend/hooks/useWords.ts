@@ -24,6 +24,8 @@ const useWords = () => {
   const [rawWpm, setRawWpm] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
+  const [showAccuracyWarningBanner, setShowAccuracyWarningBanner] =
+    useState(false);
 
   const { user } = useAuthContext();
 
@@ -103,20 +105,28 @@ const useWords = () => {
       const wpm = calculateWpm(rawWpm, accuracy);
       setWpm(wpm);
 
-      if (accuracy >= 80 && user) {
-        postTest({
-          wordsTyped,
-          timeToComplete: time,
-          rawWpm,
-          accuracy,
-          wpm,
-          userId: user.id,
-          useCapitals: useCaps,
-        });
+      if (accuracy >= 80) {
+        saveTest();
+      } else {
+        setShowAccuracyWarningBanner(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startTime, started, wordsToType, wordsTyped]);
+
+  const saveTest = async () => {
+    if (user) {
+      await postTest({
+        wordsTyped,
+        timeToComplete: secondsTaken,
+        rawWpm,
+        accuracy,
+        wpm,
+        userId: user.id,
+        useCapitals: useCaps,
+      });
+    }
+  };
 
   const charMatches = (index: number) => {
     return wordsToType[index] === wordsTyped[index];
@@ -151,6 +161,7 @@ const useWords = () => {
     wpm,
     showSignUpBanner,
     started,
+    showAccuracyWarningBanner,
   };
 };
 
