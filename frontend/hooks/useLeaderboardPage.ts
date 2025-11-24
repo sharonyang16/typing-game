@@ -26,6 +26,7 @@ const useLeaderboardPage = () => {
     const useCapitals = searchParams.get("usedCapitals");
 
     const getTests = async () => {
+      setTests([]);
       setLoading(true);
       const tests = await getAllTests(
         `orderByField=wpm&wordCount=${wordCount}${
