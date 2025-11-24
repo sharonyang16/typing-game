@@ -20,6 +20,7 @@ export default function Home() {
     accuracy,
     wpm,
     showSignUpBanner,
+    started,
   } = useWords();
 
   return (
@@ -37,7 +38,11 @@ export default function Home() {
         )}
         {!showResults && (
           <div className="flex flex-col gap-16">
-            <div className="flex justify-between">
+            <div
+              className={`flex justify-between ${
+                started && " pointer-events-none opacity-50"
+              }`}
+            >
               <div className="join">
                 {numWordsConstant.map((num) => (
                   <input
