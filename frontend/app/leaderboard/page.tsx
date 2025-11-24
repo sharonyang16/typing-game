@@ -104,8 +104,12 @@ const LeaderboardPage = () => {
               ))}
             {!loading && tests.length === 0 && (
               <tr>
-                <td></td>
-                <td colSpan={5} >No tests yet</td>
+                <td
+                  colSpan={selectedCapitals ? 6 : 7}
+                  className="py-8 text-center"
+                >
+                  No tests yet
+                </td>
               </tr>
             )}
             {tests.map((test, index) => (
