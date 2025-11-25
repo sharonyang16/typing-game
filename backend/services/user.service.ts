@@ -13,7 +13,7 @@ import {
 import prisma from "../prisma/prisma.js";
 import { Prisma } from "@prisma/client";
 import { FirebaseError } from "firebase/app";
-import firebaseErrors from "../static/firebase/firebase-errors";
+import firebaseErrors from "../static/firebase/firebase-errors.js";
 
 const auth = getAuth();
 
