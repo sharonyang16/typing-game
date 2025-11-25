@@ -13,6 +13,7 @@ import {
 import prisma from "../prisma/prisma.js";
 import { Prisma } from "@prisma/client";
 import { FirebaseError } from "firebase/app";
+import firebaseErrors from "../static/firebase/firebase-errors";
 
 const auth = getAuth();
 
@@ -21,29 +22,39 @@ export const addUser = async (
 ): Promise<AuthServiceResponse> => {
   const { email, password } = userCredentials;
 
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
-
-  const firebaseId = userCredential.user.uid;
-
-  const user = await prisma.user.create({
-    data: {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
       email,
-      firebaseId,
-      dateJoined: new Date(),
-    },
-  });
+      password
+    );
 
-  if (!user) {
-    throw new Error("User could not be created");
+    const firebaseId = userCredential.user.uid;
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        firebaseId,
+        dateJoined: new Date(),
+      },
+    });
+
+    if (!user) {
+      throw new Error("User could not be created");
+    }
+
+    const idToken = await userCredential.user.getIdToken();
+
+    return { user, idToken };
+  } catch (e) {
+    if (e instanceof FirebaseError) {
+      if (e.code in firebaseErrors) {
+        throw new Error(firebaseErrors[e.code]);
+      }
+    }
+
+    throw e;
   }
-
-  const idToken = await userCredential.user.getIdToken();
-
-  return { user, idToken };
 };
 
 export const loginUser = async (
@@ -88,8 +99,8 @@ export const loginUser = async (
     return { user, idToken };
   } catch (e) {
     if (e instanceof FirebaseError) {
-      if (e.code === "auth/invalid-credential") {
-        throw new Error("Invalid credentials");
+      if (e.code in firebaseErrors) {
+        throw new Error(firebaseErrors[e.code]);
       }
     }
     throw e;
