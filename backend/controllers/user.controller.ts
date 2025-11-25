@@ -73,10 +73,9 @@ const UserController = () => {
     try {
       const user = await verifyUser(idToken);
       res.status(200).send(user);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      if (e instanceof Error) {
-        res.status(500).send(e.message);
-      }
+      res.status(200).send(null);
     }
   };
 
