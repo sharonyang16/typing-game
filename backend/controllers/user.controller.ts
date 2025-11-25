@@ -9,9 +9,17 @@ import {
   verifyUser,
 } from "../services/user.service.js";
 
+/**
+ * Controller for users routes.
+ */
 const UserController = () => {
   const router = express.Router();
 
+  /**
+   * Determines if the request body is valid for user sign up or log in.
+   * @param req The request object containing the body with user credentials.
+   * @returns A boolean indicating if the body is valid.
+   */
   const isAuthBodyValid = (req: AuthRequest) =>
     req.body !== undefined &&
     req.body.email !== undefined &&
@@ -19,9 +27,20 @@ const UserController = () => {
     req.body.password !== undefined &&
     req.body.password !== "";
 
+  /**
+   * Determines if the request body is valid for editing a user.
+   * @param req The request object containing the body.
+   * @returns A boolean indicating if the body is valid.
+   */
   const isEditBodyValid = (req: EditUserRequest) => req.body !== undefined;
 
-  const createUser = async (req: AuthRequest, res: Response) => {
+  /**
+   * Creates a new user.
+   * @param req The request object containing the body with user credentials.
+   * @param res The response object used to send the created user or an error.
+   * @returns A Promise that resolves to void.
+   */
+  const createUser = async (req: AuthRequest, res: Response): Promise<void> => {
     if (!isAuthBodyValid(req)) {
       res.status(500).send("Invalid user body");
       return;
@@ -44,7 +63,13 @@ const UserController = () => {
     }
   };
 
-  const signInUser = async (req: AuthRequest, res: Response) => {
+  /**
+   * Signs in a user.
+   * @param req The request object containing the body with user credentials.
+   * @param res The response object used to send the signed in user or an error.
+   * @returns A Promise that resolves to void.
+   */
+  const signInUser = async (req: AuthRequest, res: Response): Promise<void> => {
     if (!isAuthBodyValid(req)) {
       res.status(500).send("Invalid user body");
       return;
@@ -67,20 +92,31 @@ const UserController = () => {
     }
   };
 
-  const checkAuth = async (req: Request, res: Response) => {
+  /**
+   * Authenticates the user based on the access token in the cookie and returns the user
+   * if valid, otherwise returns null.
+   * @param req The request object containing the access token cookie.
+   * @param res The response object used to send the user or null.
+   * @returns A Promise that resolves to void.
+   */
+  const checkAuth = async (req: Request, res: Response): Promise<void> => {
     const idToken = req.cookies.access_token;
 
     try {
       const user = await verifyUser(idToken);
       res.status(200).send(user);
-    } catch (e) {
-      if (e instanceof Error) {
-        res.status(500).send(e.message);
-      }
+    } catch (_e) {
+      res.status(200).send(null);
     }
   };
 
-  const logOut = async (_: Request, res: Response) => {
+  /**
+   * Logs out the user and clears the access token cookie.
+   * @param _ Unused request object.
+   * @param res The response object used to send a success message or an error.
+   * @returns A Promise that resolves to void.
+   */
+  const logOut = async (_: Request, res: Response): Promise<void> => {
     try {
       await signOut();
       res.clearCookie("access_token");
@@ -92,7 +128,13 @@ const UserController = () => {
     }
   };
 
-  const deleteUser = async (req: Request, res: Response) => {
+  /**
+   * Deletes the user based on the access token in the cookie.
+   * @param req The request object containing the access token cookie.
+   * @param res The response object used to send a success message or an error.
+   * @returns A Promise that resolves to void.
+   */
+  const deleteUser = async (req: Request, res: Response): Promise<void> => {
     const idToken = req.cookies.access_token;
 
     try {
@@ -105,7 +147,16 @@ const UserController = () => {
     }
   };
 
-  const patchUser = async (req: EditUserRequest, res: Response) => {
+  /**
+   * Updates the user.
+   * @param req The request object containing the access token cookie and the user fields to update in the body.
+   * @param res The response object used to send the updated user or an error.
+   * @returns A Promise that resolves to void.
+   */
+  const patchUser = async (
+    req: EditUserRequest,
+    res: Response
+  ): Promise<void> => {
     if (!isEditBodyValid(req)) {
       res.status(500).send("Body is missing");
       return;
