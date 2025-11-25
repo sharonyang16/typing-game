@@ -1,5 +1,5 @@
 import { Request } from "express";
-export type SubmitTypingTest = {
+export type TypingTest = {
   wordsTyped: string;
   timeToComplete: number;
   rawWpm: number;
@@ -10,7 +10,7 @@ export type SubmitTypingTest = {
 };
 
 export interface SubmitTypingTestRequest extends Request {
-  body: SubmitTypingTest;
+  body: TypingTest;
 }
 
 export interface GetTypingTestsRequest extends Request {
@@ -21,6 +21,14 @@ export interface GetTypingTestsRequest extends Request {
     wordCount?: WordCount;
     usedCapitals?: BooleanString;
   };
+}
+
+export interface PopulatedTypingTest extends TypingTest {
+  user: {
+    email: string;
+    username: string | null;
+  };
+  date: Date;
 }
 
 export type BooleanString = "true" | "false";
