@@ -44,7 +44,7 @@ const UserController = () => {
     }
   };
 
-  const signInUser = async (req: AuthRequest, res: Response) => {
+  const signInUser = async (req: AuthRequest, res: Response): Promise<void> => {
     if (!isAuthBodyValid(req)) {
       res.status(500).send("Invalid user body");
       return;
@@ -67,7 +67,15 @@ const UserController = () => {
     }
   };
 
-  const checkAuth = async (req: Request, res: Response) => {
+  /**
+   * Authenticates the user based on the access token in the cookie and returns the user
+   * if valid, otherwise returns null.
+   *
+   * @param req The request object containing the access token.
+   * @param res The response object used to send the user or null.
+   * @returns A Promise that resolves to void.
+   */
+  const checkAuth = async (req: Request, res: Response): Promise<void> => {
     const idToken = req.cookies.access_token;
 
     try {
