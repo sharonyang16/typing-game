@@ -1,21 +1,13 @@
-import { EditableUser, UserCredentials } from "@/types/user";
+import { AuthRequestFields, EditableUser } from "@/types/user";
 import api from "@/config/axios";
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`;
 
-const postSignUp = async (userCredentials: UserCredentials) => {
-  const { email, password } = userCredentials;
+const postSignUp = async (authRequest: AuthRequestFields) => {
   try {
-    const response = await api.post(
-      `${BASE_URL}/sign-up`,
-      {
-        email,
-        password,
-      },
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await api.post(`${BASE_URL}/sign-up`, authRequest, {
+      withCredentials: true,
+    });
 
     if (response.status !== 200) {
       throw new Error(response.data);
@@ -29,13 +21,9 @@ const postSignUp = async (userCredentials: UserCredentials) => {
   }
 };
 
-const postLogin = async (userCredentials: UserCredentials) => {
-  const { email, password } = userCredentials;
+const postLogin = async (authRequest: AuthRequestFields) => {
   try {
-    const response = await api.post(`${BASE_URL}/login`, {
-      email,
-      password,
-    });
+    const response = await api.post(`${BASE_URL}/login`, authRequest);
 
     if (response.status !== 200) {
       throw new Error(response.data);

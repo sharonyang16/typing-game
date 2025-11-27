@@ -47,13 +47,16 @@ const UserController = () => {
     }
 
     const newUser = req.body;
+    const { staySignedIn } = newUser;
 
     try {
       const { user, idToken } = await addUser(newUser);
 
-      res.cookie("access_token", idToken, {
-        httpOnly: true,
-      });
+      if (staySignedIn) {
+        res.cookie("access_token", idToken, {
+          httpOnly: true,
+        });
+      }
 
       res.status(200).send(user);
     } catch (e) {
@@ -76,13 +79,16 @@ const UserController = () => {
     }
 
     const userCredentials = req.body;
+    const { staySignedIn } = userCredentials;
 
     try {
       const { user, idToken } = await loginUser(userCredentials);
 
-      res.cookie("access_token", idToken, {
-        httpOnly: true,
-      });
+      if (staySignedIn) {
+        res.cookie("access_token", idToken, {
+          httpOnly: true,
+        });
+      }
 
       res.status(200).send(user);
     } catch (e) {

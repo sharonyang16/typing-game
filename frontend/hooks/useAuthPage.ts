@@ -9,6 +9,7 @@ const useAuthPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [staySignedIn, setStaySignedIn] = useState(false);
 
   const { login, signUp } = useAuthContext();
 
@@ -17,7 +18,7 @@ const useAuthPage = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      await login({ email: username, password });
+      await login({ email: username, password, staySignedIn });
       router.push("/");
     } catch (e) {
       if (e instanceof Error) {
@@ -54,6 +55,8 @@ const useAuthPage = () => {
     setConfirmPassword,
     error,
     loading,
+    staySignedIn,
+    setStaySignedIn,
     handleLogin,
     handleSignUp,
   };

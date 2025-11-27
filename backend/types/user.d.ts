@@ -13,12 +13,16 @@ export interface User {
  * - `password`: The password submitted in the request.
  */
 export interface AuthRequest extends Request {
-  body: UserCredentials;
+  body: AuthRequestFields;
 }
 
 export interface UserCredentials {
   email: string;
   password: string;
+}
+
+export interface AuthRequestFields extends UserCredentials {
+  staySignedIn?: boolean;
 }
 
 export interface AuthServiceResponse {
