@@ -46,11 +46,10 @@ const UserController = () => {
       return;
     }
 
-    const newUser = req.body;
-    const { staySignedIn } = newUser;
+    const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await addUser(newUser);
+      const { user, idToken } = await addUser({ email, password });
 
       if (staySignedIn) {
         res.cookie("access_token", idToken, {
@@ -78,11 +77,10 @@ const UserController = () => {
       return;
     }
 
-    const userCredentials = req.body;
-    const { staySignedIn } = userCredentials;
+    const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await loginUser(userCredentials);
+      const { user, idToken } = await loginUser({ email, password });
 
       if (staySignedIn) {
         res.cookie("access_token", idToken, {
