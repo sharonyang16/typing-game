@@ -5,9 +5,7 @@ const BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`;
 
 const postSignUp = async (authRequest: AuthRequestFields) => {
   try {
-    const response = await api.post(`${BASE_URL}/sign-up`, authRequest, {
-      withCredentials: true,
-    });
+    const response = await api.post(`${BASE_URL}/sign-up`, authRequest);
 
     if (response.status !== 200) {
       throw new Error(response.data);
