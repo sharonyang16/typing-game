@@ -36,7 +36,7 @@ const useAuthPage = () => {
 
     try {
       setLoading(true);
-      await signUp({ email: username, password });
+      await signUp({ email: username, password, staySignedIn });
       router.push("/");
     } catch (e) {
       if (e instanceof Error) {
