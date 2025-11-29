@@ -110,10 +110,10 @@ const UserController = () => {
    * @returns A Promise that resolves to void.
    */
   const checkAuth = async (req: Request, res: Response): Promise<void> => {
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      const user = await verifyUser(idToken);
+      const user = await verifyUser(sessionCookie);
       res.status(200).send(user);
     } catch (_e) {
       res.status(200).send(null);

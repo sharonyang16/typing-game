@@ -128,13 +128,15 @@ export const loginUser = async (
 };
 
 /**
- * Verifies a user's id token and returns the user.
- * @param idToken The id token to verify.
+ * Verifies a user's session cookie and returns the user.
+ * @param sessionCookie The session cookie to verify.
  * @returns The verified user.
- * @throws An error if the id token is invalid or the user could not be found.
+ * @throws An error if the session is invalid or the user could not be found.
  */
-export const verifyUser = async (idToken: string): Promise<User> => {
-  const decodedToken = await admin.auth().verifyIdToken(idToken);
+export const verifyUser = async (sessionCookie: string): Promise<User> => {
+  const decodedToken = await admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true);
 
   const user = await prisma.user.findUnique({
     where: { firebaseId: decodedToken.uid },
