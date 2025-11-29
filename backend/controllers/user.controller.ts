@@ -2,7 +2,7 @@ import express, { CookieOptions, Request, Response } from "express";
 import { AuthRequest, EditUserRequest } from "../types/user";
 import {
   addUser,
-  deleteUserWithIdToken,
+  deleteUserWithSession,
   editUser,
   loginUser,
   signOut,
@@ -148,7 +148,7 @@ const UserController = () => {
     const sessionCookie = req.cookies.session;
 
     try {
-      await deleteUserWithIdToken(sessionCookie);
+      await deleteUserWithSession(sessionCookie);
       res.status(200).send("User deleted");
     } catch (e) {
       if (e instanceof Error) {

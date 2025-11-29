@@ -20,7 +20,7 @@ const auth = getAuth();
 /**
  * Creates a new user, creates a firebase user, and saves it to the database.
  * @param userCredentials The user credentials to create the user with.
- * @returns The created user and the id token.
+ * @returns The created user and a session cookie.
  * @throws An error if the user could not be created.
  */
 export const addUser = async (
@@ -70,7 +70,7 @@ export const addUser = async (
 /**
  * Retrieves a user, using either their email or username, from the database.
  * @param userCredentials The user credentials to retrieve the user with.
- * @returns The retrieved user and the id token.
+ * @returns The retrieved user and a new session cookie.
  * @throws An error if the user could not be retrieved.
  */
 export const loginUser = async (
@@ -170,7 +170,7 @@ export const signOut = async (): Promise<void> => {
  * @returns A Promise that resolves to void.
  * @throws An error if the user could not be deleted.
  */
-export const deleteUserWithIdToken = async (
+export const deleteUserWithSession = async (
   sessionCookie: string
 ): Promise<void> => {
   try {
