@@ -27,7 +27,7 @@ export interface AuthRequestFields extends UserCredentials {
 
 export interface AuthServiceResponse {
   user: User;
-  idToken: string;
+  sessionCookie: string;
 }
 
 export interface EditableUser {

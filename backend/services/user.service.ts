@@ -51,7 +51,11 @@ export const addUser = async (
 
     const idToken = await userCredential.user.getIdToken();
 
-    return { user, idToken };
+    const sessionCookie = await admin
+      .auth()
+      .createSessionCookie(idToken, { expiresIn: 60 * 60 * 24 * 14 * 1000 });
+
+    return { user, sessionCookie };
   } catch (e) {
     if (e instanceof FirebaseError) {
       if (e.code in firebaseErrors) {
@@ -108,7 +112,11 @@ export const loginUser = async (
 
     const idToken = await userCredential.user.getIdToken();
 
-    return { user, idToken };
+    const sessionCookie = await admin.auth().createSessionCookie(idToken, {
+      expiresIn: 60 * 60 * 24 * 14 * 1000,
+    });
+
+    return { user, sessionCookie };
   } catch (e) {
     if (e instanceof FirebaseError) {
       if (e.code in firebaseErrors) {

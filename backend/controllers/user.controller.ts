@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { CookieOptions, Request, Response } from "express";
 import { AuthRequest, EditUserRequest } from "../types/user";
 import {
   addUser,
@@ -49,13 +49,16 @@ const UserController = () => {
     const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await addUser({ email, password });
+      const { user, sessionCookie } = await addUser({ email, password });
 
-      if (staySignedIn) {
-        res.cookie("access_token", idToken, {
-          httpOnly: true,
-        });
-      }
+      const sessionCookieOptions: CookieOptions = {
+        httpOnly: true,
+        secure: true,
+      };
+
+      if (staySignedIn) sessionCookieOptions.maxAge = 60 * 60 * 24 * 14 * 1000;
+
+      res.cookie("session", sessionCookie, sessionCookieOptions);
 
       res.status(200).send(user);
     } catch (e) {
@@ -80,13 +83,16 @@ const UserController = () => {
     const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await loginUser({ email, password });
+      const { user, sessionCookie } = await loginUser({ email, password });
 
-      if (staySignedIn) {
-        res.cookie("access_token", idToken, {
-          httpOnly: true,
-        });
-      }
+      const sessionCookieOptions: CookieOptions = {
+        httpOnly: true,
+        secure: true,
+      };
+
+      if (staySignedIn) sessionCookieOptions.maxAge = 60 * 60 * 24 * 14 * 1000;
+
+      res.cookie("session", sessionCookie, sessionCookieOptions);
 
       res.status(200).send(user);
     } catch (e) {
