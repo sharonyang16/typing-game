@@ -103,9 +103,9 @@ const UserController = () => {
   };
 
   /**
-   * Authenticates the user based on the access token in the cookie and returns the user
+   * Authenticates the user based on the session in the cookie and returns the user
    * if valid, otherwise returns null.
-   * @param req The request object containing the access token cookie.
+   * @param req The request object containing the session cookie.
    * @param res The response object used to send the user or null.
    * @returns A Promise that resolves to void.
    */
@@ -121,7 +121,7 @@ const UserController = () => {
   };
 
   /**
-   * Logs out the user and clears the access token cookie.
+   * Logs out the user and clears the session cookie.
    * @param _ Unused request object.
    * @param res The response object used to send a success message or an error.
    * @returns A Promise that resolves to void.
@@ -129,7 +129,7 @@ const UserController = () => {
   const logOut = async (_: Request, res: Response): Promise<void> => {
     try {
       await signOut();
-      res.clearCookie("access_token");
+      res.clearCookie("session");
       res.status(200).send("User logged out");
     } catch (e) {
       if (e instanceof Error) {
