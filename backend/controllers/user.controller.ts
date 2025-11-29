@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
+import express, { CookieOptions, Request, Response } from "express";
 import { AuthRequest, EditUserRequest } from "../types/user";
 import {
   addUser,
-  deleteUserWithIdToken,
+  deleteUserWithSession,
   editUser,
   loginUser,
   signOut,
@@ -46,14 +46,19 @@ const UserController = () => {
       return;
     }
 
-    const newUser = req.body;
+    const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await addUser(newUser);
+      const { user, sessionCookie } = await addUser({ email, password });
 
-      res.cookie("access_token", idToken, {
+      const sessionCookieOptions: CookieOptions = {
         httpOnly: true,
-      });
+        secure: true,
+      };
+
+      if (staySignedIn) sessionCookieOptions.maxAge = 60 * 60 * 24 * 14 * 1000;
+
+      res.cookie("session", sessionCookie, sessionCookieOptions);
 
       res.status(200).send(user);
     } catch (e) {
@@ -75,14 +80,19 @@ const UserController = () => {
       return;
     }
 
-    const userCredentials = req.body;
+    const { email, password, staySignedIn } = req.body;
 
     try {
-      const { user, idToken } = await loginUser(userCredentials);
+      const { user, sessionCookie } = await loginUser({ email, password });
 
-      res.cookie("access_token", idToken, {
+      const sessionCookieOptions: CookieOptions = {
         httpOnly: true,
-      });
+        secure: true,
+      };
+
+      if (staySignedIn) sessionCookieOptions.maxAge = 60 * 60 * 24 * 14 * 1000;
+
+      res.cookie("session", sessionCookie, sessionCookieOptions);
 
       res.status(200).send(user);
     } catch (e) {
@@ -93,17 +103,17 @@ const UserController = () => {
   };
 
   /**
-   * Authenticates the user based on the access token in the cookie and returns the user
+   * Authenticates the user based on the session in the cookie and returns the user
    * if valid, otherwise returns null.
-   * @param req The request object containing the access token cookie.
+   * @param req The request object containing the session cookie.
    * @param res The response object used to send the user or null.
    * @returns A Promise that resolves to void.
    */
   const checkAuth = async (req: Request, res: Response): Promise<void> => {
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      const user = await verifyUser(idToken);
+      const user = await verifyUser(sessionCookie);
       res.status(200).send(user);
     } catch (_e) {
       res.status(200).send(null);
@@ -111,7 +121,7 @@ const UserController = () => {
   };
 
   /**
-   * Logs out the user and clears the access token cookie.
+   * Logs out the user and clears the session cookie.
    * @param _ Unused request object.
    * @param res The response object used to send a success message or an error.
    * @returns A Promise that resolves to void.
@@ -119,7 +129,7 @@ const UserController = () => {
   const logOut = async (_: Request, res: Response): Promise<void> => {
     try {
       await signOut();
-      res.clearCookie("access_token");
+      res.clearCookie("session");
       res.status(200).send("User logged out");
     } catch (e) {
       if (e instanceof Error) {
@@ -129,16 +139,16 @@ const UserController = () => {
   };
 
   /**
-   * Deletes the user based on the access token in the cookie.
-   * @param req The request object containing the access token cookie.
+   * Deletes the user based on the session in the cookie.
+   * @param req The request object containing the session cookie.
    * @param res The response object used to send a success message or an error.
    * @returns A Promise that resolves to void.
    */
   const deleteUser = async (req: Request, res: Response): Promise<void> => {
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      await deleteUserWithIdToken(idToken);
+      await deleteUserWithSession(sessionCookie);
       res.status(200).send("User deleted");
     } catch (e) {
       if (e instanceof Error) {
@@ -149,7 +159,7 @@ const UserController = () => {
 
   /**
    * Updates the user.
-   * @param req The request object containing the access token cookie and the user fields to update in the body.
+   * @param req The request object containing the session cookie and the user fields to update in the body.
    * @param res The response object used to send the updated user or an error.
    * @returns A Promise that resolves to void.
    */
@@ -161,10 +171,10 @@ const UserController = () => {
       res.status(500).send("Body is missing");
       return;
     }
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      const user = await editUser(idToken, req.body);
+      const user = await editUser(sessionCookie, req.body);
       res.status(200).send(user);
     } catch (e) {
       if (e instanceof Error) {
@@ -177,7 +187,8 @@ const UserController = () => {
   router.post("/login", signInUser);
   router.get("/check-auth", checkAuth);
   router.post("/logout", logOut);
-  router.delete("/delete", deleteUser);
+  router.delete("/delete", deleteUser); // deprecated
+  router.delete("/", deleteUser);
   router.patch("/", patchUser);
 
   return router;

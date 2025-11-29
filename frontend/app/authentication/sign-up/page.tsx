@@ -14,6 +14,8 @@ const SignUpPage = () => {
     handleSignUp,
     error,
     loading,
+    staySignedIn,
+    setStaySignedIn,
   } = useAuthPage();
   return (
     <div className="flex flex-col gap-4">
@@ -49,7 +51,15 @@ const SignUpPage = () => {
           value={confirmPassword}
           disabled={loading}
         />
-
+        <label className="label">
+          <input
+            className="checkbox"
+            type="checkbox"
+            checked={staySignedIn}
+            onChange={(e) => setStaySignedIn(e.target.checked)}
+          />
+          Remember me?
+        </label>
         <button
           className="btn btn-primary mt-4"
           onClick={handleSignUp}

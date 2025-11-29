@@ -20,7 +20,7 @@ const auth = getAuth();
 /**
  * Creates a new user, creates a firebase user, and saves it to the database.
  * @param userCredentials The user credentials to create the user with.
- * @returns The created user and the id token.
+ * @returns The created user and a session cookie.
  * @throws An error if the user could not be created.
  */
 export const addUser = async (
@@ -51,7 +51,11 @@ export const addUser = async (
 
     const idToken = await userCredential.user.getIdToken();
 
-    return { user, idToken };
+    const sessionCookie = await admin
+      .auth()
+      .createSessionCookie(idToken, { expiresIn: 60 * 60 * 24 * 14 * 1000 });
+
+    return { user, sessionCookie };
   } catch (e) {
     if (e instanceof FirebaseError) {
       if (e.code in firebaseErrors) {
@@ -66,7 +70,7 @@ export const addUser = async (
 /**
  * Retrieves a user, using either their email or username, from the database.
  * @param userCredentials The user credentials to retrieve the user with.
- * @returns The retrieved user and the id token.
+ * @returns The retrieved user and a new session cookie.
  * @throws An error if the user could not be retrieved.
  */
 export const loginUser = async (
@@ -108,7 +112,11 @@ export const loginUser = async (
 
     const idToken = await userCredential.user.getIdToken();
 
-    return { user, idToken };
+    const sessionCookie = await admin.auth().createSessionCookie(idToken, {
+      expiresIn: 60 * 60 * 24 * 14 * 1000,
+    });
+
+    return { user, sessionCookie };
   } catch (e) {
     if (e instanceof FirebaseError) {
       if (e.code in firebaseErrors) {
@@ -120,13 +128,15 @@ export const loginUser = async (
 };
 
 /**
- * Verifies a user's id token and returns the user.
- * @param idToken The id token to verify.
+ * Verifies a user's session cookie and returns the user.
+ * @param sessionCookie The session cookie to verify.
  * @returns The verified user.
- * @throws An error if the id token is invalid or the user could not be found.
+ * @throws An error if the session is invalid or the user could not be found.
  */
-export const verifyUser = async (idToken: string): Promise<User> => {
-  const decodedToken = await admin.auth().verifyIdToken(idToken);
+export const verifyUser = async (sessionCookie: string): Promise<User> => {
+  const decodedToken = await admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true);
 
   const user = await prisma.user.findUnique({
     where: { firebaseId: decodedToken.uid },
@@ -155,14 +165,18 @@ export const signOut = async (): Promise<void> => {
 };
 
 /**
- * Deletes the user based on the id token.
- * @param idToken The id token belonging to the user to be deleted.
+ * Deletes the user based on the session cookie.
+ * @param sessionCookie The session belonging to the user to be deleted.
  * @returns A Promise that resolves to void.
  * @throws An error if the user could not be deleted.
  */
-export const deleteUserWithIdToken = async (idToken: string): Promise<void> => {
+export const deleteUserWithSession = async (
+  sessionCookie: string
+): Promise<void> => {
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await admin
+      .auth()
+      .verifySessionCookie(sessionCookie, true);
 
     const deletedUser = await prisma.user.delete({
       where: { firebaseId: decodedToken.uid },
@@ -177,18 +191,20 @@ export const deleteUserWithIdToken = async (idToken: string): Promise<void> => {
 };
 
 /**
- * Edits the user based on the id token and the editable user fields.
- * @param idToken The id token belonging to the user to be edited.
+ * Edits the user based on the session and the editable user fields.
+ * @param sessionCookie The session belonging to the user to be edited.
  * @param editableUser The editable user fields.
  * @returns The edited user.
  * @throws An error if the user could not be edited.
  */
 export const editUser = async (
-  idToken: string,
+  sessionCookie: string,
   editableUser: EditableUser
 ): Promise<User> => {
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await admin
+      .auth()
+      .verifySessionCookie(sessionCookie, true);
     const user = await prisma.user.update({
       where: { firebaseId: decodedToken.uid },
       data: editableUser,

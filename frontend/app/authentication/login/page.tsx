@@ -12,6 +12,8 @@ const LoginPage = () => {
     handleLogin,
     error,
     loading,
+    staySignedIn,
+    setStaySignedIn,
   } = useAuthPage();
 
   return (
@@ -38,7 +40,15 @@ const LoginPage = () => {
           value={password}
           disabled={loading}
         />
-
+        <label className="label">
+          <input
+            className="checkbox"
+            type="checkbox"
+            checked={staySignedIn}
+            onChange={(e) => setStaySignedIn(e.target.checked)}
+          />
+          Remember me?
+        </label>
         <button
           className="btn btn-primary mt-4"
           onClick={handleLogin}
