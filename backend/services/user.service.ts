@@ -165,14 +165,18 @@ export const signOut = async (): Promise<void> => {
 };
 
 /**
- * Deletes the user based on the id token.
- * @param idToken The id token belonging to the user to be deleted.
+ * Deletes the user based on the session cookie.
+ * @param sessionCookie The session belonging to the user to be deleted.
  * @returns A Promise that resolves to void.
  * @throws An error if the user could not be deleted.
  */
-export const deleteUserWithIdToken = async (idToken: string): Promise<void> => {
+export const deleteUserWithIdToken = async (
+  sessionCookie: string
+): Promise<void> => {
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await admin
+      .auth()
+      .verifySessionCookie(sessionCookie, true);
 
     const deletedUser = await prisma.user.delete({
       where: { firebaseId: decodedToken.uid },
@@ -187,18 +191,20 @@ export const deleteUserWithIdToken = async (idToken: string): Promise<void> => {
 };
 
 /**
- * Edits the user based on the id token and the editable user fields.
- * @param idToken The id token belonging to the user to be edited.
+ * Edits the user based on the session and the editable user fields.
+ * @param sessionCookie The session belonging to the user to be edited.
  * @param editableUser The editable user fields.
  * @returns The edited user.
  * @throws An error if the user could not be edited.
  */
 export const editUser = async (
-  idToken: string,
+  sessionCookie: string,
   editableUser: EditableUser
 ): Promise<User> => {
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await admin
+      .auth()
+      .verifySessionCookie(sessionCookie, true);
     const user = await prisma.user.update({
       where: { firebaseId: decodedToken.uid },
       data: editableUser,
