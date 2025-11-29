@@ -139,16 +139,16 @@ const UserController = () => {
   };
 
   /**
-   * Deletes the user based on the access token in the cookie.
-   * @param req The request object containing the access token cookie.
+   * Deletes the user based on the session in the cookie.
+   * @param req The request object containing the session cookie.
    * @param res The response object used to send a success message or an error.
    * @returns A Promise that resolves to void.
    */
   const deleteUser = async (req: Request, res: Response): Promise<void> => {
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      await deleteUserWithIdToken(idToken);
+      await deleteUserWithIdToken(sessionCookie);
       res.status(200).send("User deleted");
     } catch (e) {
       if (e instanceof Error) {
@@ -159,7 +159,7 @@ const UserController = () => {
 
   /**
    * Updates the user.
-   * @param req The request object containing the access token cookie and the user fields to update in the body.
+   * @param req The request object containing the session cookie and the user fields to update in the body.
    * @param res The response object used to send the updated user or an error.
    * @returns A Promise that resolves to void.
    */
@@ -171,10 +171,10 @@ const UserController = () => {
       res.status(500).send("Body is missing");
       return;
     }
-    const idToken = req.cookies.access_token;
+    const sessionCookie = req.cookies.session;
 
     try {
-      const user = await editUser(idToken, req.body);
+      const user = await editUser(sessionCookie, req.body);
       res.status(200).send(user);
     } catch (e) {
       if (e instanceof Error) {
