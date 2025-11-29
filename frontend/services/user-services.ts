@@ -59,7 +59,7 @@ const postLogout = async () => {
 
 const deleteUser = async () => {
   try {
-    const response = await api.delete(`${BASE_URL}/delete`, {});
+    const response = await api.delete(`${BASE_URL}/`, {});
     return response.data;
   } catch (e) {
     if (e instanceof Error) {
