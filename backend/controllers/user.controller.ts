@@ -187,7 +187,7 @@ const UserController = () => {
   router.post("/login", signInUser);
   router.get("/check-auth", checkAuth);
   router.post("/logout", logOut);
-  router.delete("/delete", deleteUser);
+  router.delete("/delete", deleteUser); // deprecated
   router.delete("/", deleteUser);
   router.patch("/", patchUser);
 
