@@ -10,6 +10,7 @@ import {
 } from "victory";
 import { format } from "date-fns";
 import Banner from "@/components/banner/banner";
+import Link from "next/link";
 
 const ProfilePage = () => {
   const {
@@ -84,47 +85,59 @@ const ProfilePage = () => {
           )}
         </div>
         <div>
-          <VictoryChart
-            theme={VictoryTheme.clean}
-            domainPadding={{ y: [0, 30] }}
-            containerComponent={
-              <VictoryVoronoiContainer
-                labels={({ datum }) =>
-                  `${datum.y} WPM, ${format(datum.x, "MM/dd, HH:mm")}`
-                }
-                labelComponent={
-                  <VictoryTooltip
-                    constrainToVisibleArea
-                    style={axisLabelStyle}
-                    flyoutStyle={{
-                      fill: "var(--color-base-100)",
-                    }}
-                  />
-                }
+          {chartData.length > 0 ? (
+            <VictoryChart
+              theme={VictoryTheme.clean}
+              domainPadding={{ y: [0, 30] }}
+              containerComponent={
+                <VictoryVoronoiContainer
+                  labels={({ datum }) =>
+                    `${datum.y} WPM, ${format(datum.x, "MM/dd, HH:mm")}`
+                  }
+                  labelComponent={
+                    <VictoryTooltip
+                      constrainToVisibleArea
+                      style={axisLabelStyle}
+                      flyoutStyle={{
+                        fill: "var(--color-base-100)",
+                      }}
+                    />
+                  }
+                />
+              }
+            >
+              <VictoryArea
+                data={chartData}
+                style={{
+                  data: {
+                    fill: "var(--color-primary)",
+                    fillOpacity: 0.3,
+                    stroke: "var(--color-primary)",
+                    strokeWidth: 2,
+                  },
+                }}
               />
-            }
-          >
-            <VictoryArea
-              data={chartData}
-              style={{
-                data: {
-                  fill: "var(--color-primary)",
-                  fillOpacity: 0.3,
-                  stroke: "var(--color-primary)",
-                  strokeWidth: 2,
-                },
-              }}
-            />
 
-            <VictoryAxis
-              dependentAxis
-              label="WPM"
-              style={{
-                axisLabel: axisLabelStyle,
-                tickLabels: axisLabelStyle,
-              }}
+              <VictoryAxis
+                dependentAxis
+                label="WPM"
+                style={{
+                  axisLabel: axisLabelStyle,
+                  tickLabels: axisLabelStyle,
+                }}
+              />
+            </VictoryChart>
+          ) : (
+            <Banner
+              message="No tests completed yet! Complete tests while logged in to track your progress."
+              type="info"
+              action={
+                <Link href="/" className="btn btn-sm btn-primary">
+                  Complete a test
+                </Link>
+              }
             />
-          </VictoryChart>
+          )}
         </div>
         <dialog ref={deleteDialogRef} className="modal">
           <div className="modal-box">
