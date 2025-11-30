@@ -14,6 +14,7 @@ const useProfilePage = () => {
   const [error, setError] = useState("");
   const [tests, setTests] = useState<TypingTest[]>([]);
   const [chartData, setChartData] = useState<{ x: Date; y: number }[]>([]);
+  const [chartLoading, setChartLoading] = useState(false);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
   const router = useRouter();
@@ -24,10 +25,12 @@ const useProfilePage = () => {
 
   useEffect(() => {
     const getTests = async () => {
+      setChartLoading(true);
       const tests = await getAllTests(
         `orderByField=date&orderBy=asc&user=${user?.email}`
       );
       setTests(tests);
+      setChartLoading(false);
     };
 
     getTests();
@@ -106,6 +109,7 @@ const useProfilePage = () => {
     handleEditCancel,
     handleEditSave,
     error,
+    chartLoading,
     chartData,
   };
 };
