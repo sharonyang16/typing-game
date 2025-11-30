@@ -26,6 +26,7 @@ const ProfilePage = () => {
     handleEditSave,
     error,
     chartData,
+    chartLoading,
   } = useProfilePage();
 
   const axisLabelStyle = {
@@ -85,7 +86,20 @@ const ProfilePage = () => {
           )}
         </div>
         <div>
-          {chartData.length > 0 ? (
+          {chartLoading ? (
+            <div className="flex gap-4 justify-center items-center">
+              <div className="skeleton h-12 w-4" />
+              <div className="self-stretch flex flex-col justify-between">
+                {[...Array(6)].fill(6).map((_, index) => (
+                  <div
+                    key={`skeleton-${index}`}
+                    className="skeleton h-4 w-12 "
+                  />
+                ))}
+              </div>
+              <div className="skeleton h-90 w-190" />
+            </div>
+          ) : chartData.length > 0 ? (
             <VictoryChart
               theme={VictoryTheme.clean}
               domainPadding={{ y: [0, 30] }}
