@@ -1,6 +1,6 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 const useAuthPage = () => {
@@ -11,15 +11,17 @@ const useAuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [staySignedIn, setStaySignedIn] = useState(false);
 
-  const { login, signUp } = useAuthContext();
+  const { login, signUp, user } = useAuthContext();
 
-  const router = useRouter();
+  if (user) {
+    redirect("/profile");
+  }
 
   const handleLogin = async () => {
     try {
       setLoading(true);
       await login({ email: username, password, staySignedIn });
-      router.push("/");
+      redirect("/");
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -37,7 +39,7 @@ const useAuthPage = () => {
     try {
       setLoading(true);
       await signUp({ email: username, password, staySignedIn });
-      router.push("/");
+      redirect("/");
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
