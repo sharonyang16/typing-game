@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { patchUser } from "@/services/user-services";
 import { AxiosError } from "axios";
 import { TypingTest } from "@/types/typing-test";
@@ -17,10 +17,9 @@ const useProfilePage = () => {
   const [chartLoading, setChartLoading] = useState(false);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const { user, setUser, logout, deleteAccount } = useAuthContext();
-  const router = useRouter();
 
   if (!user) {
-    router.push("/authentication/login");
+    redirect("/authentication/login");
   }
 
   useEffect(() => {
