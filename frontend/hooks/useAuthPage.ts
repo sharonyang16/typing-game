@@ -1,6 +1,6 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { useState } from "react";
 
 const useAuthPage = () => {
@@ -11,9 +11,13 @@ const useAuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [staySignedIn, setStaySignedIn] = useState(false);
 
-  const { login, signUp } = useAuthContext();
+  const { login, signUp, user } = useAuthContext();
 
   const router = useRouter();
+
+  if (user) {
+    redirect("/profile");
+  }
 
   const handleLogin = async () => {
     try {
