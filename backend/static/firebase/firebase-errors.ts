@@ -1,4 +1,4 @@
-const firebaseErrors: { [key: string]: string } = {
+const firebaseErrors: Record<string, string> = {
   "auth/email-already-in-use":
     "The email address is already in use by another account.",
   "auth/invalid-credential": "Invalid user credentials.",
