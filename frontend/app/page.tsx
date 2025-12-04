@@ -1,6 +1,6 @@
 "use client";
 import { RotateCcw } from "lucide-react";
-import useWords from "@/hooks/useWords";
+import useGame from "@/hooks/useGame";
 import numWordsConstant from "@/static/numWords.json";
 import ResultsPage from "@/components/game/results";
 
@@ -22,7 +22,7 @@ export default function Home() {
     showSignUpBanner,
     started,
     showAccuracyWarningBanner,
-  } = useWords();
+  } = useGame();
 
   return (
     <div className="flex flex-col h-full">
