@@ -10,7 +10,7 @@ import {
 import { postTest } from "@/services/typing-test-services";
 import { useAuthContext } from "@/context/AuthContext";
 
-const useWords = () => {
+const useGame = () => {
   const { keyPressed } = useKeyboardEvents();
   const [numWords, setNumWords] = useState(25);
   const [useCaps, setUseCaps] = useState(false);
@@ -159,4 +159,4 @@ const useWords = () => {
   };
 };
 
-export default useWords;
+export default useGame;
