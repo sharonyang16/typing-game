@@ -2,10 +2,9 @@
 
 import useLeaderboardPage from "@/hooks/useLeaderboardPage";
 import Link from "next/link";
-import numWordsConstant from "@/static/numWords.json";
-import capitalsConstant from "@/static/capitalsFilterOptions.json";
 import Banner from "@/components/banner/banner";
 import Leaderboard from "@/components/leaderboard/table";
+import Filters from "@/components/leaderboard/filters";
 
 const LeaderboardPage = () => {
   const {
@@ -40,43 +39,12 @@ const LeaderboardPage = () => {
         />
       )}
       <div className="flex gap-8 items-start">
-        <div className="flex flex-col gap-4">
-          <fieldset className="fieldset">
-            <label className="label">Word Count</label>
-            <div className="join join-vertical">
-              {numWordsConstant.map((value) => (
-                <input
-                  className="join-item btn"
-                  key={`numWords-${value}`}
-                  type="radio"
-                  name="word-count-options"
-                  value={value}
-                  checked={selectedWordCount === value}
-                  aria-label={value.toString()}
-                  onChange={handleWordCountChange}
-                />
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="fieldset">
-            <label className="label">Capitals</label>
-            <div className="join join-vertical">
-              {capitalsConstant.map(({ label, value }) => (
-                <input
-                  className="join-item btn"
-                  key={`numWords-${value}`}
-                  type="radio"
-                  name="caps-options"
-                  value={value}
-                  checked={selectedCapitals === value}
-                  aria-label={label}
-                  onChange={handleCapitalsChange}
-                />
-              ))}
-            </div>
-          </fieldset>
-        </div>
-
+        <Filters
+          selectedWordCount={selectedWordCount}
+          selectedCapitals={selectedCapitals}
+          handleWordCountChange={handleWordCountChange}
+          handleCapitalsChange={handleCapitalsChange}
+        />
         <Leaderboard
           tests={tests}
           loading={loading}
