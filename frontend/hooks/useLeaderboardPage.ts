@@ -39,7 +39,7 @@ const useLeaderboardPage = () => {
           return {
             ...test,
             user: test.user.username || test.user.email,
-            date: format(test.date, "MM-dd-yyyy"),
+            date: format(test.date, "MM/dd"),
             words: test.wordsTyped.split(" ").length,
           };
         })
