@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getAllTests } from "@/services/typing-test-services";
 import {
   PopulatedTypingTest,
   TypingTestLeaderboardEntry,
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
-import { format } from "date-fns";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
@@ -39,7 +39,8 @@ const useLeaderboardPage = () => {
           return {
             ...test,
             user: test.user.username || test.user.email,
-            date: format(test.date, "MM-dd-yyyy"),
+            date: format(test.date, "MM/dd"),
+            dateFull: format(test.date, "LLL dd, yyyy @ h:mm aaa"),
             words: test.wordsTyped.split(" ").length,
           };
         })
