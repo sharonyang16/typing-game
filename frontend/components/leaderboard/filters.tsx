@@ -1,11 +1,13 @@
 import numWordsConstant from "@/static/numWords.json";
 import capitalsConstant from "@/static/capitalsFilterOptions.json";
+
 type FiltersProps = {
   selectedWordCount: number;
   selectedCapitals: string;
   handleWordCountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCapitalsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
 const Filters = ({
   selectedWordCount,
   selectedCapitals,

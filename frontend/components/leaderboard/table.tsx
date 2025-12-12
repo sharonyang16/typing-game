@@ -1,11 +1,12 @@
-import { TypingTestLeaderboardEntry } from "@/types/typing-test";
 import { Check, X } from "lucide-react";
+import { TypingTestLeaderboardEntry } from "@/types/typing-test";
 
 type LeaderboardProps = {
   tests: TypingTestLeaderboardEntry[];
   loading: boolean;
   selectedCapitals: boolean;
 };
+
 const Leaderboard = ({
   tests,
   loading,
