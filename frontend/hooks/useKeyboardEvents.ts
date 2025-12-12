@@ -1,10 +1,29 @@
 "use client";
 import { useEffect, useState } from "react";
 
+/**
+ * Custom hook for handling keyboard events.
+ * @returns keyPressed - the key that was pressed
+ */
 const useKeyboardEvents = () => {
   const [keyPressed, setKeyPressed] = useState("");
   const [nextKeyUpperCase, setNextKeyUpperCase] = useState(false);
 
+  // Listens for key events
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  });
+
+  /**
+   * Handles the keydown event.
+   * @param e - the keydown event
+   */
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Shift") {
       setNextKeyUpperCase(true);
@@ -19,6 +38,10 @@ const useKeyboardEvents = () => {
     }
   };
 
+  /**
+   * Handles the keyup event.
+   * @param e - the keyup event
+   */
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Shift") {
       setNextKeyUpperCase(false);
@@ -26,16 +49,6 @@ const useKeyboardEvents = () => {
 
     setKeyPressed("");
   };
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  });
 
   return { keyPressed };
 };
