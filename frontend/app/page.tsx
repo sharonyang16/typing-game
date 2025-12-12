@@ -4,7 +4,7 @@ import useGame from "@/hooks/useGame";
 import Results from "@/components/game/results";
 import TypingGame from "@/components/game/typing-game";
 
-export default function Home() {
+const Game = () => {
   const {
     numWords,
     useCaps,
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-full">
       <div className="pb-8">
-        {showResults && (
+        {showResults ? (
           <Results
             showSignUpBanner={showSignUpBanner}
             showAccuracyWarningBanner={showAccuracyWarningBanner}
@@ -37,8 +37,7 @@ export default function Home() {
             rawWpm={rawWpm}
             numWords={numWords}
           />
-        )}
-        {!showResults && (
+        ) : (
           <TypingGame
             wordsToType={wordsToType}
             wordsTyped={wordsTyped}
@@ -58,4 +57,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Game;
