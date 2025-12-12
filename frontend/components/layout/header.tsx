@@ -3,7 +3,7 @@ import { Trophy, User } from "lucide-react";
 import useHeader from "@/hooks/useHeader";
 
 const Header = () => {
-  const { headerText, link } = useHeader();
+  const { headerText, profileLink } = useHeader();
 
   return (
     <header className="w-full flex justify-between align-center py-4">
@@ -13,7 +13,7 @@ const Header = () => {
 
       <div className="flex gap-4">
         <div>{headerText}</div>
-        <Link href={link}>
+        <Link href={profileLink}>
           <User />
         </Link>
         <Link href="/leaderboard">
