@@ -2,7 +2,7 @@
 import { RotateCcw } from "lucide-react";
 import useGame from "@/hooks/useGame";
 import numWordsConstant from "@/static/numWords.json";
-import ResultsPage from "@/components/game/results";
+import Results from "@/components/game/results";
 
 export default function Home() {
   const {
@@ -28,7 +28,7 @@ export default function Home() {
     <div className="flex flex-col h-full">
       <div className="pb-8">
         {showResults && (
-          <ResultsPage
+          <Results
             showSignUpBanner={showSignUpBanner}
             showAccuracyWarningBanner={showAccuracyWarningBanner}
             wpm={wpm}

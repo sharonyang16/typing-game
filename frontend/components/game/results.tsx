@@ -25,7 +25,7 @@ const ResultsNumberLabel = ({ value, label }: ResultsNumberLabelProps) => {
   );
 };
 
-const ResultsPage = ({
+const Results = ({
   showSignUpBanner,
   showAccuracyWarningBanner,
   wpm,
@@ -76,4 +76,4 @@ const ResultsPage = ({
   );
 };
 
-export default ResultsPage;
+export default Results;
