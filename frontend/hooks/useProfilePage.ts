@@ -68,24 +68,36 @@ const useProfilePage = () => {
   }, [isDeleteModalOpen]);
 
   /**
-   * Resets editable user fields
+   * Handles delete model state.
+   * @param open If the modal should be open
+   * @returns void
    */
-  const setDefault = () => {
+  const handleDeleteModelState = (open: boolean): void => {
+    setIsDeleteModalOpen(open);
+  };
+
+  /**
+   * Resets editable user fields.
+   * @returns void
+   */
+  const setDefault = (): void => {
     setUsername(user?.username || "");
   };
 
   /**
-   * Handles profile edit cancel
+   * Handles profile edit cancel.
+   * @returns void
    */
-  const handleEditCancel = () => {
+  const handleEditCancel = (): void => {
     setDefault();
     setIsEditingProfile(false);
   };
 
   /**
-   * Handles profile edit save
+   * Handles profile edit save.
+   * @returns A Promise that resolves to void.
    */
-  const handleEditSave = async () => {
+  const handleEditSave = async (): Promise<void> => {
     try {
       if (!username) {
         setError("Username cannot be empty!");
@@ -102,22 +114,24 @@ const useProfilePage = () => {
   };
 
   /**
-   * Handles logout
+   * Handles logout.
+   * @returns A Promise that resolves to void.
    */
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     await logout();
   };
 
   /**
-   * Handles account deletion
+   * Handles account deletion.
+   * @returns A Promise that resolves to void.
    */
-  const handleDeleteAccount = async () => {
+  const handleDeleteAccount = async (): Promise<void> => {
     await deleteAccount();
   };
 
   return {
     isDeleteModalOpen,
-    setIsDeleteModalOpen,
+    handleDeleteModelState,
     deleteDialogRef,
     handleLogout,
     handleDeleteAccount,
