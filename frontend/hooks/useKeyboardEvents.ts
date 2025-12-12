@@ -23,8 +23,9 @@ const useKeyboardEvents = () => {
   /**
    * Handles the keydown event.
    * @param e - the keydown event
+   * @returns void
    */
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent): void => {
     if (e.key === "Shift") {
       setNextKeyUpperCase(true);
     }
@@ -41,8 +42,9 @@ const useKeyboardEvents = () => {
   /**
    * Handles the keyup event.
    * @param e - the keyup event
+   * @returns void
    */
-  const handleKeyUp = (e: KeyboardEvent) => {
+  const handleKeyUp = (e: KeyboardEvent): void => {
     if (e.key === "Shift") {
       setNextKeyUpperCase(false);
     }

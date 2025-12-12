@@ -10,6 +10,25 @@ import {
 import { postTest } from "@/services/typing-test-services";
 import { useAuthContext } from "@/context/AuthContext";
 
+/**
+ * Custom hook for handling game logic.
+ * @returns numWords - the number of words to type in the test
+ * @returns handleNumWordsChange - the function to handle changing the number of words
+ * @returns useCaps - if the test should use capital letters
+ * @returns handleCapsChange - the function to handle changing the use capital letters
+ * @returns wordsToType - the words to type in the test
+ * @returns wordsTyped - the words that have been typed in the test
+ * @returns handleRestart - the function to handle restarting the test
+ * @returns charMatches - the function to determine if the character typed and the character that it should be matches
+ * @returns secondsTaken - the number of seconds it took to type
+ * @returns showResults - if the results should be shown
+ * @returns accuracy - the accuracy of the test
+ * @returns rawWpm - the raw WPM of the test
+ * @returns wpm - the WPM of the test
+ * @returns showSignUpBanner - if the sign up banner should be shown
+ * @returns started - if the test has started
+ * @returns showAccuracyWarningBanner - if the accuracy warning banner should be shown
+ */
 const useGame = () => {
   const { keyPressed } = useKeyboardEvents();
   const [numWords, setNumWords] = useState(25);
@@ -49,20 +68,16 @@ const useGame = () => {
     setStarted(false);
   };
 
+  // Generate new words
   useEffect(() => {
     generateWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numWords, useCaps]);
 
+  // Show sign up banner if user is not logged in on results page
   useEffect(() => {
     setShowSignUpBanner(!user);
   }, [user]);
-
-  const handleRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    generateWords();
-    e.currentTarget.blur();
-    setShowResults(false);
-  };
 
   // Update the words typed
   useEffect(() => {
@@ -122,11 +137,34 @@ const useGame = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startTime, started, wordsToType, wordsTyped]);
 
-  const charMatches = (index: number) => {
+  /**
+   * Handles restarting the test.
+   * @param e The event object from the button click event.
+   * @returns void
+   */
+  const handleRestart = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    generateWords();
+    e.currentTarget.blur();
+    setShowResults(false);
+  };
+
+  /**
+   * Determines if the character typed and the character that it should be matches.
+   * @param index The index of the character.
+   * @returns True if the character matches, false otherwise.
+   */
+  const charMatches = (index: number): boolean => {
     return wordsToType[index] === wordsTyped[index];
   };
 
-  const handleNumWordsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Handles changing the number of words for the test.
+   * @param e The event object from the input change event.
+   * @returns void
+   */
+  const handleNumWordsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     try {
       setNumWords(parseInt(e.target.value));
     } catch {
@@ -134,20 +172,25 @@ const useGame = () => {
     }
   };
 
-  const handleCapsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Handles changing the use capital letters for the test.
+   * @param e The event object from the input change event.
+   * @returns void
+   */
+  const handleCapsChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUseCaps(e.target.checked);
     e.currentTarget.blur();
   };
 
   return {
     numWords,
+    handleNumWordsChange,
     useCaps,
     handleCapsChange,
     wordsToType,
-    handleRestart,
     wordsTyped,
+    handleRestart,
     charMatches,
-    handleNumWordsChange,
     secondsTaken,
     showResults,
     accuracy,
