@@ -22,6 +22,7 @@ const useProfilePage = () => {
     redirect("/authentication/login");
   }
 
+  // Fetches tests
   useEffect(() => {
     const getTests = async () => {
       setChartLoading(true);
@@ -36,6 +37,7 @@ const useProfilePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Sets/cleans chart data if there are tests
   useEffect(() => {
     if (tests.length > 0) {
       setChartData(
@@ -49,20 +51,40 @@ const useProfilePage = () => {
     }
   }, [tests]);
 
+  // Sets username
   useEffect(() => {
     if (user) {
       setUsername(user.username || "");
     }
   }, [user]);
 
+  // Handles delete modal open and close
+  useLayoutEffect(() => {
+    if (!isDeleteModalOpen) {
+      deleteDialogRef.current?.close();
+    } else {
+      deleteDialogRef.current?.showModal();
+    }
+  }, [isDeleteModalOpen]);
+
+  /**
+   * Resets editable user fields
+   */
   const setDefault = () => {
     setUsername(user?.username || "");
   };
 
+  /**
+   * Handles profile edit cancel
+   */
   const handleEditCancel = () => {
     setDefault();
     setIsEditingProfile(false);
   };
+
+  /**
+   * Handles profile edit save
+   */
   const handleEditSave = async () => {
     try {
       if (!username) {
@@ -79,18 +101,16 @@ const useProfilePage = () => {
     }
   };
 
-  useLayoutEffect(() => {
-    if (!isDeleteModalOpen) {
-      deleteDialogRef.current?.close();
-    } else {
-      deleteDialogRef.current?.showModal();
-    }
-  }, [isDeleteModalOpen]);
-
+  /**
+   * Handles logout
+   */
   const handleLogout = async () => {
     await logout();
   };
 
+  /**
+   * Handles account deletion
+   */
   const handleDeleteAccount = async () => {
     await deleteAccount();
   };
