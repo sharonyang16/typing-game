@@ -7,6 +7,23 @@ import { AxiosError } from "axios";
 import { TypingTest } from "@/types/typing-test";
 import { getAllTests } from "@/services/typing-test-services";
 
+/**
+ * Custom hook for the profile page.
+ * @returns isDeleteModalOpen - if the delete modal is open
+ * @returns setIsDeleteModalOpen - the function to set the delete modal open
+ * @returns deleteDialogRef - the ref to the delete modal
+ * @returns handleLogout - the function to handle logout
+ * @returns handleDeleteAccount - the function to handle account deletion
+ * @returns username - the username value
+ * @returns setUsername - the function to set the username value
+ * @returns isEditingProfile - if the profile is being edited
+ * @returns setIsEditingProfile - the function to set the profile editing state
+ * @returns handleEditCancel - the function to handle profile edit cancel
+ * @returns handleEditSave - the function to handle profile edit save
+ * @returns error - the error message related to editing changes
+ * @returns chartData - the data to be graphed
+ * @returns chartLoading - if the chart data is loading
+ */
 const useProfilePage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [username, setUsername] = useState("");
