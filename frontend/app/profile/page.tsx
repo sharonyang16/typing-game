@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const ProfilePage = () => {
   const {
-    setIsDeleteModalOpen,
+    handleDeleteModelState,
     handleLogout,
     handleDeleteAccount,
     deleteDialogRef,
@@ -162,7 +162,7 @@ const ProfilePage = () => {
             <div className="w-full flex gap-2 justify-end">
               <button
                 className="btn btn-outline"
-                onClick={() => setIsDeleteModalOpen(false)}
+                onClick={() => handleDeleteModelState(false)}
               >
                 Cancel
               </button>
@@ -175,7 +175,7 @@ const ProfilePage = () => {
         <div className="flex flex-col gap-4 w-fit">
           <button
             className="btn btn-error btn-outline"
-            onClick={() => setIsDeleteModalOpen(true)}
+            onClick={() => handleDeleteModelState(true)}
           >
             Delete Account
           </button>

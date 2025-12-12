@@ -9,6 +9,16 @@ import {
 } from "@/types/typing-test";
 import { useAuthContext } from "@/context/AuthContext";
 
+/**
+ * Custom hook for the leaderboard page.
+ * @returns tests - the tests to be displayed
+ * @returns showSignUpBanner - if the sign up banner should be shown
+ * @returns handleWordCountChange - the function to handle word count change
+ * @returns handleCapitalsChange - the function to handle capitals change
+ * @returns selectedWordCount - the currently selected word count
+ * @returns selectedCapitals - the currently selected capitals
+ * @returns loading - if the tests are loading
+ */
 const useLeaderboardPage = () => {
   const [tests, setTests] = useState<TypingTestLeaderboardEntry[]>([]);
   const [showSignUpBanner, setShowSignUpBanner] = useState(false);
@@ -20,6 +30,7 @@ const useLeaderboardPage = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // Fetches tests on search params change
   useEffect(() => {
     const wordCount = searchParams.get("wordCount") ?? "25";
     setSelectedWordCount(parseInt(wordCount));
@@ -51,7 +62,19 @@ const useLeaderboardPage = () => {
     getTests();
   }, [searchParams]);
 
-  const handleWordCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Show sign up banner if user is not logged in
+  useEffect(() => {
+    setShowSignUpBanner(!user);
+  }, [user]);
+
+  /**
+   * Pushes the new word count param value to the url on input change.
+   * @param e The event object from the input change event.
+   * @returns void
+   */
+  const handleWordCountChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     try {
       const params = new URLSearchParams(searchParams.toString());
       params.set("wordCount", e.target.value || "");
@@ -63,6 +86,11 @@ const useLeaderboardPage = () => {
     }
   };
 
+  /**
+   * Pushes the used capital param value to the url on input change.
+   * @param e The event object from the input change event.
+   * @returns void
+   */
   const handleCapitalsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const params = new URLSearchParams(searchParams.toString());
@@ -74,10 +102,6 @@ const useLeaderboardPage = () => {
       // do nothing
     }
   };
-
-  useEffect(() => {
-    setShowSignUpBanner(!user);
-  }, [user]);
 
   return {
     tests,
