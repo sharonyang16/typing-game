@@ -24,4 +24,5 @@ export interface TypingTestLeaderboardEntry {
   accuracy: number;
   useCapitals: boolean;
   date: string;
+  dateFull: string;
 }

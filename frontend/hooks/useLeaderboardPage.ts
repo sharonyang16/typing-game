@@ -40,6 +40,7 @@ const useLeaderboardPage = () => {
             ...test,
             user: test.user.username || test.user.email,
             date: format(test.date, "MM/dd"),
+            dateFull: format(test.date, "LLL dd, yyyy @ h:mm aaa"),
             words: test.wordsTyped.split(" ").length,
           };
         })

@@ -56,7 +56,11 @@ const Leaderboard = ({
               {!selectedCapitals && (
                 <td>{test.useCapitals ? <Check /> : <X />}</td>
               )}
-              <td>{test.date}</td>
+              <td>
+                <div className="tooltip" data-tip={test.dateFull}>
+                  {test.date}
+                </div>
+              </td>
             </tr>
           ))
         )}
