@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 
 /**
- * Custom hook for handling keyboard events.
+ * Custom hook for handling keyboard events for main game page.
  * @returns keyPressed - the key that was pressed
  */
-const useKeyboardEvents = () => {
+const useGameKeyboardEvents = () => {
   const [keyPressed, setKeyPressed] = useState("");
   const [nextKeyUpperCase, setNextKeyUpperCase] = useState(false);
 
@@ -55,4 +55,4 @@ const useKeyboardEvents = () => {
   return { keyPressed };
 };
 
-export default useKeyboardEvents;
+export default useGameKeyboardEvents;

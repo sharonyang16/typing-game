@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Trophy, User } from "lucide-react";
+import { Keyboard, Trophy, User } from "lucide-react";
 import useHeader from "@/hooks/useHeader";
 
 const Header = () => {
@@ -13,11 +13,14 @@ const Header = () => {
 
       <div className="flex gap-4">
         <div>{headerText}</div>
-        <Link href={profileLink}>
-          <User />
+        <Link href="/keyboard">
+          <Keyboard />
         </Link>
         <Link href="/leaderboard">
           <Trophy />
+        </Link>
+        <Link href={profileLink}>
+          <User />
         </Link>
       </div>
     </header>

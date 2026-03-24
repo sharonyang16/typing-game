@@ -26,7 +26,7 @@ const Game = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="pb-8">
+      <div className="pt-16 pb-8">
         {showResults ? (
           <Results
             showSignUpBanner={showSignUpBanner}
