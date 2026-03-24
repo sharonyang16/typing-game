@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 
 /**
- * Custom hook for handling keyboard events.
+ * Custom hook for handling keyboard events for key testing page.
  * @returns keyPressed - the key that was pressed
  */
-const useKeyboardEvents = (disableKeyboardEvents: boolean) => {
+const useTestKeyboardEvents = () => {
   const [keyPressed, setKeyPressed] = useState("");
   const [nextKeyUpperCase, setNextKeyUpperCase] = useState(false);
 
@@ -26,10 +26,9 @@ const useKeyboardEvents = (disableKeyboardEvents: boolean) => {
    * @returns void
    */
   const handleKeyDown = (e: KeyboardEvent): void => {
-    if (disableKeyboardEvents) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    e.preventDefault();
+    e.stopPropagation();
+
     if (e.key === "Shift") {
       setNextKeyUpperCase(true);
     }
@@ -59,4 +58,4 @@ const useKeyboardEvents = (disableKeyboardEvents: boolean) => {
   return { keyPressed };
 };
 
-export default useKeyboardEvents;
+export default useTestKeyboardEvents;

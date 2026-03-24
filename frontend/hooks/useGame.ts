@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import data from "@/static/words.json";
-import useKeyboardEvents from "./useKeyboardEvents";
+import useGameKeyboardEvents from "./useGameKeyboardEvents";
 import {
   calculateRawWpm,
   calculateAccuracy,
@@ -30,7 +30,7 @@ import { useAuthContext } from "@/context/AuthContext";
  * @returns showAccuracyWarningBanner - if the accuracy warning banner should be shown
  */
 const useGame = () => {
-  const { keyPressed } = useKeyboardEvents(false);
+  const { keyPressed } = useGameKeyboardEvents();
   const [numWords, setNumWords] = useState(25);
   const [useCaps, setUseCaps] = useState(false);
   const [wordsToType, setWordsToType] = useState("");

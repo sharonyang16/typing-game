@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import useKeyboardEvents from "./useKeyboardEvents";
+import useTestKeyboardEvents from "./useTestKeyboardEvents";
 
 type Key = {
   value: string;
@@ -75,7 +75,7 @@ const KEY_VALUES: string[][] = [
 ];
 
 const useKeyboardPage = () => {
-  const { keyPressed } = useKeyboardEvents(true);
+  const { keyPressed } = useTestKeyboardEvents();
   const keyboard: Key[][] = KEY_VALUES.map((row) =>
     row.map(
       (value): Key => ({
