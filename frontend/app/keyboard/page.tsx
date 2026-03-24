@@ -17,12 +17,9 @@ const KeyboardPage = () => {
           >
             Reset
           </button>
-          <div className="flex-col">
+          <div className="flex flex-col gap-1">
             {keyboard.map((row, index) => (
-              <div
-                className="my-1 flex w-full gap-1"
-                key={`keyboard-row-${index}`}
-              >
+              <div className=" flex gap-1 w-full" key={`keyboard-row-${index}`}>
                 {row.map((key, index) => (
                   <kbd
                     className={`kbd ${currentPressedKeys.has(key.value) ? "bg-accent/60" : allPressedKeys.has(key.value) && "bg-accent text-accent-content"}`}
