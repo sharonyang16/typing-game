@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
  * Custom hook for handling keyboard events.
  * @returns keyPressed - the key that was pressed
  */
-const useKeyboardEvents = () => {
+const useKeyboardEvents = (disableKeyboardEvents: boolean) => {
   const [keyPressed, setKeyPressed] = useState("");
   const [nextKeyUpperCase, setNextKeyUpperCase] = useState(false);
 
@@ -26,6 +26,10 @@ const useKeyboardEvents = () => {
    * @returns void
    */
   const handleKeyDown = (e: KeyboardEvent): void => {
+    if (disableKeyboardEvents) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (e.key === "Shift") {
       setNextKeyUpperCase(true);
     }
