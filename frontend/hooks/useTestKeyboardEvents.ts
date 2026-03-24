@@ -6,11 +6,29 @@ import { useEffect, useState } from "react";
  * @returns keyPressed - the key that was pressed
  */
 const useTestKeyboardEvents = () => {
-  const [keyPressed, setKeyPressed] = useState("");
-  const [nextKeyUpperCase, setNextKeyUpperCase] = useState(false);
+  const [currentPressedKeys, setCurrentPressedKeys] = useState<Set<string>>(
+    new Set(),
+  );
+  const [allPressedKeys, setAllPressedKeys] = useState<Set<string>>(new Set());
 
-  // Listens for key events
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.repeat) return; // ignore key held auto-repeat events
+      setCurrentPressedKeys((prev) => new Set(prev).add(e.key));
+      setAllPressedKeys((prev) => new Set(prev).add(e.key));
+    };
+
+    const handleKeyUp = (e: KeyboardEvent): void => {
+      setCurrentPressedKeys((prev) => {
+        const next = new Set(prev);
+        next.delete(e.key);
+        return next;
+      });
+    };
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
 
@@ -20,42 +38,7 @@ const useTestKeyboardEvents = () => {
     };
   });
 
-  /**
-   * Handles the keydown event.
-   * @param e - the keydown event
-   * @returns void
-   */
-  const handleKeyDown = (e: KeyboardEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (e.key === "Shift") {
-      setNextKeyUpperCase(true);
-    }
-
-    if (nextKeyUpperCase) {
-      setKeyPressed(e.key.toUpperCase());
-      setNextKeyUpperCase(false);
-      return;
-    } else {
-      setKeyPressed(e.key);
-    }
-  };
-
-  /**
-   * Handles the keyup event.
-   * @param e - the keyup event
-   * @returns void
-   */
-  const handleKeyUp = (e: KeyboardEvent): void => {
-    if (e.key === "Shift") {
-      setNextKeyUpperCase(false);
-    }
-
-    setKeyPressed("");
-  };
-
-  return { keyPressed };
+  return { currentPressedKeys, allPressedKeys };
 };
 
 export default useTestKeyboardEvents;
